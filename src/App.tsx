@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Card } from '@mui/material';
+// import { Box, Card } from '@mui/material';
 import CardStack from './components/Card/CardStack';
 import DifficultyChooser from './components/DifficultyChooser/DifficultyChooser';
 import ProgressBar from './components/ProgressBar/ProgressBar';

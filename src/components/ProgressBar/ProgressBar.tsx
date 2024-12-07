@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, LinearProgress } from '@mui/material';
+// import { Box, LinearProgress } from '@mui/material';
 
 interface ProgressBarProps {
   progress: number;
@@ -7,7 +7,21 @@ interface ProgressBarProps {
 
 const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => {
   return (
-    <Box sx={{ width: "100%", marginBottom: "20px" }}>
+    <div>
+      <div className='active-Progress'></div>
+      <div className='active-Progress'></div>
+      <div className='active-Progress'></div>
+      <div className='deactive-Progress'></div>
+      <div className='deactive-Progress'></div>
+      <div className='deactive-Progress'></div>
+      <div className='deactive-Progress'></div>
+    </div>
+  );
+};
+
+export default ProgressBar;
+
+{/* <Box sx={{ width: "100%", marginBottom: "20px" }}>
       <LinearProgress
         variant="determinate"
         value={progress}
@@ -18,8 +32,4 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => {
           },
         }}
       />
-    </Box>
-  );
-};
-
-export default ProgressBar;
+    </Box> */}
