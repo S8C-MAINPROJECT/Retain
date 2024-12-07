@@ -1,0 +1,15 @@
+/* Header.css */
+
+.headItems {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  background-color: none;
+  margin-top: 51px;
+}
+
+#closebtn {
+    position: relative;
+    right: 50px;
+}

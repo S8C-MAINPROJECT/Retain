@@ -1,52 +1,34 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import './Card.css';
+import EditBtn from '../../assets/editbtn.svg';
 
-interface CardProps {
-  question: string;
-  answer: string;
-}
+const db = [
+  { country: 'What is the capital of France?', capital: 'The capital of France is Paris' },
+  { country: 'What is the capital of United States?', capital: 'The capital of United States is Washington, D.C.' },
+  { country: 'What is the capital of India?', capital: 'The capital of India is New Delhi' },
+  { country: 'What is the capital of Japan?', capital: 'The capital of Japan is Tokyo' },
+  { country: 'What is the capital of Australia?', capital: 'The capital of Australia is Canberra' },
+];
 
-const Card: React.FC<CardProps> = ({ question, answer }) => {
-  const [revealed, setRevealed] = useState(false);
+const Card = () => {
+  const [showAnswer, setShowAnswer] = useState(false);
 
-  const cardStyle: React.CSSProperties = {
-    backgroundColor: "#292929",
-    color: "#ffffff",
-    padding: "20px",
-    borderRadius: "10px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-    textAlign: "center",
-    width: "300px",
-    height: "200px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    cursor: "pointer",
-  };
-
-  const questionStyle: React.CSSProperties = {
-    fontSize: "18px",
-    fontWeight: "bold",
-    marginBottom: "10px",
-  };
-
-  const answerStyle: React.CSSProperties = {
-    fontSize: "14px",
-    opacity: 0.7,
+  const handleCardClick = () => {
+    setShowAnswer(!showAnswer);
   };
 
   return (
-    <div
-      style={cardStyle}
-      onClick={() => setRevealed(!revealed)}
-    >
-      {/* Question */}
-      <div style={questionStyle}>
-        {question}
-      </div>
-
-      {/* Conditional Rendering for the Answer */}
-      <div style={answerStyle}>
-        {revealed ? answer : "Tap to reveal answer"}
+    <div className="cardContainer">
+      <div className="card" onClick={handleCardClick}>
+        <div className='cardHeader'>
+            <p>2/11</p>
+            <img src={EditBtn} alt="Edit Button" id='editbtn'/>
+        </div>
+        <h2 className="question">{db[0].country}</h2>
+        <div className="separator"></div>
+        <p className="answer">
+          {showAnswer ? db[0].capital : 'Tap to reveal answer'}
+        </p>
       </div>
     </div>
   );

@@ -1,27 +1,18 @@
-import React from 'react'
+import './DifficultyChooser.css'
 
 const DifficultyChooser = () => {
 
-    const difficultyButtonStyle: React.CSSProperties = {
-        paddingTop: "4px",
-        paddingBottom: "4px",
-        paddingLeft: "8px",
-        paddingRight: "8px",
-        border: "0.25px solid rgba(156, 156, 156, 1)",
-        borderRadius: "12.71px"
-    }
-
   return (
     <div>
-        <div className='difficultyOptions' style={{display:"flex", justifyContent:"center", gap:40}}>
-            <button style={difficultyButtonStyle}>
-                15 min<br></br>Again
+        <div className='difficultyOptions'>
+            <button className='difficultyBtn hard'>
+                <span className='difficultyTime'>15 min</span><br></br><span className='difficultyMeasure'>Again</span>
             </button>
-            <button style={difficultyButtonStyle}>
-                4 day<br></br>Easy
+            <button className='difficultyBtn medium'>
+                <span className='difficultyTime'>4 day</span><br></br><span className='difficultyMeasure'>Easy</span>
             </button>
-            <button style={difficultyButtonStyle}>
-                1 day<br></br>Good
+            <button className='difficultyBtn easy'>
+                <span className='difficultyTime'>1 day</span><br></br><span className='difficultyMeasure'>Good</span>
             </button>
         </div>
     </div>
