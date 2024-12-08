@@ -4,13 +4,14 @@ import React from 'react';
 
 interface ProgressBarProps {
   progress: number; // Progress is a number (e.g., 0 to 5)
+  total: number;
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({ progress,total }) => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: 40, gap: 5, marginBottom: 30 }}>
-        {Array.from({ length: 9 }, (_, index) => (
+        {Array.from({ length: total }, (_, index) => (
           <div
             key={index}
             style={{

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './Card.css';
+import ProgressBar from '../ProgressBar/ProgressBar';
 import EditBtn from '../../assets/editbtn.svg';
 
 const db = [
@@ -11,25 +12,59 @@ const db = [
 ];
 
 const Card = () => {
+  const [progress, setProgress] = useState(2); 
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [animation, setAnimation] = useState('');
 
-  const handleCardClick = () => {
-    setShowAnswer(!showAnswer);
+  const handleNext = () => {
+    setAnimation('slideOutLeft');
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % db.length);
+      setAnimation('slideInRight');
+    }, 400); 
+  };
+
+  const handlePrev = () => {
+    setAnimation('slideOutRight');
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) => (prevIndex === 0 ? db.length - 1 : prevIndex - 1));
+      setAnimation('slideInLeft');
+    }, 400); 
+  };
+
+  const getCardData = (offset: number) => {
+    const index = (currentIndex + offset + db.length) % db.length;
+    return db[index];
   };
 
   return (
+  
+  <div>
+  <ProgressBar progress={currentIndex + 1} total={db.length} />
     <div className="cardContainer">
-      <div className="card" onClick={handleCardClick}>
-        <div className='cardHeader'>
-            <p>2/11</p>
-            <img src={EditBtn} alt="Edit Button" id='editbtn'/>
+      <div className="cardStack">
+
+        <div
+          className={`card currentCard ${animation}`}
+          onClick={() => setShowAnswer(!showAnswer)}
+        >
+          <div className="cardHeader">
+            <p>{currentIndex + 1}/{db.length}</p>
+            <img src={EditBtn} alt="Edit Button" id="editbtn" />
+          </div>
+          <h2 className="question">{getCardData(0).country}</h2>
+          <div className="separator"></div>
+          <p className="answer">{showAnswer ? getCardData(0).capital : 'Tap to reveal answer'}</p>
         </div>
-        <h2 className="question">{db[0].country}</h2>
-        <div className="separator"></div>
-        <p className="answer">
-          {showAnswer ? db[0].capital : 'Tap to reveal answer'}
-        </p>
       </div>
+
+      <div className="navigation">
+        <button onClick={handlePrev} className="navButton">Previous</button>
+        <button onClick={handleNext} className="navButton">Next</button>
+      </div>
+    </div>
+
     </div>
   );
 };
