@@ -75,8 +75,12 @@ const Card = () => {
             </div>
             <h2 className="question">{getCardData(0).country}</h2>
             <div className="separator"></div>
-            <p className="answer">
-              {showAnswer ? getCardData(0).capital : "Tap to reveal answer"}
+            <p>
+              {showAnswer ? (
+                <div className="answer">{getCardData(0).capital}</div>
+              ) : (
+                <div className="reveal">Tap to reveal answer</div>
+              )}
             </p>
           </div>
         </div>
