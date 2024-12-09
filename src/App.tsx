@@ -1,20 +1,28 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import Card from './components/Card/Card';
-import DifficultyChooser from './components/DifficultyChooser/DifficultyChooser';
-import Header from './components/Header/Header';
+import Card from './pages/Card/Card';
+import Login from './pages/Login/Login';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <Header />
-      <Card />
-      <DifficultyChooser />
-    </div>
+    <Router>
+      <div className="App">
+        {/* Define routes for different pages */}
+        <Routes>
+          {/* Route for Login Page */}
+          <Route path="/" element={<Login />} />
+
+          {/* Route for Card Page */}
+          <Route path="/card" element={<Card />} />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 
 export default App;
+
 
 
 // import { Box, Card } from '@mui/material';
