@@ -75,7 +75,7 @@ const Card = () => {
             </div>
             <h2 className="question">{getCardData(0).country}</h2>
             <div className="separator"></div>
-            <p>
+            <p >
               {showAnswer ? (
                 <div className="answer">{getCardData(0).capital}</div>
               ) : (
