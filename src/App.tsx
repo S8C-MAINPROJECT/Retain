@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import Card from './components/Card/Card';
 import DifficultyChooser from './components/DifficultyChooser/DifficultyChooser';
-import ProgressBar from './components/ProgressBar/ProgressBar';
 import Header from './components/Header/Header';
 
 const App: React.FC = () => {
-  const [progress, setProgress] = useState(2); // Example progress
-
   return (
     <div className="App">
       <Header />
-      <ProgressBar progress={progress} />
       <Card />
       <DifficultyChooser />
     </div>
