@@ -20,15 +20,22 @@ const Card = () => {
   return (
     <div className="cardContainer">
       <div className="card" onClick={handleCardClick}>
-        <div className='cardHeader'>
-            <p>2/11</p>
-            <img src={EditBtn} alt="Edit Button" id='editbtn'/>
+        <div className='cardBodyContent'>
+            <div className='cardHeader'>
+                <p className='cardHeaderContent'><span style={{color:"rgba(255,255,255,1)"}}>2/</span><span style={{color:"rgba(177, 177, 177, 1)"}}>11</span></p>
+                <img src={EditBtn} alt="Edit Button" id='editbtn' className='cardHeaderContent'/>
+            </div>
+            <h2 className="question">{db[0].country}</h2>
+            <div className="separator"></div>
+            <p className="answer">
+              {showAnswer ? (
+                <div className="capital">{db[0].capital}</div>
+              ) : (
+                <div className="tap-to-reveal">Tap to reveal answer</div>
+              )}
+            </p>
+
         </div>
-        <h2 className="question">{db[0].country}</h2>
-        <div className="separator"></div>
-        <p className="answer">
-          {showAnswer ? db[0].capital : 'Tap to reveal answer'}
-        </p>
       </div>
     </div>
   );
