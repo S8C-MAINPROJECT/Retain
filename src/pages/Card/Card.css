@@ -135,7 +135,9 @@
   font-size: 20px;
   font-weight: bold;
   color: rgba(255, 255, 255, 1);
-  margin: 0;
+  margin: 0 20px;
+  padding: 0 0px;
+  text-align: left;
 }
 
 .separator {
@@ -153,7 +155,7 @@
 }
 
 .cardHeader {
-  margin-top: 10px;
+  margin: 10px 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -179,6 +181,10 @@
   background-color: #444;
 }
 
-/* .cardHeader-item {
-  padding: 15px;
-} */
+.cardHeader{
+  padding-top: 4px;
+}
+
+.cardHeader-item {
+  padding: 0 15px;
+}
