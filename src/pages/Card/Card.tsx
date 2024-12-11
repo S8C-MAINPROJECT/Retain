@@ -40,6 +40,7 @@ const Card = () => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % db.length);
       setAnimation("slideInRight");
     }, 400);
+    setShowAnswer(false);
   };
 
   const handlePrev = () => {
@@ -50,6 +51,7 @@ const Card = () => {
       );
       setAnimation("slideInLeft");
     }, 400);
+    setShowAnswer(false);
   };
 
   const getCardData = (offset: number) => {
@@ -69,19 +71,26 @@ const Card = () => {
           >
             <div className="cardHeader">
               <p className="cardHeader-item">
-                {currentIndex + 1}/{db.length}
+                <span className="current-count">{currentIndex + 1}/</span><span className="total-count">{db.length}</span>
               </p>
-              <img src={EditBtn} alt="Edit Button" id="editbtn" className="cardHeader-item" />
+              <img
+                src={EditBtn}
+                alt="Edit Button"
+                id="editbtn"
+                className="cardHeader-item"
+              />
             </div>
             <h2 className="question">{getCardData(0).country}</h2>
             <div className="separator"></div>
-            <p >
-              {showAnswer ? (
-                <div className="answer">{getCardData(0).capital}</div>
-              ) : (
-                <div className="reveal">Tap to reveal answer</div>
-              )}
-            </p>
+            <div className="question">
+              <p>
+                {showAnswer ? (
+                  <div className="answer">{getCardData(0).capital}</div>
+                ) : (
+                  <div className="reveal">Tap to reveal answer</div>
+                )}
+              </p>
+            </div>
           </div>
         </div>
 

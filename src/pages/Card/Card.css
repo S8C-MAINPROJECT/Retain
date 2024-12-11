@@ -147,26 +147,27 @@
   margin: 10px 0;
 }
 
-/* .question {
-  position: absolute;
-} */
+.question {
+  /* position: absolute; */
+}
  
 .answer {
   font-size: 20px;
   font-weight: bold;
   color: rgba(255, 255, 255, 1);
   text-align: left;
-  margin: 0px 20px;
+  
 }
 
-.revieal {
+.reveal {
   font-size: 16px;
   color: rgba(255, 255, 255, 0.49);
-  margin: 10px;
+  font-weight: 400;
   width: 100%;
-  position: absolute;
-  top: 50px;
+  position: relative;
+  top: 45px;
 }
+
 
 .cardHeader {
   margin: 10px 0;
@@ -203,4 +204,14 @@
 
 .cardHeader-item {
   padding: 0 15px;
+}
+
+.current-count {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 1);
+}
+
+.total-count {
+  font-size: 16px;
+  color: rgba(177, 177, 177, 1)
 }
