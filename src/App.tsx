@@ -4,7 +4,6 @@ import './App.css';
 import Card from './pages/Card/Card';
 import Login from './pages/Login/Login';
 import Home from './pages/Home/Home';
-import AnimatedMenu from './components/AnimatedMenu/AnimatedMenu';
 
 const App: React.FC = () => {
   return (
@@ -18,8 +17,6 @@ const App: React.FC = () => {
           <Route path="/home" element={<Home />} />
           {/* Route for Card Page */}
           <Route path="/card" element={<Card />} />
-          {/* Route for testing*/}
-          <Route path="/test" element={<AnimatedMenu />} />
         </Routes>
       </div>
     </Router>

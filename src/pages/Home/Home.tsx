@@ -1,10 +1,10 @@
-import React from "react";
+import { useState } from "react";
 import icons from "../../assets/icons";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
-import AnimatedMenu from "../../components/AnimatedMenu/AnimatedMenu";
 import "./Home.css";
 
 const Home = () => {
+  const [show, setShow] = useState(false);
   return (
     <div className="home">
       <div className="homeHeader">
@@ -17,17 +17,61 @@ const Home = () => {
         <div className="homeCard-items">
           <div className="left-side-items"></div>
           <div className="right-side-items">
-            <div><h5>Capital Countries</h5></div>
-            <div><p>Today:3/11</p></div>
+            <div>
+              <h5>Capital Countries</h5>
+            </div>
+            <div>
+              <p>Today:3/11</p>
+            </div>
             <div className="pgBar-home">
-              <ProgressBar progress={1} total={5} activecolor="rgba(81, 197, 70, 1)" deactivecolor="rgba(171, 250, 164, 1)" />
+              <ProgressBar
+                progress={1}
+                total={5}
+                activecolor="rgba(81, 197, 70, 1)"
+                deactivecolor="rgba(171, 250, 164, 1)"
+              />
             </div>
           </div>
         </div>
       </div>
+      {show ? <div className="uploadOptions">
+        <div className="">
+          <img className="uploadOptions-icon"
+              src={icons.addText}
+              alt=""
+              onClick={() => {
+                // setShow(true);
+              }}
+            />
+          </div>
+          <div>
+          <img
+              src={icons.addPDF}
+              alt=""
+              onClick={() => {
+                // setShow(true);
+              }}
+            />
+          </div>
+          <div>
+          <img className="uploadOptions-icon"
+              src={icons.addDeck}
+              alt=""
+              onClick={() => {
+                // setShow(true);
+              }}
+            />
+          </div>
+      </div> : null}
       <div className="homeFooter">
         <div className="homeFooter-button">
-            <AnimatedMenu />
+          <img
+            src={show ? icons.boldcross : icons.plusSymbol}
+            alt=""
+            onClick={() => {
+              setShow(!show);
+            }}
+          />
         </div>
       </div>
     </div>
