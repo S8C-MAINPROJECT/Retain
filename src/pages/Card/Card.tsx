@@ -62,7 +62,9 @@ const Card = () => {
   return (
     <div className="central-card-component">
       <Header />
-      <ProgressBar progress={currentIndex + 1} total={db.length} />
+      <div className="pgBar-card">
+        <ProgressBar progress={currentIndex + 1} total={db.length} activecolor="rgba(104,104,104,1)" deactivecolor="white"/>
+      </div>
       <div className="cardContainer">
         <div className="cardStack">
           <div

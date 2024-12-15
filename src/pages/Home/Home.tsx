@@ -1,14 +1,14 @@
 import React from "react";
-import Symbol from "../../assets/retainSymbol.svg";
-import Plus from "../../assets/plusSymbol.svg";
+import icons from "../../assets/icons";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
+import AnimatedMenu from "../../components/AnimatedMenu/AnimatedMenu";
 import "./Home.css";
 
 const Home = () => {
   return (
     <div className="home">
       <div className="homeHeader">
-        <img src={Symbol} alt="" />
+        <img src={icons.retainSymbol} alt="" />
         <span className="home-heading">
           <p>Retain</p>
         </span>
@@ -17,17 +17,17 @@ const Home = () => {
         <div className="homeCard-items">
           <div className="left-side-items"></div>
           <div className="right-side-items">
-            <h5>Capital Countries</h5>
-            <p>Today:3/11</p>
-            <ProgressBar progress={1} total={5} />
+            <div><h5>Capital Countries</h5></div>
+            <div><p>Today:3/11</p></div>
+            <div className="pgBar-home">
+              <ProgressBar progress={1} total={5} activecolor="rgba(81, 197, 70, 1)" deactivecolor="rgba(171, 250, 164, 1)" />
+            </div>
           </div>
         </div>
       </div>
       <div className="homeFooter">
         <div className="homeFooter-button">
-          <button>
-            <img src={Plus} alt="" />
-          </button>
+            <AnimatedMenu />
         </div>
       </div>
     </div>

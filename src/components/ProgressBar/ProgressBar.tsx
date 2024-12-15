@@ -5,12 +5,14 @@ import React from 'react';
 interface ProgressBarProps {
   progress: number; // Progress is a number (e.g., 0 to 5)
   total: number;
+  activecolor: string;
+  deactivecolor: string;
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ progress,total }) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({ progress, total, activecolor, deactivecolor }) => {
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 40, gap: 5, marginBottom: 30 }}>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 5, margin:2}}>
         {Array.from({ length: total }, (_, index) => (
           <div
             key={index}
@@ -18,7 +20,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progress,total }) => {
               height: '5px',
               width: '25px',
               borderRadius: '25px',
-              backgroundColor: index < progress ? 'rgba(104,104,104,1)' : 'white', // Active bars are white
+              backgroundColor: index < progress ? activecolor : deactivecolor, // Active bars are white
             }}
           ></div>
         ))}
