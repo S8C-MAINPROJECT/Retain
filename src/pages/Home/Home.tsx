@@ -34,9 +34,10 @@ const Home = () => {
           </div>
         </div>
       </div>
+
       {show ? <div className="uploadOptions">
         <div className="">
-          <img className="uploadOptions-icon"
+          <img className="uploadOptions-icon" id="left"
               src={icons.addText}
               alt=""
               onClick={() => {
@@ -45,7 +46,7 @@ const Home = () => {
             />
           </div>
           <div>
-          <img
+          <img className="uploadOptions-icon" id="center"
               src={icons.addPDF}
               alt=""
               onClick={() => {
@@ -54,7 +55,7 @@ const Home = () => {
             />
           </div>
           <div>
-          <img className="uploadOptions-icon"
+          <img className="uploadOptions-icon" id="right"
               src={icons.addDeck}
               alt=""
               onClick={() => {
@@ -63,6 +64,7 @@ const Home = () => {
             />
           </div>
       </div> : null}
+      
       <div className="homeFooter">
         <div className="homeFooter-button">
           <img

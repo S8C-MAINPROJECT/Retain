@@ -1,100 +1,145 @@
-
-
 .homeHeader {
-    display: flex;
-    justify-content: left;
-    margin-top: 50px;
-    margin-left: 23px;
+  display: flex;
+  justify-content: left;
+  margin-top: 50px;
+  margin-left: 23px;
 }
 
-.home-heading{
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-    font-size: 32px;
-    line-height: 14.18px;
-    letter-spacing: -1px;
-    padding-left: 12px;
+.home-heading {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 14.18px;
+  letter-spacing: -1px;
+  padding-left: 12px;
 }
 
 .homeCard {
-    height: fit-content;
-    width: fit-content;
-    padding-left: 13px;
-    padding-top: 14px;
-    background-color: rgba(255, 255, 255, 1);
-    border-radius: 21px;
-    margin-top: 25px;
-    margin-left: 23px;
-    
+  height: fit-content;
+  width: fit-content;
+  padding-left: 13px;
+  padding-top: 14px;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 21px;
+  margin-top: 25px;
+  margin-left: 23px;
 }
 
 .homeCard-items {
-    display: flex;
-    top: 14px;
-    left: 13px;
+  display: flex;
+  top: 14px;
+  left: 13px;
 }
 
-.left-side-items{
-    width: 75px;
-    height: 65px;
-    border-radius: 18px;
-    background-color: #E5E5E5;
+.left-side-items {
+  width: 75px;
+  height: 65px;
+  border-radius: 18px;
+  background-color: #e5e5e5;
 }
 
-.right-side-items{
-    width: 220px;
-    padding-left: 10px;
+.right-side-items {
+  width: 220px;
+  padding-left: 10px;
 }
 
 .homeFooter {
-    width: 100%;
-    height: 100px;
-    background-color: rgba(255, 255, 255, 1);
-    border-radius: 40px 40px 0px 0px;
-    border-width: 0.25px;
-    position: fixed;
-    bottom: 0;
-    box-shadow: 0px 0px 13.7px 0 rgba(0, 0, 0, 0.25);
-    display: flex;
-    justify-content: center;
-    z-index: 1;
+  width: 100%;
+  height: 100px;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 40px 40px 0px 0px;
+  border-width: 0.25px;
+  position: fixed;
+  bottom: 0;
+  box-shadow: 0px 0px 13.7px 0 rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  z-index: 1;
 }
 
 .homeFooter-button {
-    background-color: rgba(255, 255, 255, 1);
-    border-radius: 50%;
-    border-width: 0.25px;
-    width: 60px; 
-    height: 60px; 
-    box-shadow: 0px 0px 13.7px 0 rgba(0, 0, 0, 0.25);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-    position: relative;
-    bottom: 32.5px;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 50%;
+  border-width: 0.25px;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0px 0px 13.7px 0 rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  position: relative;
+  bottom: 32.5px;
 }
 
 .homeFooter-button button {
-    background-color: rgba(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .pgBar-home {
-    margin-top: 20px;
-    margin-right: 75px;
-    margin-bottom: 10px;
-}
-
-.uploadOptions {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 250px;
+  margin-top: 20px;
+  margin-right: 75px;
+  margin-bottom: 10px;
 }
 
 .uploadOptions-icon {
-    position: relative;
-    top: 30px;
+  /* position: relative;
+  top: 30px; */
+  position: absolute;
+  left: 43%;
+  transform: translateY(160%);
+}
+.uploadOptions #center {
+  animation: up 200ms ease-out forwards;
+}
+
+.uploadOptions #left {
+  animation: diagonal-left 200ms ease-in-out forwards;
+}
+
+.uploadOptions #right {
+  animation: diagonal-right 200ms ease-in-out forwards;
+}
+
+.uploadOptions {
+  /* display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px; */
+  width: 100%;
+  margin-top: 250px;
+  position: relative;
+  /* margin-top: 350px;*/
+}
+
+@keyframes up {
+  from {
+    transform: translateY(160%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes diagonal-left {
+  from {
+    transform: translateY(160%);
+    left: 43%;
+  }
+  to {
+    transform: translateY(60%);
+    left: 25%;
+  }
+}
+
+@keyframes diagonal-right {
+  from {
+    transform: translateY(160%);
+    left: 43%;
+  }
+  to {
+    transform: translateY(60%);
+    left: 61%;
+  }
 }
