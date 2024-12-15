@@ -100,12 +100,12 @@ const Card = () => {
           <button onClick={handlePrev} className="navButton">
             Previous
           </button>
-          <button onClick={handleNext} className="navButton">
+          {/* <button onClick={handleNext} className="navButton">
             Next
-          </button>
+          </button> */}
         </div>
       </div>
-      <DifficultyChooser />
+      <DifficultyChooser handleNext={handleNext} />
     </div>
   );
 };
