@@ -7,7 +7,7 @@
   padding: 10px 15px;
   gap: 10px;
   border-radius: 16px;
-  background: #ff682f;
+  background: #2a2a2a;
   color: white;
   border: none;
   cursor: pointer;
@@ -16,5 +16,5 @@
 }
 
 .btn:hover {
-  background: #d25325;
+  background: #000000;
 }

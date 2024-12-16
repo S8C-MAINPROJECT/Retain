@@ -5,10 +5,10 @@ import PrimaryBtn from "../../components/Button/PrimaryBtn";
 import SecondaryBtn from "../../components/Button/secondaryBtn";
 import styles from "./Login.module.css";
 import logo from "./Assets/logo.svg";
-
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-
+  const navigate = useNavigate();
   return (
     <div className={styles.signup}>
       <div className={styles.signupBoundingbox}>
@@ -36,7 +36,12 @@ export default function Login() {
             />
           </div>
           <div className={styles.signupButtons}>
-            <PrimaryBtn name="Login" /*onClick={handleSignUp}*/ />
+            <PrimaryBtn
+              name="Login"
+              onClick={() => {
+                navigate("/home");
+              }}
+            />
             <SecondaryBtn
               name="SignUp" /*onClick={() => navigate('/login')}*/
             />
