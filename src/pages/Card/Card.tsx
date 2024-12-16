@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Card.css";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
-import icons from "../../assets/icons";
+import EditBtn from "../../assets/editbtn.svg";
 import DifficultyChooser from "../../components/DifficultyChooser/DifficultyChooser";
 import Header from "../../components/Header/Header";
 
@@ -59,21 +59,11 @@ const Card = () => {
     return db[index];
   };
 
-  const speakText = (text: string) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    speechSynthesis.speak(utterance);
-  };
-
   return (
     <div className="central-card-component">
       <Header />
       <div className="pgBar-card">
-        <ProgressBar
-          progress={currentIndex + 1}
-          total={db.length}
-          activecolor="rgba(104,104,104,1)"
-          deactivecolor="white"
-        />
+        <ProgressBar progress={currentIndex + 1} total={db.length} activecolor="rgba(104,104,104,1)" deactivecolor="white"/>
       </div>
       <div className="cardContainer">
         <div className="cardStack">
@@ -83,59 +73,26 @@ const Card = () => {
           >
             <div className="cardHeader">
               <p className="cardHeader-item">
-                <span className="current-count">{currentIndex + 1}/</span>
-                <span className="total-count">{db.length}</span>
+                <span className="current-count">{currentIndex + 1}/</span><span className="total-count">{db.length}</span>
               </p>
               <img
-                src={icons.editbtn}
+                src={EditBtn}
                 alt="Edit Button"
                 id="editbtn"
                 className="cardHeader-item"
               />
             </div>
-
-            <div className="question_container">
-              <h2 className="question">
-                {getCardData(0).country}
-                <img
-                  src={icons.addDeck}
-                  alt="Speaker Icon"
-                  className="speaker-icon"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    speakText(getCardData(0).country);
-                  }}
-                />
-              </h2>
-            </div>
-
+            <h2 className="question">{getCardData(0).country}</h2>
             <div className="separator"></div>
-            
-            <div className="question_container">
-
             <div className="question">
               <p>
                 {showAnswer ? (
-                  <div className="answer">
-                    {getCardData(0).capital}
-                    <img
-                      src={icons.addDeck}
-                      alt="Speaker Icon"
-                      className="speaker-icon"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        speakText(getCardData(0).capital);
-                      }}
-                    />
-                  </div>
+                  <div className="answer">{getCardData(0).capital}</div>
                 ) : (
                   <div className="reveal">Tap to reveal answer</div>
                 )}
               </p>
             </div>
-
-            </div>
-
           </div>
         </div>
 
@@ -143,9 +100,9 @@ const Card = () => {
           <button onClick={handlePrev} className="navButton">
             Previous
           </button>
-          <button onClick={handleNext} className="navButton">
+          {/* <button onClick={handleNext} className="navButton">
             Next
-          </button>
+          </button> */}
         </div>
       </div>
       <DifficultyChooser handleNext={handleNext} />

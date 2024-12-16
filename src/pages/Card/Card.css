@@ -81,13 +81,13 @@
 .cardStack {
   position: relative;
   width: 300px;
-  height: 350px;
+  height: 250px;
   overflow: hidden; 
 }
 
 .card {
   width: 300px;
-  height: 350px;
+  height: 250px;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -131,8 +131,6 @@
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-
-
 .question {
   font-size: 20px;
   font-weight: bold;
@@ -140,13 +138,6 @@
   margin: 0 20px;
   padding: 0 0px;
   text-align: left;
-}
-.question img {
-  position: relative;
-  width: 20px;
-  height: auto;
-  border-radius: 10px;
- left: 220px;  /* make it dynamic */
 }
 
 .separator {
