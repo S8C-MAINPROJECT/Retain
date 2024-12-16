@@ -5,8 +5,8 @@ import closebtn from "./closebtn.svg";
 import editbtn from "./editbtn.svg";
 import retainSymbol from "./retainSymbol.svg";
 import plusSymbol from "./plusSymbol.svg";
-import boldcross from "./boldcross.svg"
-
+import boldcross from "./boldcross.svg";
+import speakbtn from "./speakbtn.svg";
 const icons = {
   addDeck,
   addPDF,
@@ -15,7 +15,8 @@ const icons = {
   editbtn,
   retainSymbol,
   plusSymbol,
-  boldcross
+  boldcross,
+  speakbtn
 };
 
 export default icons;

@@ -98,7 +98,7 @@ const Card = () => {
               <h2 className="question">
                 {getCardData(0).country}
                 <img
-                  src={icons.addDeck}
+                  src={icons.speakbtn}
                   alt="Speaker Icon"
                   className="speaker-icon"
                   onClick={(e) => {
@@ -116,7 +116,7 @@ const Card = () => {
                   <div className="answer">
                     {getCardData(0).capital}
                     <img
-                      src={icons.addDeck}
+                      src={icons.speakbtn}
                       alt="Speaker Icon"
                       className="speaker-icon"
                       onClick={(e) => {
