@@ -2,9 +2,11 @@ import { useState } from "react";
 import icons from "../../assets/icons";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import "./Home.css";
+import { Navigate,useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [show, setShow] = useState(false);
+  const Navigate = useNavigate();
   return (
     <div className="home">
       <div className="homeHeader">
@@ -13,7 +15,7 @@ const Home = () => {
           <p>Retain</p>
         </span>
       </div>
-      <div className="homeCard">
+      <div className="homeCard" onClick={() => {Navigate("/card")}}>
         <div className="homeCard-items">
           <div className="left-side-items"></div>
           <div className="right-side-items">
