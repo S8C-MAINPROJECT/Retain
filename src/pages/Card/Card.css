@@ -81,13 +81,13 @@
 .cardStack {
   position: relative;
   width: 300px;
-  height: 250px;
+  height: 350px;
   overflow: hidden; 
 }
 
 .card {
   width: 300px;
-  height: 250px;
+  height: 350px;
   position: absolute;
   display: flex;
   flex-direction: column;
