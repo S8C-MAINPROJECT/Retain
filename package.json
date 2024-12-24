@@ -8,10 +8,11 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "host":"vite --host"
+    "host": "vite --host"
   },
   "dependencies": {
     "@react-spring/web": "^9.5.5",
+    "axios": "^1.7.9",
     "clsx": "^2.1.1",
     "framer-motion": "^11.14.4",
     "lucide-react": "^0.468.0",
