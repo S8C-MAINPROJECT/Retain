@@ -1,13 +1,13 @@
 import { ChangeEvent, useState } from "react";
 import icons from "../../assets/icons";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
-import "./Home.css";
+import "./Test.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
 
-const Home = () => {
+const Test = () => {
   const [show, setShow] = useState(false);
   const [text, setText] = useState<File | null>(null);
   const [pdf, setPdf] = useState<File | null>(null);
@@ -285,4 +285,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Test;
