@@ -4,6 +4,7 @@ import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { YoutubeTranscript } from "youtube-transcript";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
 
@@ -13,7 +14,7 @@ const Home = () => {
   const [pdf, setPdf] = useState<File | null>(null);
   const [deck, setDeck] = useState<File | null>(null);
   const [status, setStatus] = useState<UploadStatus>("idle");
-  const [file, setFile] = useState<File | null>(null);
+  // const [file, setFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [youtubeLink, setYoutubeLink] = useState<string>(""); // Holds the YouTube link
   const [showDialog, setShowDialog] = useState<boolean>(false); // Controls dialog visibility
@@ -68,7 +69,7 @@ const Home = () => {
     formData.append("pdf", pdf);
 
     try {
-      await axios.post("https://httpbin.org/post", formData, {
+      await axios.post("https://your-backend-endpoint.com/api/file", formData, {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
           const progress = progressEvent.total
@@ -102,7 +103,7 @@ const Home = () => {
     formData.append("text", text);
 
     try {
-      await axios.post("https://httpbin.org/post", formData, {
+      await axios.post("https://your-backend-endpoint.com/api/text", formData, {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
           const progress = progressEvent.total
@@ -136,7 +137,7 @@ const Home = () => {
     formData.append("deck", deck);
 
     try {
-      await axios.post("https://httpbin.org/post", formData, {
+      await axios.post("https://your-backend-endpoint.com/api/deck", formData, {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
           const progress = progressEvent.total
@@ -165,13 +166,39 @@ const handleYoutubeUpload = async () => {
   setStatus("uploading");
 
   try {
-    // Simulate API call for processing YouTube link
-    await axios.post("https://httpbin.org/post", { youtubeLink });
+    // Extract video ID from the link
+    const videoIdMatch = youtubeLink.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
+    const videoId = videoIdMatch ? videoIdMatch[1] : null;
+
+    if (!videoId) {
+      alert("Invalid YouTube link. Please provide a valid link.");
+      setStatus("error");
+      return;
+    }
+
+    // Fetch the transcript
+    const transcript = await YoutubeTranscript.fetchTranscript(videoId);
+
+    if (!transcript || transcript.length === 0) {
+      alert("Transcript not available for this video.");
+      setStatus("error");
+      return;
+    }
+
+    // Prepare transcript for sending
+    const formattedTranscript = transcript.map((entry) => entry.text).join(" ");
+
+    // Send the transcript to the backend
+    await axios.post("https://your-backend-endpoint.com/api/transcript", {
+      transcript: formattedTranscript,
+      videoId,
+    });
+
     setStatus("success");
-    console.log("YouTube link uploaded:", youtubeLink);
+    console.log("Transcript sent to the backend successfully.");
   } catch (error) {
+    console.error("Error fetching or sending transcript:", error);
     setStatus("error");
-    console.error("Error uploading YouTube link:", error);
   } finally {
     setShowDialog(false); // Close the dialog after the operation
     setYoutubeLink(""); // Clear the input field
