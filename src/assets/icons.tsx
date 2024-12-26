@@ -1,6 +1,7 @@
 import addDeck from "./addDeck.svg";
 import addPDF from "./addPDF.svg";
 import addText from "./addText.svg";
+import addYoutube from "./addYoutube.svg";
 import closebtn from "./closebtn.svg";
 import editbtn from "./editbtn.svg";
 import retainSymbol from "./retainSymbol.svg";
@@ -11,6 +12,7 @@ const icons = {
   addDeck,
   addPDF,
   addText,
+  addYoutube,
   closebtn,
   editbtn,
   retainSymbol,

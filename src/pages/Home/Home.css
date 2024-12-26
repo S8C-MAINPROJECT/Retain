@@ -169,6 +169,69 @@
       bottom: 32.5px;
     }
 
+    .dialogOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    
+    .dialogBox {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+    }
+    
+    .dialogBox h3 {
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+    
+    .youtubeInput {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    .dialogActions {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .dialogButton {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: #fff;
+      transition: background-color 0.2s;
+    }
+    
+    .dialogButton.cancel {
+      background-color: #dc3545;
+    }
+    
+    .dialogButton:hover {
+      background-color: #0056b3;
+    }
+    
+    .dialogButton.cancel:hover {
+      background-color: #c82333;
+    }
+    
+  
     @media (max-width: 768px) {
       .uploadButton {
           padding-left: 10px;

@@ -15,6 +15,8 @@ const Home = () => {
   const [status, setStatus] = useState<UploadStatus>("idle");
   const [file, setFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [youtubeLink, setYoutubeLink] = useState<string>(""); // Holds the YouTube link
+  const [showDialog, setShowDialog] = useState<boolean>(false); // Controls dialog visibility
 
   const navigate = useNavigate();
 
@@ -151,6 +153,32 @@ const Home = () => {
     }
   };
 
+
+
+// Handle YouTube Upload
+const handleYoutubeUpload = async () => {
+  if (!youtubeLink.trim()) {
+    alert("Please enter a valid YouTube link.");
+    return;
+  }
+
+  setStatus("uploading");
+
+  try {
+    // Simulate API call for processing YouTube link
+    await axios.post("https://httpbin.org/post", { youtubeLink });
+    setStatus("success");
+    console.log("YouTube link uploaded:", youtubeLink);
+  } catch (error) {
+    setStatus("error");
+    console.error("Error uploading YouTube link:", error);
+  } finally {
+    setShowDialog(false); // Close the dialog after the operation
+    setYoutubeLink(""); // Clear the input field
+  }
+};
+
+
   return (
     <div className="home">
       {/* Header */}
@@ -267,6 +295,43 @@ const Home = () => {
               accept=".deck"
               onChange={handleDeck}
             />
+
+            {/* Upload YouTube Transcript */}
+            <button
+              className="uploadButton"
+              onClick={() => setShowDialog(true)}
+            >
+              <img src={icons.addYoutube} alt="Upload YouTube" />
+            </button>
+
+            {showDialog && (
+              <div className="dialogOverlay">
+                <div className="dialogBox">
+                  <h3>Enter YouTube Link</h3>
+                  <input
+                    type="text"
+                    className="youtubeInput"
+                    placeholder="Paste your YouTube link here..."
+                    value={youtubeLink}
+                    onChange={(e) => setYoutubeLink(e.target.value)}
+                  />
+                  <div className="dialogActions">
+                    <button
+                      className="dialogButton"
+                      onClick={handleYoutubeUpload}
+                    >
+                      Submit
+                    </button>
+                    <button
+                      className="dialogButton cancel"
+                      onClick={() => setShowDialog(false)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

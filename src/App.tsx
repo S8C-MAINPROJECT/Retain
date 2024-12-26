@@ -4,7 +4,7 @@ import './App.css';
 import Card from './pages/Card/Card';
 import Login from './pages/Login/Login';
 import Home from './pages/Home/Home';
-import Test from './pages/Test/Test';
+
 
 const App: React.FC = () => {
   return (
@@ -18,8 +18,6 @@ const App: React.FC = () => {
           <Route path="/home" element={<Home />} />
           {/* Route for Card Page */}
           <Route path="/card" element={<Card />} />
-          {/* Route for Card Test */}
-          <Route path="/test" element={<Test />} />
         </Routes>
       </div>
     </Router>
