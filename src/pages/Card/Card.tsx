@@ -47,7 +47,7 @@ const Card = () => {
     setAnimation("slideOutRight");
     setTimeout(() => {
       setCurrentIndex((prevIndex) =>
-        prevIndex === 0 ? db.length - 1 : prevIndex - 1
+        prevIndex === 0 ? prevIndex : prevIndex - 1
       );
       setAnimation("slideInLeft");
     }, 400);
