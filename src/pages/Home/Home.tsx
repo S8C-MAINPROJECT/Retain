@@ -4,7 +4,7 @@ import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { YoutubeTranscript } from "youtube-transcript";
+// import { YoutubeTranscript } from "youtube-transcript";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
 
@@ -103,7 +103,7 @@ const Home = () => {
     formData.append("text", text);
 
     try {
-      await axios.post("https://your-backend-endpoint.com/api/text", formData, {
+      await axios.post("https://localhost:3000/api/text", formData, {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
           const progress = progressEvent.total
@@ -137,7 +137,7 @@ const Home = () => {
     formData.append("deck", deck);
 
     try {
-      await axios.post("https://your-backend-endpoint.com/api/deck", formData, {
+      await axios.post("https://localhost:3000/api/deck", formData, {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
           const progress = progressEvent.total
@@ -154,9 +154,37 @@ const Home = () => {
     }
   };
 
+//   // Fetch the transcript
+//   const transcript = await YoutubeTranscript.fetchTranscript(videoId);
 
+//   if (!transcript || transcript.length === 0) {
+//     alert("Transcript not available for this video.");
+//     setStatus("error");
+//     return;
+//   }
 
-// Handle YouTube Upload
+//   // Prepare transcript for sending
+//   const formattedTranscript = transcript.map((entry) => entry.text).join(" ");
+
+//   // Send the transcript to the backend
+//   await axios.post("https://your-backend-endpoint.com/api/transcript", {
+//     transcript: formattedTranscript,
+//     videoId,
+//   });
+
+//   setStatus("success");
+//   console.log("Transcript sent to the backend successfully.");
+//   console.log("Transcript:", formattedTranscript);
+// } catch (error) {
+//   console.error("Error fetching or sending transcript:", error);
+//   setStatus("error");
+// } finally {
+//   setShowDialog(false); // Close the dialog after the operation
+//   setYoutubeLink(""); // Clear the input field
+// }
+// };
+
+ // Handle YouTube Upload
 const handleYoutubeUpload = async () => {
   if (!youtubeLink.trim()) {
     alert("Please enter a valid YouTube link.");
@@ -176,28 +204,16 @@ const handleYoutubeUpload = async () => {
       return;
     }
 
-    // Fetch the transcript
-    const transcript = await YoutubeTranscript.fetchTranscript(videoId);
-
-    if (!transcript || transcript.length === 0) {
-      alert("Transcript not available for this video.");
-      setStatus("error");
-      return;
-    }
-
-    // Prepare transcript for sending
-    const formattedTranscript = transcript.map((entry) => entry.text).join(" ");
-
-    // Send the transcript to the backend
-    await axios.post("https://your-backend-endpoint.com/api/transcript", {
-      transcript: formattedTranscript,
-      videoId,
+    // Post the YouTube link to the backend
+    await axios.post("https://localhost:3000/api/youtube-summary/summarize", {
+      youtubeLink,
     });
 
     setStatus("success");
-    console.log("Transcript sent to the backend successfully.");
+    console.log("YouTube link sent to the backend successfully.");
+    console.log("YouTube Link:", youtubeLink);
   } catch (error) {
-    console.error("Error fetching or sending transcript:", error);
+    console.error("Error sending YouTube link:", error);
     setStatus("error");
   } finally {
     setShowDialog(false); // Close the dialog after the operation
