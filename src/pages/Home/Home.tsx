@@ -4,6 +4,9 @@ import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import TextInput from "../../components/Input/textInput";
+import PrimaryBtn from "../../components/Button/PrimaryBtn";
+import SecondaryBtn from "../../components/Button/secondaryBtn";
 // import { YoutubeTranscript } from "youtube-transcript";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
@@ -154,72 +157,81 @@ const Home = () => {
     }
   };
 
-//   // Fetch the transcript
-//   const transcript = await YoutubeTranscript.fetchTranscript(videoId);
+  //   // Fetch the transcript
+  //   const transcript = await YoutubeTranscript.fetchTranscript(videoId);
 
-//   if (!transcript || transcript.length === 0) {
-//     alert("Transcript not available for this video.");
-//     setStatus("error");
-//     return;
-//   }
+  //   if (!transcript || transcript.length === 0) {
+  //     alert("Transcript not available for this video.");
+  //     setStatus("error");
+  //     return;
+  //   }
 
-//   // Prepare transcript for sending
-//   const formattedTranscript = transcript.map((entry) => entry.text).join(" ");
+  //   // Prepare transcript for sending
+  //   const formattedTranscript = transcript.map((entry) => entry.text).join(" ");
 
-//   // Send the transcript to the backend
-//   await axios.post("https://your-backend-endpoint.com/api/transcript", {
-//     transcript: formattedTranscript,
-//     videoId,
-//   });
+  //   // Send the transcript to the backend
+  //   await axios.post("https://your-backend-endpoint.com/api/transcript", {
+  //     transcript: formattedTranscript,
+  //     videoId,
+  //   });
 
-//   setStatus("success");
-//   console.log("Transcript sent to the backend successfully.");
-//   console.log("Transcript:", formattedTranscript);
-// } catch (error) {
-//   console.error("Error fetching or sending transcript:", error);
-//   setStatus("error");
-// } finally {
-//   setShowDialog(false); // Close the dialog after the operation
-//   setYoutubeLink(""); // Clear the input field
-// }
-// };
+  //   setStatus("success");
+  //   console.log("Transcript sent to the backend successfully.");
+  //   console.log("Transcript:", formattedTranscript);
+  // } catch (error) {
+  //   console.error("Error fetching or sending transcript:", error);
+  //   setStatus("error");
+  // } finally {
+  //   setShowDialog(false); // Close the dialog after the operation
+  //   setYoutubeLink(""); // Clear the input field
+  // }
+  // };
 
- // Handle YouTube Upload
-const handleYoutubeUpload = async () => {
-  if (!youtubeLink.trim()) {
-    alert("Please enter a valid YouTube link.");
-    return;
-  }
-
-  setStatus("uploading");
-
-  try {
-    // Extract video ID from the link
-    const videoIdMatch = youtubeLink.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
-    const videoId = videoIdMatch ? videoIdMatch[1] : null;
-
-    if (!videoId) {
-      alert("Invalid YouTube link. Please provide a valid link.");
-      setStatus("error");
+  // Handle YouTube Upload
+  const handleYoutubeUpload = async () => {
+    if (!youtubeLink.trim()) {
+      alert("Please enter a valid YouTube link.");
       return;
     }
 
-    // Post the YouTube link to the backend
-    await axios.post("https://localhost:3000/api/youtube-summary/summarize", {
-      youtubeLink,
-    });
+    setStatus("uploading");
 
-    setStatus("success");
-    console.log("YouTube link sent to the backend successfully.");
-    console.log("YouTube Link:", youtubeLink);
-  } catch (error) {
-    console.error("Error sending YouTube link:", error);
-    setStatus("error");
-  } finally {
-    setShowDialog(false); // Close the dialog after the operation
-    setYoutubeLink(""); // Clear the input field
-  }
-};
+    try {
+      // Extract video ID from the link
+      const videoIdMatch = youtubeLink.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
+      const videoId = videoIdMatch ? videoIdMatch[1] : null;
+
+      if (!videoId) {
+        alert("Invalid YouTube link. Please provide a valid link.");
+        setStatus("error");
+        return;
+      }
+
+      // Post the YouTube link to the backend
+      await axios.post("https://localhost:3000/api/youtube-summary/summarize", {
+        youtubeLink,
+      });
+
+      setStatus("success");
+      console.log("YouTube link sent to the backend successfully.");
+      console.log("YouTube Link:", youtubeLink);
+    } catch (error) {
+      console.error("Error sending YouTube link:", error);
+      setStatus("error");
+    } finally {
+      setShowDialog(false); // Close the dialog after the operation
+      setYoutubeLink(""); // Clear the input field
+    }
+  };
+
+  const [question, setQuestion] = useState('');
+  const [answer, setAnswer] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleSubmit = () => {
+    // Handle the submission logic
+    setIsModalOpen(false);
+  };
+
 
 
   return (
@@ -233,10 +245,10 @@ const handleYoutubeUpload = async () => {
       </div>
 
       {/* Card */}
-      <div className="homeCard" onClick={() => navigate("/card")}>
+      <div className="homeCard" >
         <div className="homeCard-items">
           <div className="left-side-items"></div>
-          <div className="right-side-items">
+          <div className="right-side-items" onClick={() => navigate("/card")}>
             <div>
               <h5>Capital Countries</h5>
             </div>
@@ -253,6 +265,43 @@ const handleYoutubeUpload = async () => {
             </div>
           </div>
         </div>
+        <button
+          className="add-card-btn"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent card navigation
+            setIsModalOpen(true);
+          }}
+        >
+          + Add Card
+        </button>
+        {isModalOpen && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h3>Add New Card</h3>
+              </div>
+              <TextInput
+                placeholder="Question"
+                onChange={(e) => setQuestion(e.target.value)} value={question} />
+
+              <TextInput
+                placeholder="Answer"
+                onChange={(e) => setAnswer(e.target.value)} value={answer} />
+
+
+              <div className="modal-buttons">
+                <PrimaryBtn
+                  name="Submit"
+                  onClick={handleSubmit}
+                />
+                <SecondaryBtn
+                  name="Cancel"
+                  onClick={() => setIsModalOpen(false)}
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* TESTING!!! */}

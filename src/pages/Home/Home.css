@@ -116,6 +116,7 @@
   width: fit-content;
   padding-left: 13px;
   padding-top: 14px;
+  padding-bottom: 14px;
   background-color: rgba(255, 255, 255, 1);
   border-radius: 21px;
   margin-top: 25px;
@@ -126,6 +127,72 @@
   display: flex;
   top: 14px;
   left: 13px;
+}
+
+.add-card-btn {
+  height: 40px;
+  width: 170px;
+  display: flex;
+  padding: 10px 15px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 16px;
+  background: #dedede;
+  border: 0;
+  font-weight: 300;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modal-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-header h3 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+.modal-header img {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 .left-side-items {

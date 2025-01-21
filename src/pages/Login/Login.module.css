@@ -52,8 +52,11 @@ h6 {
   gap: 16px;
 }
 .signupField {
-  width: 90%;
+  width: 100%;
+  padding-top: 5px;
+  padding: 0px 64px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 16px;
 }
