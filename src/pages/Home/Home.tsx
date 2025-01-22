@@ -7,11 +7,20 @@ import axios from "axios";
 import TextInput from "../../components/Input/textInput";
 import PrimaryBtn from "../../components/Button/PrimaryBtn";
 import SecondaryBtn from "../../components/Button/secondaryBtn";
+import HomeCard from "../../components/HomeCard/HomeCard";
 // import { YoutubeTranscript } from "youtube-transcript";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
 
 const Home = () => {
+
+  const [deckTitle, setDeckTitle] = useState('');
+  const [totalQuestions, setTotalQuestions] = useState('');
+  const [decks, setDecks] = useState<Array<{ title: string, completed: number, total: number }>>([
+    { title: "Capital Countries", completed: 3, total: 11 }
+  ]);
+  const [isDeckModalOpen, setIsDeckModalOpen] = useState(false);
+
   const [show, setShow] = useState(false);
   const [text, setText] = useState<File | null>(null);
   const [pdf, setPdf] = useState<File | null>(null);
@@ -23,6 +32,26 @@ const Home = () => {
   const [showDialog, setShowDialog] = useState<boolean>(false); // Controls dialog visibility
 
   const navigate = useNavigate();
+
+  const handleDeckSubmit = () => {
+    if (deckTitle && totalQuestions) {
+      setDecks([...decks, {
+        title: deckTitle,
+        completed: 0,
+        total: parseInt(totalQuestions)
+      }]);
+      setDeckTitle('');
+      setTotalQuestions('');
+      setIsDeckModalOpen(false);
+    }
+  };
+
+  const handleDeleteDeck = (index: number) => {
+    if (window.confirm('Are you sure you want to delete this deck?')) {
+      setDecks(decks.filter((_, i) => i !== index));
+    }
+  };
+
 
   // TESTING!!!
   //   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -224,13 +253,13 @@ const Home = () => {
     }
   };
 
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleSubmit = () => {
-    // Handle the submission logic
-    setIsModalOpen(false);
-  };
+  // const [question, setQuestion] = useState('');
+  // const [answer, setAnswer] = useState('');
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const handleSubmit = () => {
+  //   // Handle the submission logic here
+  //   setIsModalOpen(false);
+  // };
 
 
 
@@ -245,7 +274,7 @@ const Home = () => {
       </div>
 
       {/* Card */}
-      <div className="homeCard" >
+      {/* <div className="homeCard" >
         <div className="homeCard-items">
           <div className="left-side-items"></div>
           <div className="right-side-items" onClick={() => navigate("/card")}>
@@ -302,7 +331,20 @@ const Home = () => {
             </div>
           </div>
         )}
+      </div> */}
+      <div className="decks">
+        {decks.map((deck, index) => (
+          <HomeCard
+            key={index}
+            title={deck.title}
+            completed={deck.completed}
+            total={deck.total}
+            onDelete={() => handleDeleteDeck(index)}
+          />
+        ))}
       </div>
+
+
 
       {/* TESTING!!! */}
       {/* <div className="space-y-2">
@@ -342,91 +384,121 @@ const Home = () => {
       {/* Upload Options */}
       {show && (
         <div className="uploadOptions">
-          <div className="optionDisplayArea">
-            {/* Upload Text */}
-            <button
-              className="uploadButton"
-              onClick={() => document.getElementById("textUpload")?.click()}
-            >
-              <img src={icons.addText} alt="Upload Text" />
-            </button>
-            <input
-              type="file"
-              id="textUpload"
-              style={{ display: "none" }}
-              accept=".txt"
-              onChange={handleText}
-            />
+          {/* Upload Text */}
+          <button
+            className="uploadButton"
+            onClick={() => document.getElementById("textUpload")?.click()}
+          >
+            <img src={icons.addText} alt="Upload Text" />
+          </button>
+          <input
+            type="file"
+            id="textUpload"
+            style={{ display: "none" }}
+            accept=".txt"
+            onChange={handleText}
+          />
 
-            {/* Upload PDF */}
-            <button
-              className="uploadButton"
-              onClick={() => document.getElementById("pdfUpload")?.click()}
-            >
-              <img src={icons.addPDF} alt="Upload PDF" />
-            </button>
-            <input
-              type="file"
-              id="pdfUpload"
-              style={{ display: "none" }}
-              accept="application/pdf"
-              onChange={handlePdf}
-            />
+          {/* Upload PDF */}
+          <button
+            className="uploadButton"
+            onClick={() => document.getElementById("pdfUpload")?.click()}
+          >
+            <img src={icons.addPDF} alt="Upload PDF" />
+          </button>
+          <input
+            type="file"
+            id="pdfUpload"
+            style={{ display: "none" }}
+            accept="application/pdf"
+            onChange={handlePdf}
+          />
 
-            {/* Upload Deck */}
-            <button
-              className="uploadButton"
-              onClick={() => document.getElementById("deckUpload")?.click()}
-            >
-              <img src={icons.addDeck} alt="Upload Deck" />
-            </button>
-            <input
-              type="file"
-              id="deckUpload"
-              style={{ display: "none" }}
-              accept=".deck"
-              onChange={handleDeck}
-            />
+          {/* Upload Deck */}
+          <button
+            className="uploadButton"
+            onClick={() => setIsDeckModalOpen(true)}
+          >
+            <img src={icons.addDeck} alt="Upload Deck" />
+          </button>
 
-            {/* Upload YouTube Transcript */}
-            <button
-              className="uploadButton"
-              onClick={() => setShowDialog(true)}
-            >
-              <img src={icons.addYoutube} alt="Upload YouTube" />
-            </button>
+          <input
+            type="file"
+            id="deckUpload"
+            style={{ display: "none" }}
+            accept=".deck"
+            onChange={handleDeck}
+          />
 
-            {showDialog && (
-              <div className="dialogOverlay">
-                <div className="dialogBox">
-                  <h3>Enter YouTube Link</h3>
-                  <input
-                    type="text"
-                    className="youtubeInput"
-                    placeholder="Paste your YouTube link here..."
-                    value={youtubeLink}
-                    onChange={(e) => setYoutubeLink(e.target.value)}
-                  />
-                  <div className="dialogActions">
-                    <button
-                      className="dialogButton"
-                      onClick={handleYoutubeUpload}
-                    >
-                      Submit
-                    </button>
-                    <button
-                      className="dialogButton cancel"
-                      onClick={() => setShowDialog(false)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
+          {/* Upload YouTube Transcript */}
+          <button
+            className="uploadButton"
+            onClick={() => setShowDialog(true)}
+          >
+            <img src={icons.addYoutube} alt="Upload YouTube" />
+          </button>
+
+          {showDialog && (
+            <div className="dialogOverlay">
+              <div className="dialogBox">
+                <h3>Enter YouTube Link</h3>
+                <input
+                  type="text"
+                  className="youtubeInput"
+                  placeholder="Paste your YouTube link here..."
+                  value={youtubeLink}
+                  onChange={(e) => setYoutubeLink(e.target.value)}
+                />
+                <div className="dialogActions">
+                  <button
+                    className="dialogButton"
+                    onClick={handleYoutubeUpload}
+                  >
+                    Submit
+                  </button>
+                  <button
+                    className="dialogButton cancel"
+                    onClick={() => setShowDialog(false)}
+                  >
+                    Cancel
+                  </button>
                 </div>
               </div>
-            )}
+            </div>
+          )}
+        </div>
+      )}
+
+      {isDeckModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3>Create New Deck</h3>
+            </div>
+            <TextInput
+              placeholder="Deck Title"
+              onChange={(e) => setDeckTitle(e.target.value)}
+              value={deckTitle}
+            />
+            <TextInput
+              placeholder="Number of Questions"
+              onChange={(e) => setTotalQuestions(e.target.value)}
+              value={totalQuestions}
+            />
+            <div className="modal-buttons">
+              <PrimaryBtn
+                name="Create"
+                onClick={handleDeckSubmit}
+              />
+              <SecondaryBtn
+                name="Cancel"
+                onClick={() => setIsDeckModalOpen(false)}
+              />
+            </div>
           </div>
         </div>
       )}
+
 
       {/* Footer */}
       <div className="homeFooter">
@@ -438,7 +510,7 @@ const Home = () => {
           />
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
