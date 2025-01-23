@@ -11,11 +11,12 @@ interface HomeCardProps {
   completed: number;
   total: number;
   onDelete: () => void;
+  path: string;
 }
 
 
 
-const HomeCard: React.FC<HomeCardProps> = ({ title, completed, total, onDelete }) => {
+const HomeCard: React.FC<HomeCardProps> = ({ title, completed, total, onDelete, path }) => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
@@ -29,6 +30,7 @@ const HomeCard: React.FC<HomeCardProps> = ({ title, completed, total, onDelete }
     <div className="homeCard">
       <div className="homeCard-items">
         <div className="left-side-items">
+          <img src={path} alt="card" />
         </div>
         <div className="right-side-items" onClick={() => navigate("/card")}>
           <div>

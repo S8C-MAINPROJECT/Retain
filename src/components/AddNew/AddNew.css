@@ -1,0 +1,75 @@
+.AddNew {
+  width: 345px;
+  height: 179px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-left: 16px;
+  margin-top: 25px;
+  border-radius: 21px;
+  justify-content: center;
+  border: 2px dashed #0d440829;
+  color: #0000007a;
+  cursor: pointer;
+}
+
+.AddNew:hover {
+  border: 2px dashed #51c546;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modal-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-box-container {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  width: 360px;
+  flex-wrap: wrap;
+}
+
+.modal-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 172px;
+  gap: 8px;
+  padding: 16px 24px;
+  border-radius: 21px;
+  border: 2px dashed #0d440829;
+  text-align: center;
+}
+
+.modal-box img {
+  width: 48px;
+}

@@ -7,9 +7,9 @@ import styles from "./Login.module.css";
 import logo from "./Assets/logo.svg";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance"; // Use the configured Axios instance
+import React from "react";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -19,7 +19,6 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       const response = await axiosInstance.post("/auth/login", {
-        username,
         email,
         password,
       });
@@ -53,11 +52,6 @@ const Login = () => {
           </div>
           <div className={styles.signupField}>
             <TextField
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <TextField
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -70,7 +64,7 @@ const Login = () => {
           {error && <p className={styles.error}>{error}</p>}
           <div className={styles.signupButtons}>
             <PrimaryBtn name="Login" onClick={handleLogin} />
-            <SecondaryBtn name="SignUp" onClick={() => navigate("/signup")} />
+            <SecondaryBtn name="SignUp Instead" onClick={() => navigate("/signup")} />
           </div>
         </div>
       </div>

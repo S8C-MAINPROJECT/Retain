@@ -4,6 +4,7 @@ import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import icons from "../../assets/icons";
 import DifficultyChooser from "../../components/DifficultyChooser/DifficultyChooser";
 import Header from "../../components/Header/Header";
+import React from "react";
 
 const db = [
   {

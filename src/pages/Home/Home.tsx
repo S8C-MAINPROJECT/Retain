@@ -1,6 +1,5 @@
 import { ChangeEvent, useState } from "react";
 import icons from "../../assets/icons";
-import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -8,6 +7,8 @@ import TextInput from "../../components/Input/textInput";
 import PrimaryBtn from "../../components/Button/PrimaryBtn";
 import SecondaryBtn from "../../components/Button/secondaryBtn";
 import HomeCard from "../../components/HomeCard/HomeCard";
+import {AddNew} from "../../components/AddNew/AddNew";
+import React from "react";
 // import { YoutubeTranscript } from "youtube-transcript";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
@@ -32,6 +33,7 @@ const Home = () => {
   const [showDialog, setShowDialog] = useState<boolean>(false); // Controls dialog visibility
 
   const navigate = useNavigate();
+
 
   const handleDeckSubmit = () => {
     if (deckTitle && totalQuestions) {
@@ -340,10 +342,11 @@ const Home = () => {
             completed={deck.completed}
             total={deck.total}
             onDelete={() => handleDeleteDeck(index)}
+            path="src/assets/jjj.webp"
           />
         ))}
+        <AddNew onManual={() => setIsDeckModalOpen(true)} />
       </div>
-
 
 
       {/* TESTING!!! */}

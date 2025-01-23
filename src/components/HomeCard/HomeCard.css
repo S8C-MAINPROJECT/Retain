@@ -16,15 +16,26 @@
 .left-side-items {
   width: 80px;
   height: 80px;
-  background: #d9d9d9;
+  background: #000000;
   border-radius: 8px;
 }
+
+.left-side-items img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+} 
 
 
 .right-side-items {
   flex: 1;
   display: flex;
   flex-direction: column;
+}
+
+.right-side-items h5 {
+  font-weight: 500;
 }
 
 .button-container{
@@ -44,11 +55,10 @@
 .delete-button {
   background: none;
   border: none;
+  margin-top: 8px;
   color: #ff4444;
   cursor: pointer;
   padding: 8px 8px;
-  line-height: 1;
-  border-radius: 50%;
   transition: background-color 0.2s;
 }
 

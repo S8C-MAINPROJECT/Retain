@@ -1,4 +1,4 @@
-.home{
+.home {
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -19,8 +19,9 @@
   letter-spacing: -1px;
   padding-left: 12px;
 }
-.decks{
+.decks {
   display: flex;
+  align-items: center;
 }
 .homeCard {
   height: fit-content;
@@ -317,13 +318,13 @@
     position: relative;
     /* top: 200px; */
   }
-  .decks{
+  .decks {
     display: block;
     overflow: scroll;
   }
 }
 @media (min-height: 768px) {
   .uploadOptions {
-     margin-top: 72px; /* Adjust based on design needs */
+    margin-top: 72px; /* Adjust based on design needs */
   }
 }
