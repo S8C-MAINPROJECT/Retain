@@ -3,35 +3,40 @@
   flex-direction: column;
   height: 100vh;
 }
-.homeHeader {
-  display: flex;
-  justify-content: left;
-  margin-top: 50px;
+
+.home h3 {
+  font-weight: 300;
   margin-left: 23px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 1.15em;
+}
+h3 span {
+  font-weight: 400;
+}
+.homeHeader {
+  margin-top: 32px;
+  padding: 0 23px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .home-heading {
-  display: flex;
-  align-items: center;
   font-weight: 500;
   font-size: 32px;
   line-height: 14.18px;
   letter-spacing: -1px;
-  padding-left: 12px;
 }
 .decks {
   display: flex;
   align-items: center;
-}
-.homeCard {
-  height: fit-content;
-  width: fit-content;
-  padding-left: 13px;
-  padding-top: 14px;
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 21px;
-  margin-top: 25px;
-  margin-left: 23px;
 }
 
 .homeCard-items {
@@ -85,12 +90,6 @@
   background-color: rgba(255, 255, 255, 1);
 }
 
-.pgBar-home {
-  margin-top: 20px;
-  margin-right: 75px;
-  margin-bottom: 10px;
-}
-
 .uploadOptionsfooter {
   display: flex;
   flex-direction: row;
@@ -109,28 +108,6 @@
   padding-right: 10px;
   position: relative;
   top: 50px;
-}
-
-.home-heading {
-  display: flex;
-  align-items: center;
-  font-weight: 500;
-  font-size: 32px;
-  line-height: 14.18px;
-  letter-spacing: -1px;
-  padding-left: 12px;
-}
-
-.homeCard {
-  height: fit-content;
-  width: fit-content;
-  padding-left: 13px;
-  padding-top: 14px;
-  padding-bottom: 14px;
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 21px;
-  margin-top: 25px;
-  margin-left: 23px;
 }
 
 .homeCard-items {
@@ -218,6 +195,7 @@
 }
 
 .homeFooter {
+  visibility: hidden;
   width: 100%;
   height: 100px;
   background-color: rgba(255, 255, 255, 1);

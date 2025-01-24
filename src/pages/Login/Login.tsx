@@ -40,7 +40,9 @@ const Login = () => {
 
   return (
     <div className={styles.signup}>
+      
       <div className={styles.signupBoundingbox}>
+        <img className={styles.signupimg} src="src/pages/Login/Assets/whole.png"  alt="" />
         <div className={styles.signupBoundingboxText}>
           <div className={styles.nameAndLogo}>
             <img src={logo} alt="Logo" />
@@ -48,7 +50,7 @@ const Login = () => {
           </div>
           <div className={styles.signupBoundingboxTextInner}>
             <h1>Login</h1>
-            <h6>Enter your credentials to continue</h6>
+            <h5>Enter your credentials to continue</h5>
           </div>
           <div className={styles.signupField}>
             <TextField

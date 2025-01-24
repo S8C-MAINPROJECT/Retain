@@ -33,10 +33,11 @@ const HomeCard: React.FC<HomeCardProps> = ({ title, completed, total, onDelete, 
           <img src={path} alt="card" />
         </div>
         <div className="right-side-items" onClick={() => navigate("/card")}>
+          
           <div>
             <h5>{title}</h5>
           </div>
-          <div>
+          <div className='progress'>
             <p>Today: {completed}/{total}</p>
           </div>
           <div className="pgBar-home">
