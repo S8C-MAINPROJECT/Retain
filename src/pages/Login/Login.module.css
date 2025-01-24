@@ -65,3 +65,35 @@ h6 {
   align-items: center;
   gap: 16px;
 }
+
+@media (max-width: 970px) {
+  .signupimg {
+    display: none;
+  }
+  .signupBoundingbox {
+    height: fit-content;
+    width: fit-content;
+  }
+  .signupBoundingboxText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 1em;
+  }
+  .signupBoundingboxTextInner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .signupField {
+    width: 100%;
+    padding-top: 5px;
+    padding: 0 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+}
