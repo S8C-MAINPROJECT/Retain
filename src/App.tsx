@@ -20,7 +20,7 @@ const App: React.FC = () => {
           {/* Route for Card Page */}
           <Route path="/card" element={<Card />} />
           {/* Route for Signup Page */}
-          <Route path="/signup" element={<ViewDeck />} />
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
       </div>
     </Router>

@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance"; // Use the configured Axios instance
 
 const SignUp = () => {
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -18,8 +17,7 @@ const SignUp = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axiosInstance.post("/auth/signup", {
-        username,
+      const response = await axiosInstance.post("http://localhost:3000/auth/signup", {
         email,
         password,
       });
@@ -35,7 +33,7 @@ const SignUp = () => {
       navigate("/");
     } catch (err) {
       console.error("Signup error:", err);
-      setError("Invalid Signup credentials. Please try again.");
+      setError("Some error. Please try again.");
     }
   };
 
@@ -52,11 +50,6 @@ const SignUp = () => {
             <h6>Enter your credentials to continue</h6>
           </div>
           <div className={styles.signupField}>
-            <TextField
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
             <TextField
               placeholder="Email"
               value={email}

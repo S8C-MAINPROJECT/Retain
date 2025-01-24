@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "https://your-backend-url.com"; // Replace with your actual backend URL
+const baseURL = "http://localhost:3000"; // Replace with your actual backend URL
 
 // Create an Axios instance
 const axiosInstance = axios.create({
@@ -59,7 +59,10 @@ axiosInstance.interceptors.response.use(
         // Handle refresh token failure
         console.error("Token refresh failed:", refreshError);
         localStorage.clear(); // Clear tokens from localStorage
-        window.location.href = "/login"; // Redirect to login
+        // Delay redirection by 5 seconds
+        // setTimeout(() => {
+        //   window.location.href = "/"; // Redirect to login
+        // }, 5000);
         return Promise.reject(refreshError);
       }
     }
