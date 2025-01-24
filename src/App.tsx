@@ -5,6 +5,7 @@ import Card from "./pages/Card/Card";
 import Login from "./pages/Login/Login";
 import Home from "./pages/Home/Home";
 import SignUp from "./pages/Signup/SignUp";
+import ViewDeck from "./components/ViewDeck/ViewDeck";
 
 const App: React.FC = () => {
   return (
@@ -19,9 +20,9 @@ const App: React.FC = () => {
           {/* Route for Card Page */}
           <Route path="/card" element={<Card />} />
           {/* Route for Signup Page */}
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signup" element={<ViewDeck />} />
         </Routes>
-        </div>
+      </div>
     </Router>
   );
 };

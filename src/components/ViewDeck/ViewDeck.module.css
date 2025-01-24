@@ -1,0 +1,38 @@
+.cardCount {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  background-color: #f9f9f9;
+}
+
+.cardSide {
+  margin-bottom: 0.5rem;
+}
+
+.cardSide h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.cardSide p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
+}
