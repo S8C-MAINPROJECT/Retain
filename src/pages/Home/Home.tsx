@@ -8,8 +8,7 @@ import PrimaryBtn from "../../components/Button/PrimaryBtn";
 import SecondaryBtn from "../../components/Button/secondaryBtn";
 import HomeCard from "../../components/HomeCard/HomeCard";
 import {AddNew} from "../../components/AddNew/AddNew";
-import React from "react";
-// import { YoutubeTranscript } from "youtube-transcript";
+// import { YoutubeTranscript } from "youtube-transcript";  
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
 
@@ -19,6 +18,10 @@ const Home = () => {
   const [totalQuestions, setTotalQuestions] = useState('');
   const [decks, setDecks] = useState<Array<{ title: string, completed: number, total: number }>>([
     { title: "Capital Countries", completed: 3, total: 11 }
+  ]);
+  const [deck2, setDeck2] = useState<Array<{ title: string, completed: number, total: number }>>([
+    { title: "Capital Countries", completed: 3, total: 11 },
+    { title: "Something Important", completed: 3, total: 11 }
   ]);
   const [isDeckModalOpen, setIsDeckModalOpen] = useState(false);
 
@@ -269,120 +272,41 @@ const Home = () => {
     <div className="home">
       {/* Header */}
       <div className="homeHeader">
-        <img src={icons.retainSymbol} alt="Retain Logo" />
-        <span className="home-heading">
-          <p>Retain</p>
-        </span>
-      </div>
-
-      {/* Card */}
-      {/* <div className="homeCard" >
-        <div className="homeCard-items">
-          <div className="left-side-items"></div>
-          <div className="right-side-items" onClick={() => navigate("/card")}>
-            <div>
-              <h5>Capital Countries</h5>
-            </div>
-            <div>
-              <p>Today: 3/11</p>
-            </div>
-            <div className="pgBar-home">
-              <ProgressBar
-                progress={1}
-                total={5}
-                activecolor="rgba(81, 197, 70, 1)"
-                deactivecolor="rgba(171, 250, 164, 1)"
-              />
-            </div>
-          </div>
+        <div className="logo">
+          <img src={icons.retainSymbol} alt="Retain Logo" />
+          <span className="home-heading">Retain
+          </span>
         </div>
-        <button
-          className="add-card-btn"
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent card navigation
-            setIsModalOpen(true);
-          }}
-        >
-          + Add Card
-        </button>
-        {isModalOpen && (
-          <div className="modal-overlay">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h3>Add New Card</h3>
-              </div>
-              <TextInput
-                placeholder="Question"
-                onChange={(e) => setQuestion(e.target.value)} value={question} />
-
-              <TextInput
-                placeholder="Answer"
-                onChange={(e) => setAnswer(e.target.value)} value={answer} />
-
-
-              <div className="modal-buttons">
-                <PrimaryBtn
-                  name="Submit"
-                  onClick={handleSubmit}
-                />
-                <SecondaryBtn
-                  name="Cancel"
-                  onClick={() => setIsModalOpen(false)}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-      </div> */}
-      <div className="decks">
-        {decks.map((deck, index) => (
-          <HomeCard
-            key={index}
-            title={deck.title}
-            completed={deck.completed}
-            total={deck.total}
-            onDelete={() => handleDeleteDeck(index)}
-            path="src/assets/jjj.webp"
-          />
-        ))}
-        <AddNew onManual={() => setIsDeckModalOpen(true)} />
+        <div className="logout">logout</div>
       </div>
+      <h3>Welcome Back! you got <span id="no_lessons">3</span> lessons to review</h3>
 
-
-      {/* TESTING!!! */}
-      {/* <div className="space-y-2">
-        <input type="file" accept=".pdf" onChange={handleFileChange} />
-        {file && (
-          <div className="mb-4 text-sm">
-            <p>File Name: {file.name}</p>
-            <p>File Size: {(file.size/1024).toFixed(2)} KB</p>
-            <p>File Type: {file.type}</p>
-          </div>
-        )}
-
-        {status === 'uploading' && (
-          <div className="space-y-2">
-            <div className="h-2.5 w-full rounded-full bg-gray-200">
-              <div className="h-2.5 rounded-full bg-blue-600 transition-all duration-300" style={{width: `${uploadProgress}%`}}></div>
-            </div>
-            <p className="text-sm text-gray-600">{uploadProgress}%uploaded</p>
-          </div>
-        )}
-
-        {file && status!= "uploading" && 
-          <button onClick={handleFileUpload}>Upload</button>
-        }
-        {status === 'success' && (
-          <p className="text-sm text-green-600">
-            File uploaded successfully!
-          </p>
-        )}
-        {status === 'error' && (
-          <p className="text-sm text-red-600">
-            Error uploading file. Please try again.
-          </p>
-        )}
-      </div> */}
+        <div className="decks">
+          {decks.map((deck, index) => (
+            <HomeCard
+              key={index}
+              title={deck.title}
+              completed={deck.completed}
+              total={deck.total}
+              onDelete={() => handleDeleteDeck(index)}
+              path="src/assets/jjj.webp"
+            />
+          ))}
+        </div>
+        <h3>All Decks</h3>
+        <div className="decks">
+          {deck2.map((deck2, index) => (
+            <HomeCard
+              key={index}
+              title={deck2.title}
+              completed={deck2.completed}
+              total={deck2.total}
+              onDelete={() => handleDeleteDeck(index)}
+              path="src/assets/jjj.webp"
+            />
+          ))}
+          <AddNew onManual={() => setIsDeckModalOpen(true)} />
+        </div>
 
       {/* Upload Options */}
       {show && (
