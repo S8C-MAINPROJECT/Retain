@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import { useState } from 'react'; 
 import styles from './passwordInput.module.css';
 import EyeIcon from './Assets/eye.svg';
 import CrossedEyeIcon from './Assets/crossed-eye.svg'; 
 
-type PROPS ={
-  value : string,
-  onChange : (e:any) => void
-}
+type PROPS = {
+  value: string;
+  onChange: (e: any) => void;
+  placeholder?: string; 
+  style?: React.CSSProperties;
+  label?: string; // ✅ Added label prop
+};
 
-function PasswordInput(props:PROPS) {
+function PasswordInput({ value, onChange, placeholder, style, label = "Password" }: PROPS) {
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -16,14 +19,14 @@ function PasswordInput(props:PROPS) {
     setIsFocused(true);
   };
 
-  const handleBlur = (event: { target: { value: string; }; }) => {
+  const handleBlur = (event: { target: { value: string } }) => {
     if (event.target.value === '') {
       setIsFocused(false);
     }
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword((prevShowPassword) => !prevShowPassword); // Toggle the showPassword state
+    setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
   return (
@@ -32,10 +35,12 @@ function PasswordInput(props:PROPS) {
         type={showPassword ? 'text' : 'password'}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        value={props.value}
-        onChange={props.onChange}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        style={style}
       />
-      <label>Password</label>
+      <label>{label}</label> {/* ✅ Dynamic label */}
       <div className={styles.passwordToggle} onClick={togglePasswordVisibility}>
         {showPassword ? (
           <img src={CrossedEyeIcon} alt="Hide Password" className={styles.eyeIcon} />

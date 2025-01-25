@@ -11,16 +11,27 @@ import axiosInstance from "../../utils/axiosInstance"; // Use the configured Axi
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState(""); // ✅ Added confirm password
   const [error, setError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false); // ✅ State to track confirm password field error
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleSignup = async () => {
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      setConfirmPasswordError(true); // ✅ Highlight the confirm password field
+      return;
+    }
+
     try {
-      const response = await axiosInstance.post("http://localhost:3000/auth/signup", {
-        email,
-        password,
-      });
+      const response = await axiosInstance.post(
+        "http://localhost:3000/auth/signup",
+        {
+          email,
+          password,
+        }
+      );
 
       const { accessToken, refreshToken, user } = response.data;
 
@@ -46,8 +57,8 @@ const SignUp = () => {
             <h3>Retain</h3>
           </div>
           <div className={styles.signupBoundingboxTextInner}>
-            <h1>SignUP</h1>
-            <h6>Enter your credentials to continue</h6>
+            <h1>SignUp</h1>
+            <h6>Create an account</h6>
           </div>
           <div className={styles.signupField}>
             <TextField
@@ -58,11 +69,21 @@ const SignUp = () => {
             <PasswordField
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              label="Password" // ✅ Explicitly set
+            />
+            <PasswordField
+              value={confirmPassword}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+                setConfirmPasswordError(false);
+              }}
+              label="Confirm Password" // ✅ Now the second field is labeled correctly
+              style={confirmPasswordError ? { border: "2px solid red" } : {}}
             />
           </div>
           {error && <p className={styles.error}>{error}</p>}
           <div className={styles.signupButtons}>
-            <PrimaryBtn name="SignUp" onClick={handleLogin} />
+            <PrimaryBtn name="SignUp" onClick={handleSignup} />
             <SecondaryBtn name="Login" onClick={() => navigate("/")} />
           </div>
         </div>
