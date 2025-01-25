@@ -21,6 +21,8 @@ const App: React.FC = () => {
           <Route path="/card" element={<Card />} />
           {/* Route for Signup Page */}
           <Route path="/signup" element={<SignUp />} />
+          {/* Route for Signup Page */}
+          <Route path="/test" element={<ViewDeck />} />
         </Routes>
       </div>
     </Router>

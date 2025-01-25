@@ -64,10 +64,10 @@ function ViewDeck() {
     setEditingIndex(null);
     setCurrentEdit(null);
   };
-
+  const title = "Capital Countries";
   return (
     <>
-      <div className={styles.cardCount}>Total Cards: {flashcards.length}</div>
+      <div className={styles.header}>Total Cards: {title}</div>
       <div className={styles.container}>
         {flashcards.map((card, index) => (
           <div key={index} className={styles.card}>
