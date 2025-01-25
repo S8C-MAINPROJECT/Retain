@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styles from "./ViewDeck.module.css";
+import "../HomeCard/HomeCard.css";
 import icons from "../../assets/icons";
+import BackBtn from "../Button/backBtn";
+import TextInput from "../Input/textInput";
+import PrimaryBtn from "../Button/PrimaryBtn";
+import SecondaryBtn from "../Button/secondaryBtn";
 
 interface Flashcard {
   front: string;
@@ -66,9 +71,20 @@ function ViewDeck() {
     setCurrentEdit(null);
   };
   const title = "Capital Countries";
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleSubmit = () => {
+    setIsModalOpen(false);
+  };
   return (
     <>
-      <div className={styles.header}>{title}</div>
+      <div className={styles.backBtn}>
+        <BackBtn />
+      </div>
+      <div className={styles.header}>
+        <h1>{title}</h1>
+      </div>
       <div className={styles.container}>
         {flashcards.map((card, index) => (
           <div key={index} className={styles.card}>
@@ -89,15 +105,8 @@ function ViewDeck() {
                   />
                 </div>
                 <div className={styles.actions}>
-                  <button onClick={handleSave} className={styles.saveButton}>
-                    Save
-                  </button>
-                  <button
-                    onClick={handleCancel}
-                    className={styles.cancelButton}
-                  >
-                    Cancel
-                  </button>
+                  <PrimaryBtn onClick={handleSave} name="save" />
+                  <SecondaryBtn onClick={handleCancel} name="cancel" />
                 </div>
               </>
             ) : (
@@ -109,7 +118,7 @@ function ViewDeck() {
                   <p>{card.back}</p>
                 </div>
                 <img
-                  src={icons.editbtn}
+                  src={icons.edit2}
                   className={styles.editbtn}
                   onClick={() => handleEditClick(index)}
                 />
@@ -117,7 +126,50 @@ function ViewDeck() {
             )}
           </div>
         ))}
+        <div
+          className={styles.AddNew}
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+        >
+          <img src="src/assets/Add.svg" alt="" />
+          <p
+            onClick={() => {
+              setIsModalOpen(true);
+            }}
+          >
+            Add a new card
+          </p>
+        </div>
       </div>
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3>Add New Card</h3>
+            </div>
+            <TextInput
+              placeholder="Question"
+              onChange={(e) => setQuestion(e.target.value)}
+              value={question}
+            />
+
+            <TextInput
+              placeholder="Answer"
+              onChange={(e) => setAnswer(e.target.value)}
+              value={answer}
+            />
+
+            <div className="modal-buttons">
+              <PrimaryBtn name="Submit" onClick={handleSubmit} />
+              <SecondaryBtn
+                name="Cancel"
+                onClick={() => setIsModalOpen(false)}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
