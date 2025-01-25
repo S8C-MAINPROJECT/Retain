@@ -7,20 +7,37 @@
   align-items: center;
 }
 
-.signupBoundingbox {
+.signup {
+  background-color: #fff;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  border-radius: 24px;
-  background: #fff;
-  max-width: 500px;
-  min-height: 550px;
-  width: 80%;
-  height: 60%;
-  box-shadow: 0 -1px 22.7px 0 rgba(0, 0, 0, 0.25);
+  align-items: center;
 }
 
+.signupBoundingbox {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 24px;
+  background: #fff;
+  max-width: 451px;
+  max-height: 546px;
+  width: 80%;
+  height: 100%;
+  box-shadow: 0 -1px 22.7px 0 rgba(0, 0, 0, 0.25);
+}
+.nameAndLogo {
+  gap: 0.5em;
+  display: flex;
+  align-items: center;
+}
+
+.nameAndLogo h3 {
+  font-size: 20px;
+}
 .signupBoundingboxText {
   display: flex;
   flex-direction: column;
@@ -28,21 +45,22 @@
   width: 100%;
   gap: 1em;
 }
-
-.nameAndLogo {
-  gap: 0.5em;
-  display: flex;
-}
-
 .signupBoundingboxTextInner {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
 }
-
-h6 {
-  font-size: 12px;
+.signupField {
+  width: 100%;
+  max-width: 384px;
+  padding-top: 5px;
+  padding: 0 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
 .signupButtons {
@@ -52,13 +70,6 @@ h6 {
   gap: 16px;
 }
 
-.signupField {
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 /* ✅ Highlight the confirm password field if passwords do not match */
 .errorField {
   border: 2px solid red !important;
@@ -66,5 +77,5 @@ h6 {
 
 .error {
   color: red;
-  font-size: 14px;
+  font-size: 16px;
 }

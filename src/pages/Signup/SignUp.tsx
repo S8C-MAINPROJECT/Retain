@@ -58,8 +58,9 @@ const SignUp = () => {
           </div>
           <div className={styles.signupBoundingboxTextInner}>
             <h1>SignUp</h1>
-            <h6>Create an account</h6>
+            {error? <h5 className={styles.error}>{error}</h5>:<h5>Create an account</h5>}
           </div>
+          
           <div className={styles.signupField}>
             <TextField
               placeholder="Email"
@@ -81,10 +82,10 @@ const SignUp = () => {
               style={confirmPasswordError ? { border: "2px solid red" } : {}}
             />
           </div>
-          {error && <p className={styles.error}>{error}</p>}
+          
           <div className={styles.signupButtons}>
             <PrimaryBtn name="SignUp" onClick={handleSignup} />
-            <SecondaryBtn name="Login" onClick={() => navigate("/")} />
+            <SecondaryBtn name="I already have an account" onClick={() => navigate("/")} />
           </div>
         </div>
       </div>
