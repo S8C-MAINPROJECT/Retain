@@ -79,7 +79,7 @@ const SignUp = () => {
                 setConfirmPasswordError(false);
               }}
               label="Confirm Password" // ✅ Now the second field is labeled correctly
-              style={confirmPasswordError ? { border: "2px solid red" } : {}}
+              style={confirmPasswordError ? { borderBottom: "2px solid red" } : {}}
             />
           </div>
           
