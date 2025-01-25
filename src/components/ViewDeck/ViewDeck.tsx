@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./ViewDeck.module.css";
+import icons from "../../assets/icons";
 
 interface Flashcard {
   front: string;
@@ -67,22 +68,20 @@ function ViewDeck() {
   const title = "Capital Countries";
   return (
     <>
-      <div className={styles.header}>Total Cards: {title}</div>
+      <div className={styles.header}>{title}</div>
       <div className={styles.container}>
         {flashcards.map((card, index) => (
           <div key={index} className={styles.card}>
             {editingIndex === index ? (
               <>
-                <div className={styles.cardSide}>
-                  <h3>Front</h3>
+                <div className={styles.frontSide}>
                   <textarea
                     value={currentEdit?.front || ""}
                     onChange={(e) => handleInputChange("front", e.target.value)}
                     className={styles.textArea}
                   />
                 </div>
-                <div className={styles.cardSide}>
-                  <h3>Back</h3>
+                <div className={styles.backSide}>
                   <textarea
                     value={currentEdit?.back || ""}
                     onChange={(e) => handleInputChange("back", e.target.value)}
@@ -103,20 +102,17 @@ function ViewDeck() {
               </>
             ) : (
               <>
-                <div
-                  className={styles.cardSide}
-                  onClick={() => handleEditClick(index)}
-                >
-                  <h3>Front</h3>
+                <div className={styles.cardSide}>
                   <p>{card.front}</p>
                 </div>
-                <div
-                  className={styles.cardSide}
-                  onClick={() => handleEditClick(index)}
-                >
-                  <h3>Back</h3>
+                <div className={styles.cardSide}>
                   <p>{card.back}</p>
                 </div>
+                <img
+                  src={icons.editbtn}
+                  className={styles.editbtn}
+                  onClick={() => handleEditClick(index)}
+                />
               </>
             )}
           </div>
