@@ -52,7 +52,8 @@ const Login = () => {
           </div>
           <div className={styles.signupBoundingboxTextInner}>
             <h1>Login</h1>
-            <h5>Enter your credentials to continue</h5>
+            {error ? <p className={styles.error}>{error}</p>:<h5>Enter your credentials to continue</h5>}
+            
           </div>
           <div className={styles.signupField}>
             <TextField
@@ -65,7 +66,6 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          {error && <p className={styles.error}>{error}</p>}
           <div className={styles.signupButtons}>
             <PrimaryBtn name="Login" onClick={handleLogin} />
             <SecondaryBtn name="SignUp Instead" onClick={() => navigate("/signup")} />
