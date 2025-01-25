@@ -106,7 +106,7 @@ const Home = () => {
     formData.append("pdf", pdf);
 
     try {
-      await axios.post("https://your-backend-endpoint.com/api/file", formData, {
+      await axios.post("http://localhost:3000/api/file", formData, {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
           const progress = progressEvent.total

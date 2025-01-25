@@ -18,7 +18,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axiosInstance.post("/auth/login", {
+      const response = await axiosInstance.post("http://localhost:3000/auth/login", {
         email,
         password,
       });
@@ -29,6 +29,8 @@ const Login = () => {
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("user", JSON.stringify(user));
+
+      console.log("Login successful");
 
       // Redirect to the home page
       navigate("/home");
