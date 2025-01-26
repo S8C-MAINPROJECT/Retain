@@ -8,7 +8,6 @@
   background-color: #f0f0f0;
 }
 
-
 @keyframes slideInFromRight {
   from {
     transform: translateX(100%);
@@ -53,7 +52,6 @@
   }
 }
 
-
 .card.slideInRight {
   animation: slideInFromRight 0.4s ease forwards;
 }
@@ -70,8 +68,19 @@
   animation: slideOutToRight 0.4s ease forwards;
 }
 
+.headItems {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  background-color: none;
+  margin-top: 51px;
+  gap: 16px;
+}
 
-
+.headItems img {
+  cursor: pointer;
+}
 
 .cardContainer {
   text-align: center;
@@ -81,7 +90,7 @@
   position: relative;
   width: 300px;
   height: 350px;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .card {
@@ -106,7 +115,7 @@
 }
 
 .card.currentCard {
-  transform: translateX(0) scale(1); 
+  transform: translateX(0) scale(1);
   opacity: 1;
   background-color: #2a2a2a;
   z-index: 2;
@@ -130,8 +139,7 @@
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-
-.question img{
+.question img {
   position: relative;
   width: 20px;
   height: auto;
@@ -157,13 +165,12 @@
 .question {
   /* position: absolute; */
 }
- 
+
 .answer {
   font-size: 20px;
   font-weight: bold;
   color: rgba(255, 255, 255, 1);
   text-align: left;
-  
 }
 
 .reveal {
@@ -174,7 +181,6 @@
   position: relative;
   top: 45px;
 }
-
 
 .cardHeader {
   margin: 10px 0;
@@ -205,7 +211,7 @@
   background-color: #444;
 }
 
-.cardHeader{
+.cardHeader {
   padding-top: 4px;
 }
 
@@ -220,10 +226,10 @@
 
 .total-count {
   font-size: 16px;
-  color: rgba(177, 177, 177, 1)
+  color: rgba(177, 177, 177, 1);
 }
 
-.pgBar-card{
+.pgBar-card {
   margin-top: 20px;
   margin-bottom: 20px;
 }

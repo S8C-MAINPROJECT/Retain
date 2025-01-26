@@ -1,39 +1,74 @@
-import { useState } from "react";
+// src/pages/Card/Card.tsx
+import { useState, useEffect } from "react";
 import "./Card.css";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import icons from "../../assets/icons";
 import DifficultyChooser from "../../components/DifficultyChooser/DifficultyChooser";
-import Header from "../../components/Header/Header";
-import React from "react";
-
-const db = [
-  {
-    country: "What is the capital of France?",
-    capital: "The capital of France is Paris",
-  },
-  {
-    country: "What is the capital of United States?",
-    capital: "The capital of United States is Washington, D.C.",
-  },
-  {
-    country: "What is the capital of India?",
-    capital: "The capital of India is New Delhi",
-  },
-  {
-    country: "What is the capital of Japan?",
-    capital: "The capital of Japan is Tokyo",
-  },
-  {
-    country: "What is the capital of Australia?",
-    capital: "The capital of Australia is Canberra",
-  },
-];
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Card = () => {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  let deckTitle = params.get("deckTitle");
+  if (deckTitle) {
+    deckTitle = decodeURIComponent(deckTitle);
+  }
+  const navigate = useNavigate();
   const [progress, setProgress] = useState(2);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [animation, setAnimation] = useState("");
+  const [db, setDb] = useState<Array<{ question: string; answer: string }>>([
+    { question: "Loading...", answer: "Please wait." },
+  ]);
+  // Define type for db state
+
+  useEffect(() => {
+    console.log("Deck Title in Card:", deckTitle);
+    let dataFile = null;
+
+    // Determine the JSON file to load based on deckTitle
+    if (deckTitle === "Capital Countries") {
+      dataFile = import("../../data/capital-countries.json");
+    } else if (deckTitle === "English Vocabulary") {
+      dataFile = import("../../data/english-vocabulary.json");
+    } else {
+      console.warn(`Unknown deck title: ${deckTitle}. Loading default data.`);
+      dataFile = import("../../data/capital-countries.json"); // Default fallback
+    }
+
+    if (dataFile) {
+      dataFile
+        .then((module) => {
+          setDb(module.default); // module.default is where the imported JSON data resides
+        })
+        .catch((error) => {
+          console.error("Error loading deck data:", error);
+          setDb([
+            // Fallback data in case of loading error
+            {
+              question: "Error loading data.",
+              answer: "Please check console.",
+            },
+          ]);
+        });
+    }
+  }, [deckTitle]);
+
+  useEffect(() => {
+    const handleSpacebar = (event: KeyboardEvent) => {
+      if (event.key === " " || event.code === "Space") {
+        // Checks for spacebar
+        setShowAnswer(!showAnswer);
+      }
+    };
+
+    document.addEventListener("keydown", handleSpacebar); // Add listener on mount
+
+    return () => {
+      document.removeEventListener("keydown", handleSpacebar); // Remove listener on unmount
+    };
+  }, [showAnswer]); // Dependency array (important - see below)
 
   const handleNext = () => {
     setAnimation("slideOutLeft");
@@ -67,7 +102,19 @@ const Card = () => {
 
   return (
     <div className="central-card-component">
-      <Header />
+      <div>
+        <div className="headItems">
+          <img
+            src="src/assets/closebtn.svg"
+            alt="Close Button"
+            id="closebtn"
+            onClick={() => {
+              navigate("/home");
+            }}
+          />
+          <p>{deckTitle ? deckTitle : "Capital Countries"}</p>
+        </div>
+      </div>
       <div className="pgBar-card">
         <ProgressBar
           progress={currentIndex + 1}
@@ -97,14 +144,14 @@ const Card = () => {
 
             <div className="question_container">
               <h2 className="question">
-                {getCardData(0).country}
+                {getCardData(0).question}
                 <img
                   src={icons.speakbtn}
                   alt="Speaker Icon"
                   className="speaker-icon"
                   onClick={(e) => {
                     e.stopPropagation();
-                    speakText(getCardData(0).country);
+                    speakText(getCardData(0).question);
                   }}
                 />
               </h2>
@@ -115,19 +162,19 @@ const Card = () => {
               <p>
                 {showAnswer ? (
                   <div className="answer">
-                    {getCardData(0).capital}
+                    {getCardData(0).answer}
                     <img
                       src={icons.speakbtn}
                       alt="Speaker Icon"
                       className="speaker-icon"
                       onClick={(e) => {
                         e.stopPropagation();
-                        speakText(getCardData(0).capital);
+                        speakText(getCardData(0).answer);
                       }}
                     />
                   </div>
                 ) : (
-                  <div className="reveal">Tap to reveal answer</div>
+                  <div className="reveal">Tap or [Space] to reveal</div>
                 )}
               </p>
             </div>

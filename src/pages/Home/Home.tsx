@@ -22,7 +22,7 @@ const Home = () => {
     Array<{ title: string; completed: number; total: number }>
   >([
     { title: "Capital Countries", completed: 3, total: 11 },
-    { title: "Something Important", completed: 3, total: 11 },
+    { title: "English Vocabulary", completed: 3, total: 11 },
   ]);
   const [isDeckModalOpen, setIsDeckModalOpen] = useState(false);
 

@@ -54,7 +54,7 @@
 .button-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 16px;
 }
 .add-card-btn {
   padding: 8px;
@@ -135,4 +135,12 @@
 }
 .editAndView {
   display: flex;
+  gap: 8px;
+  padding: 8px;
+  margin-top: 8px;
+  border: none;
+  background: none;
+  color: #666;
+  cursor: pointer;
+  text-align: left;
 }

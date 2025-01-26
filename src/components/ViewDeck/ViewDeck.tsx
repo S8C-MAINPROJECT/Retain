@@ -83,6 +83,7 @@ function ViewDeck() {
     <>
       <div className={styles.backBtn}>
         <BackBtn
+          name=" "
           onClick={() => {
             Navigate("/home");
           }}

@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import "./HomeCard.css";
-import SecondaryBtn from "../Button/secondaryBtn";
-import PrimaryBtn from "../Button/PrimaryBtn";
-import TextInput from "../Input/textInput";
 import icons from "../../assets/icons";
 
 interface HomeCardProps {
@@ -23,21 +20,17 @@ const HomeCard: React.FC<HomeCardProps> = ({
   path,
 }) => {
   const navigate = useNavigate();
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleSubmit = () => {
-    // Handle the submission logic here
-    setIsModalOpen(false);
-  };
-
+  const handleCardClick = () => {
+        // Navigate to the Card page and pass the deck title as a parameter
+        navigate(`/card?deckTitle=${title}`); // Using query parameter for now, can be changed to path parameter if needed
+    };
   return (
     <div className="homeCard">
       <div className="homeCard-items">
         <div className="left-side-items">
           <img src={path} alt="card" />
         </div>
-        <div className="right-side-items" onClick={() => navigate("/card")}>
+        <div className="right-side-items" onClick={handleCardClick}>
           <div>
             <h5>{title}</h5>
           </div>
