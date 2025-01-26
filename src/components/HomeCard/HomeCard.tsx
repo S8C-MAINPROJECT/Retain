@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ProgressBar from '../ProgressBar/ProgressBar';
-import './HomeCard.css';
-import SecondaryBtn from '../Button/secondaryBtn';
-import PrimaryBtn from '../Button/PrimaryBtn';
-import TextInput from '../Input/textInput';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ProgressBar from "../ProgressBar/ProgressBar";
+import "./HomeCard.css";
+import SecondaryBtn from "../Button/secondaryBtn";
+import PrimaryBtn from "../Button/PrimaryBtn";
+import TextInput from "../Input/textInput";
+import icons from "../../assets/icons";
 
 interface HomeCardProps {
   title: string;
@@ -14,12 +15,16 @@ interface HomeCardProps {
   path: string;
 }
 
-
-
-const HomeCard: React.FC<HomeCardProps> = ({ title, completed, total, onDelete, path }) => {
+const HomeCard: React.FC<HomeCardProps> = ({
+  title,
+  completed,
+  total,
+  onDelete,
+  path,
+}) => {
   const navigate = useNavigate();
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleSubmit = () => {
     // Handle the submission logic here
@@ -33,12 +38,13 @@ const HomeCard: React.FC<HomeCardProps> = ({ title, completed, total, onDelete, 
           <img src={path} alt="card" />
         </div>
         <div className="right-side-items" onClick={() => navigate("/card")}>
-          
           <div>
             <h5>{title}</h5>
           </div>
-          <div className='progress'>
-            <p>Today: {completed}/{total}</p>
+          <div className="progress">
+            <p>
+              Today: {completed}/{total}
+            </p>
           </div>
           <div className="pgBar-home">
             <ProgressBar
@@ -51,15 +57,10 @@ const HomeCard: React.FC<HomeCardProps> = ({ title, completed, total, onDelete, 
         </div>
       </div>
       <div className="button-container">
-        <button
-          className="add-card-btn"
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent card navigation
-            setIsModalOpen(true);
-          }}
-        >
-          + Add Card
-        </button>
+        <div className="editAndView" onClick={() => navigate("/test")}>
+          <img src={icons.edit2} />
+          view and edit
+        </div>
         <button
           className="delete-button"
           onClick={(e) => {
@@ -70,34 +71,6 @@ const HomeCard: React.FC<HomeCardProps> = ({ title, completed, total, onDelete, 
           × Delete deck
         </button>
       </div>
-      {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h3>Add New Card</h3>
-            </div>
-            <TextInput
-              placeholder="Question"
-              onChange={(e) => setQuestion(e.target.value)} value={question} />
-
-            <TextInput
-              placeholder="Answer"
-              onChange={(e) => setAnswer(e.target.value)} value={answer} />
-
-
-            <div className="modal-buttons">
-              <PrimaryBtn
-                name="Submit"
-                onClick={handleSubmit}
-              />
-              <SecondaryBtn
-                name="Cancel"
-                onClick={() => setIsModalOpen(false)}
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

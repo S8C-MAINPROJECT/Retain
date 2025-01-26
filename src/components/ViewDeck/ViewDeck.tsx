@@ -6,6 +6,7 @@ import BackBtn from "../Button/backBtn";
 import TextInput from "../Input/textInput";
 import PrimaryBtn from "../Button/PrimaryBtn";
 import SecondaryBtn from "../Button/secondaryBtn";
+import { useNavigate } from "react-router-dom";
 
 interface Flashcard {
   front: string;
@@ -39,6 +40,7 @@ function ViewDeck() {
 
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [currentEdit, setCurrentEdit] = useState<Flashcard | null>(null);
+  const Navigate = useNavigate();
 
   // Save flashcards to localStorage whenever they change
   useEffect(() => {
@@ -80,7 +82,11 @@ function ViewDeck() {
   return (
     <>
       <div className={styles.backBtn}>
-        <BackBtn />
+        <BackBtn
+          onClick={() => {
+            Navigate("/home");
+          }}
+        />
       </div>
       <div className={styles.header}>
         <h1>{title}</h1>

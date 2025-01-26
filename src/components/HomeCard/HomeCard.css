@@ -1,12 +1,7 @@
 .homeCard {
-  height: fit-content;
-  width: fit-content;
-  padding-left: 13px;
-  padding-top: 14px;
-  padding-bottom: 14px;
+  padding: 1rem;
   background-color: rgba(255, 255, 255, 1);
   border-radius: 21px;
-  margin-left: 23px;
   box-shadow: 0px 13px 40.4px 0px rgba(0, 0, 0, 0.08);
   border: 0.5px solid rgba(0, 0, 0, 0.15);
 }
@@ -59,6 +54,7 @@
 .button-container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .add-card-btn {
   padding: 8px;
@@ -136,4 +132,7 @@
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
+}
+.editAndView {
+  display: flex;
 }
