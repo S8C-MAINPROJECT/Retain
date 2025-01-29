@@ -25,8 +25,9 @@ const Home = () => {
     { title: "English Vocabulary", completed: 3, total: 11 },
   ]);
   const [isDeckModalOpen, setIsDeckModalOpen] = useState(false);
-
+  const [activeNav, setActiveNav] = useState("deck");
   const [show, setShow] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [text, setText] = useState<File | null>(null);
   const [pdf, setPdf] = useState<File | null>(null);
   const [deck, setDeck] = useState<File | null>(null);
@@ -37,6 +38,11 @@ const Home = () => {
   const [showDialog, setShowDialog] = useState<boolean>(false); // Controls dialog visibility
 
   const navigate = useNavigate();
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  const handleNavClick = (navItem: string) => {
+    setActiveNav(navItem); // Update active nav item on click
+  };
 
   const handleDeckSubmit = () => {
     if (deckTitle && totalQuestions) {
@@ -276,155 +282,181 @@ const Home = () => {
           <img src={icons.retainSymbol} alt="Retain Logo" />
           <span className="home-heading">Retain</span>
         </div>
-        <div className="logout">logout</div>
+
+        <div className="hamburger-menu" onClick={toggleMenu}>
+          <div className="bar1"></div>
+          <div className="bar2"></div>
+          <div className="bar3"></div>
+        </div>
+        <div className={`nav-items ${isMenuOpen ? "open" : ""}`}>
+          {" "}
+          {/* Conditionally apply 'open' class */}
+          <div
+            className={`nav-item ${activeNav === "deck" ? "active" : ""}`} // Conditional 'active' class
+            onClick={() => handleNavClick("deck")} // Handle click for Deck
+          >
+            Deck
+          </div>
+          <div
+            className={`nav-item ${activeNav === "summarize" ? "active" : ""}`} // Conditional 'active' class
+            onClick={() => handleNavClick("summarize")} // Handle click for Summarize
+          >
+            Summarize
+          </div>
+          <div className="nav-item logout">Logout</div>{" "}
+          {/* Logout remains unchanged */}
+        </div>
       </div>
-      <div className="home">
-        <h3>
-          Welcome Back! you got <span id="no_lessons">3</span> lessons to review
-        </h3>
+      {activeNav === "deck" && (
+        <div className="home">
+          <h3>
+            Welcome Back! you got <span id="no_lessons">3</span> lessons to
+            review
+          </h3>
 
-        <div className="decks">
-          {decks.map((deck, index) => (
-            <HomeCard
-              key={index}
-              title={deck.title}
-              completed={deck.completed}
-              total={deck.total}
-              onDelete={() => handleDeleteDeck(index)}
-              path="src/assets/jjj.webp"
-            />
-          ))}
-        </div>
-        <h3>All Decks</h3>
-        <div className="decks">
-          {deck2.map((deck2, index) => (
-            <HomeCard
-              key={index}
-              title={deck2.title}
-              completed={deck2.completed}
-              total={deck2.total}
-              onDelete={() => handleDeleteDeck(index)}
-              path="src/assets/jjj.webp"
-            />
-          ))}
-          <AddNew onManual={() => setIsDeckModalOpen(true)} />
-        </div>
+          <div className="decks">
+            {decks.map((deck, index) => (
+              <HomeCard
+                key={index}
+                title={deck.title}
+                completed={deck.completed}
+                total={deck.total}
+                onDelete={() => handleDeleteDeck(index)}
+                path="src/assets/jjj.webp"
+              />
+            ))}
+          </div>
+          <h3>All Decks</h3>
+          <div className="decks">
+            {deck2.map((deck2, index) => (
+              <HomeCard
+                key={index}
+                title={deck2.title}
+                completed={deck2.completed}
+                total={deck2.total}
+                onDelete={() => handleDeleteDeck(index)}
+                path="src/assets/jjj.webp"
+              />
+            ))}
+            <AddNew onManual={() => setIsDeckModalOpen(true)} />
+          </div>
 
-        {/* Upload Options */}
-        {show && (
-          <div className="uploadOptions">
-            {/* Upload Text */}
-            <button
-              className="uploadButton"
-              onClick={() => document.getElementById("textUpload")?.click()}
-            >
-              <img src={icons.addText} alt="Upload Text" />
-            </button>
-            <input
-              type="file"
-              id="textUpload"
-              style={{ display: "none" }}
-              accept=".txt"
-              onChange={handleText}
-            />
+          {/* Upload Options */}
+          {show && (
+            <div className="uploadOptions">
+              {/* Upload Text */}
+              <button
+                className="uploadButton"
+                onClick={() => document.getElementById("textUpload")?.click()}
+              >
+                <img src={icons.addText} alt="Upload Text" />
+              </button>
+              <input
+                type="file"
+                id="textUpload"
+                style={{ display: "none" }}
+                accept=".txt"
+                onChange={handleText}
+              />
 
-            {/* Upload PDF */}
-            <button
-              className="uploadButton"
-              onClick={() => document.getElementById("pdfUpload")?.click()}
-            >
-              <img src={icons.addPDF} alt="Upload PDF" />
-            </button>
-            <input
-              type="file"
-              id="pdfUpload"
-              style={{ display: "none" }}
-              accept="application/pdf"
-              onChange={handlePdf}
-            />
+              {/* Upload PDF */}
+              <button
+                className="uploadButton"
+                onClick={() => document.getElementById("pdfUpload")?.click()}
+              >
+                <img src={icons.addPDF} alt="Upload PDF" />
+              </button>
+              <input
+                type="file"
+                id="pdfUpload"
+                style={{ display: "none" }}
+                accept="application/pdf"
+                onChange={handlePdf}
+              />
 
-            {/* Upload Deck */}
-            <button
-              className="uploadButton"
-              onClick={() => setIsDeckModalOpen(true)}
-            >
-              <img src={icons.addDeck} alt="Upload Deck" />
-            </button>
+              {/* Upload Deck */}
+              <button
+                className="uploadButton"
+                onClick={() => setIsDeckModalOpen(true)}
+              >
+                <img src={icons.addDeck} alt="Upload Deck" />
+              </button>
 
-            <input
-              type="file"
-              id="deckUpload"
-              style={{ display: "none" }}
-              accept=".deck"
-              onChange={handleDeck}
-            />
+              <input
+                type="file"
+                id="deckUpload"
+                style={{ display: "none" }}
+                accept=".deck"
+                onChange={handleDeck}
+              />
 
-            {/* Upload YouTube Transcript */}
-            <button
-              className="uploadButton"
-              onClick={() => setShowDialog(true)}
-            >
-              <img src={icons.addYoutube} alt="Upload YouTube" />
-            </button>
+              {/* Upload YouTube Transcript */}
+              <button
+                className="uploadButton"
+                onClick={() => setShowDialog(true)}
+              >
+                <img src={icons.addYoutube} alt="Upload YouTube" />
+              </button>
 
-            {showDialog && (
-              <div className="dialogOverlay">
-                <div className="dialogBox">
-                  <h3>Enter YouTube Link</h3>
-                  <input
-                    type="text"
-                    className="youtubeInput"
-                    placeholder="Paste your YouTube link here..."
-                    value={youtubeLink}
-                    onChange={(e) => setYoutubeLink(e.target.value)}
-                  />
-                  <div className="dialogActions">
-                    <button
-                      className="dialogButton"
-                      onClick={handleYoutubeUpload}
-                    >
-                      Submit
-                    </button>
-                    <button
-                      className="dialogButton cancel"
-                      onClick={() => setShowDialog(false)}
-                    >
-                      Cancel
-                    </button>
+              {showDialog && (
+                <div className="dialogOverlay">
+                  <div className="dialogBox">
+                    <h3>Enter YouTube Link</h3>
+                    <input
+                      type="text"
+                      className="youtubeInput"
+                      placeholder="Paste your YouTube link here..."
+                      value={youtubeLink}
+                      onChange={(e) => setYoutubeLink(e.target.value)}
+                    />
+                    <div className="dialogActions">
+                      <button
+                        className="dialogButton"
+                        onClick={handleYoutubeUpload}
+                      >
+                        Submit
+                      </button>
+                      <button
+                        className="dialogButton cancel"
+                        onClick={() => setShowDialog(false)}
+                      >
+                        Cancel
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
 
-        {isDeckModalOpen && (
-          <div className="modal-overlay">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h3>Create New Deck</h3>
-              </div>
-              <TextInput
-                placeholder="Deck Title"
-                onChange={(e) => setDeckTitle(e.target.value)}
-                value={deckTitle}
-              />
-              <TextInput
-                placeholder="Number of Questions"
-                onChange={(e) => setTotalQuestions(e.target.value)}
-                value={totalQuestions}
-              />
-              <div className="modal-buttons">
-                <PrimaryBtn name="Create" onClick={handleDeckSubmit} />
-                <SecondaryBtn
-                  name="Cancel"
-                  onClick={() => setIsDeckModalOpen(false)}
+          {isDeckModalOpen && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h3>Create New Deck</h3>
+                </div>
+                <TextInput
+                  placeholder="Deck Title"
+                  onChange={(e) => setDeckTitle(e.target.value)}
+                  value={deckTitle}
                 />
+                <TextInput
+                  placeholder="Number of Questions"
+                  onChange={(e) => setTotalQuestions(e.target.value)}
+                  value={totalQuestions}
+                />
+                <div className="modal-buttons">
+                  <PrimaryBtn name="Create" onClick={handleDeckSubmit} />
+                  <SecondaryBtn
+                    name="Cancel"
+                    onClick={() => setIsDeckModalOpen(false)}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </>
   );
 };
