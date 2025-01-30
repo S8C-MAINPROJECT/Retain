@@ -30,7 +30,7 @@ const Login = () => {
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("user", JSON.stringify(user));
 
-      console.log("Login successful");
+      console.log("Login successful",JSON.stringify(user));
 
       // Redirect to the home page
       navigate("/home");

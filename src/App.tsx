@@ -6,23 +6,23 @@ import Login from "./pages/Login/Login";
 import Home from "./pages/Home/Home";
 import SignUp from "./pages/Signup/SignUp";
 import ViewDeck from "./components/ViewDeck/ViewDeck";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 const App: React.FC = () => {
   return (
     <Router>
       <div className="App">
-        {/* Define routes for different pages */}
         <Routes>
-          {/* Route for Login Page */}
+          {/* Public Routes */}
           <Route path="/" element={<Login />} />
-          {/* Route for Home Page */}
-          <Route path="/home" element={<Home />} />
-          {/* Route for Card Page */}
-          <Route path="/card" element={<Card />} />
-          {/* Route for Signup Page */}
           <Route path="/signup" element={<SignUp />} />
-          {/* Route for Signup Page */}
-          <Route path="/test" element={<ViewDeck />} />
+
+          {/* Protected Routes - Only accessible after login */}
+          <Route element={<PrivateRoute />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/card" element={<Card />} />
+            <Route path="/test" element={<ViewDeck />} />
+          </Route>
         </Routes>
       </div>
     </Router>
@@ -30,6 +30,7 @@ const App: React.FC = () => {
 };
 
 export default App;
+
 
 // import { Box, Card } from '@mui/material';
 // <Box
@@ -46,3 +47,16 @@ export default App;
 //   {/* <ProgressBar progress={progress} /> */}
 //   <CardStack />
 // </Box>
+
+
+{/* <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/card" element={<Card />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/test" element={<ViewDeck />} />
+        </Routes>
+      </div>
+</Router> */}
