@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import icons from "../../assets/icons";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
@@ -8,22 +8,18 @@ import PrimaryBtn from "../../components/Button/PrimaryBtn";
 import SecondaryBtn from "../../components/Button/secondaryBtn";
 import HomeCard from "../../components/HomeCard/HomeCard";
 import { AddNew } from "../../components/AddNew/AddNew";
-// import { YoutubeTranscript } from "youtube-transcript";
+import { jwtDecode } from "jwt-decode";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
 
 const Home = () => {
   const [deckTitle, setDeckTitle] = useState("");
   const [totalQuestions, setTotalQuestions] = useState("");
+
   const [decks, setDecks] = useState<
     Array<{ title: string; completed: number; total: number }>
-  >([{ title: "Capital Countries", completed: 3, total: 11 }]);
-  const [deck2, setDeck2] = useState<
-    Array<{ title: string; completed: number; total: number }>
-  >([
-    { title: "Capital Countries", completed: 3, total: 11 },
-    { title: "English Vocabulary", completed: 3, total: 11 },
-  ]);
+  >([]);
+
   const [isDeckModalOpen, setIsDeckModalOpen] = useState(false);
   const [activeNav, setActiveNav] = useState("deck");
   const [show, setShow] = useState(false);
@@ -32,10 +28,33 @@ const Home = () => {
   const [pdf, setPdf] = useState<File | null>(null);
   const [deck, setDeck] = useState<File | null>(null);
   const [status, setStatus] = useState<UploadStatus>("idle");
-  // const [file, setFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [youtubeLink, setYoutubeLink] = useState<string>(""); // Holds the YouTube link
   const [showDialog, setShowDialog] = useState<boolean>(false); // Controls dialog visibility
+
+  // Function to extract uid from the access token
+  const getUidFromToken = (token: string) => {
+    const decoded: { id: number } = jwtDecode(token);
+    return decoded.id;
+  };
+
+  const fetchDecks = async () => {
+    const token = localStorage.getItem("accessToken"); // Retrieve token
+    if (!token) return;
+
+    const uid = getUidFromToken(token); // Extract uid
+    try {
+      const response = await axios.get(`http://localhost:3000/decks/${uid}`);
+      setDecks(response.data); // Update state with fetched decks
+    } catch (error) {
+      console.error("Error fetching decks:", error);
+    }
+  };
+
+  // Call fetchDecks when the component mounts
+  useEffect(() => {
+    fetchDecks();
+  }, []);
 
   const navigate = useNavigate();
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -65,35 +84,6 @@ const Home = () => {
       setDecks(decks.filter((_, i) => i !== index));
     }
   };
-
-  // TESTING!!!
-  //   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //     if (e.target.files) {
-  //       setFile(e.target.files[0]);
-  //       console.log("File uploaded:", e.target.files[0].name);
-  //     }
-  //   }
-
-  //   const handleFileUpload = async () => {
-  //     if(!file) return;
-  //     setStatus('uploading');
-  //     setUploadProgress(0);
-  //     const formData = new FormData();
-  //     formData.append('file', file);
-
-  //     try {
-  //       await axios.post("https://httpbin.org/post", formData, { headers: { 'Content-Type': 'multipart/form-data' }, onUploadProgress: (progressEvent) => {
-  //         const progress = progressEvent.total ? Math.round((progressEvent.loaded*100)/progressEvent.total) : 0;
-  //         setUploadProgress(progress);
-  //       },
-  //       });
-  //       setStatus('success');
-  //       setUploadProgress(100);
-  //     } catch (error) {
-  //       setStatus('error');
-  //       setUploadProgress(0);
-  //     }
-  //   }
 
   // File input handlers
 
@@ -199,36 +189,6 @@ const Home = () => {
     }
   };
 
-  //   // Fetch the transcript
-  //   const transcript = await YoutubeTranscript.fetchTranscript(videoId);
-
-  //   if (!transcript || transcript.length === 0) {
-  //     alert("Transcript not available for this video.");
-  //     setStatus("error");
-  //     return;
-  //   }
-
-  //   // Prepare transcript for sending
-  //   const formattedTranscript = transcript.map((entry) => entry.text).join(" ");
-
-  //   // Send the transcript to the backend
-  //   await axios.post("https://your-backend-endpoint.com/api/transcript", {
-  //     transcript: formattedTranscript,
-  //     videoId,
-  //   });
-
-  //   setStatus("success");
-  //   console.log("Transcript sent to the backend successfully.");
-  //   console.log("Transcript:", formattedTranscript);
-  // } catch (error) {
-  //   console.error("Error fetching or sending transcript:", error);
-  //   setStatus("error");
-  // } finally {
-  //   setShowDialog(false); // Close the dialog after the operation
-  //   setYoutubeLink(""); // Clear the input field
-  // }
-  // };
-
   // Handle YouTube Upload
   const handleYoutubeUpload = async () => {
     if (!youtubeLink.trim()) {
@@ -266,13 +226,10 @@ const Home = () => {
     }
   };
 
-  // const [question, setQuestion] = useState('');
-  // const [answer, setAnswer] = useState('');
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-  // const handleSubmit = () => {
-  //   // Handle the submission logic here
-  //   setIsModalOpen(false);
-  // };
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
 
   return (
     <>
@@ -303,7 +260,9 @@ const Home = () => {
           >
             Summarize
           </div>
-          <div className="nav-item logout">Logout</div>{" "}
+          <div className="nav-item logout" onClick={handleLogout}>
+            Logout
+          </div>
           {/* Logout remains unchanged */}
         </div>
       </div>
@@ -315,6 +274,19 @@ const Home = () => {
           </h3>
 
           <div className="decks">
+            {decks.length > 0 && (
+              <HomeCard
+                key={0}
+                title={decks[0].title}
+                completed={decks[0].completed}
+                total={decks[0].total}
+                onDelete={() => handleDeleteDeck(0)}
+                path="src/assets/jjj.webp"
+              />
+            )}
+          </div>
+          <h3>All Decks</h3>
+          <div className="decks">
             {decks.map((deck, index) => (
               <HomeCard
                 key={index}
@@ -325,20 +297,7 @@ const Home = () => {
                 path="src/assets/jjj.webp"
               />
             ))}
-          </div>
-          <h3>All Decks</h3>
-          <div className="decks">
-            {deck2.map((deck2, index) => (
-              <HomeCard
-                key={index}
-                title={deck2.title}
-                completed={deck2.completed}
-                total={deck2.total}
-                onDelete={() => handleDeleteDeck(index)}
-                path="src/assets/jjj.webp"
-              />
-            ))}
-            <AddNew onManual={() => setIsDeckModalOpen(true)} />
+            <AddNew onManual={() => setIsDeckModalOpen(true)} />
           </div>
 
           {/* Upload Options */}
@@ -462,3 +421,85 @@ const Home = () => {
 };
 
 export default Home;
+
+// import { YoutubeTranscript } from "youtube-transcript";
+
+
+  // const [decks, setDecks] = useState<
+  //   Array<{ title: string; completed: number; total: number }>
+  // >([{ title: "Capital Countries", completed: 3, total: 11 }]);
+
+  // const [deck2, setDeck2] = useState<
+  //   Array<{ title: string; completed: number; total: number }>
+  // >([
+  //   { title: "Capital Countries", completed: 3, total: 11 },
+  //   { title: "English Vocabulary", completed: 3, total: 11 },
+  // ]);
+
+// const [file, setFile] = useState<File | null>(null);
+// const [question, setQuestion] = useState('');
+// const [answer, setAnswer] = useState('');
+// const [isModalOpen, setIsModalOpen] = useState(false);
+// const handleSubmit = () => {
+//   // Handle the submission logic here
+//   setIsModalOpen(false);
+// };
+
+//   // Fetch the transcript
+//   const transcript = await YoutubeTranscript.fetchTranscript(videoId);
+
+//   if (!transcript || transcript.length === 0) {
+//     alert("Transcript not available for this video.");
+//     setStatus("error");
+//     return;
+//   }
+
+//   // Prepare transcript for sending
+//   const formattedTranscript = transcript.map((entry) => entry.text).join(" ");
+
+//   // Send the transcript to the backend
+//   await axios.post("https://your-backend-endpoint.com/api/transcript", {
+//     transcript: formattedTranscript,
+//     videoId,
+//   });
+
+//   setStatus("success");
+//   console.log("Transcript sent to the backend successfully.");
+//   console.log("Transcript:", formattedTranscript);
+// } catch (error) {
+//   console.error("Error fetching or sending transcript:", error);
+//   setStatus("error");
+// } finally {
+//   setShowDialog(false); // Close the dialog after the operation
+//   setYoutubeLink(""); // Clear the input field
+// }
+// };
+
+// TESTING!!!
+//   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+//     if (e.target.files) {
+//       setFile(e.target.files[0]);
+//       console.log("File uploaded:", e.target.files[0].name);
+//     }
+//   }
+
+//   const handleFileUpload = async () => {
+//     if(!file) return;
+//     setStatus('uploading');
+//     setUploadProgress(0);
+//     const formData = new FormData();
+//     formData.append('file', file);
+
+//     try {
+//       await axios.post("https://httpbin.org/post", formData, { headers: { 'Content-Type': 'multipart/form-data' }, onUploadProgress: (progressEvent) => {
+//         const progress = progressEvent.total ? Math.round((progressEvent.loaded*100)/progressEvent.total) : 0;
+//         setUploadProgress(progress);
+//       },
+//       });
+//       setStatus('success');
+//       setUploadProgress(100);
+//     } catch (error) {
+//       setStatus('error');
+//       setUploadProgress(0);
+//     }
+//   }
