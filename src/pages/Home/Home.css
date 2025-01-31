@@ -45,19 +45,19 @@ h3 span {
 .hamburger-menu div {
   width: 100%;
   height: 1px;
-  background-color: black; /* Or your preferred icon color, maybe header text color */
+  background-color: black;
 }
 
 .nav-items {
-  display: flex; /* Arrange nav items horizontally */
-  gap: 20px; /* Spacing between nav items */
+  display: flex;
+  gap: 20px;
   align-items: center;
 }
 
 .nav-item {
-  cursor: pointer; /* Indicate clickable */
-  padding: 8px 12px; /* Example padding for nav items */
-  border-radius: 5px; /* Optional: Rounded corners */
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 5px;
 }
 
 .nav-item.active {
@@ -337,32 +337,27 @@ h3 span {
 }
 @media (min-height: 768px) {
   .uploadOptions {
-    margin-top: 72px; /* Adjust based on design needs */
+    margin-top: 72px;
   }
 }
 
 @media (max-width: 506px) {
-  /* .homeHeader {
-      flex-direction: row; 
-      justify-content: space-between; 
-    } */
-
   .nav-items {
-    display: none; /* Hide nav items by default on small screens */
-    flex-direction: column; /* Display nav items in a column when menu is open */
+    display: none;
+    flex-direction: column;
     position: absolute;
-    top: 60px; /* Adjust based on your header height */
+    top: 60px;
     right: 0;
-    background-color: white; /* Or your nav background color */
+    background-color: white;
     width: 100%;
     padding: 20px;
     box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 10; /* Ensure it's above other content */
-    align-items: flex-start; /* Align items to the start of the container */
+    z-index: 10;
+    align-items: flex-start;
   }
 
   .nav-items.open {
-    display: flex; /* Show nav items when 'open' class is applied */
+    display: flex;
     margin-top: 20px;
   }
   .hamburger-menu {

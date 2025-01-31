@@ -18,11 +18,11 @@ const App: React.FC = () => {
           <Route path="/signup" element={<SignUp />} />
 
           {/* Protected Routes - Only accessible after login */}
-          <Route element={<PrivateRoute />}>
-            <Route path="/home" element={<Home />} />
-            <Route path="/card" element={<Card />} />
-            <Route path="/test" element={<ViewDeck />} />
-          </Route>
+          {/* <Route element={<PrivateRoute />}> */}
+          <Route path="/home" element={<Home />} />
+          <Route path="/card" element={<Card />} />
+          <Route path="/test" element={<ViewDeck />} />
+          {/* </Route> */}
         </Routes>
       </div>
     </Router>
@@ -30,7 +30,6 @@ const App: React.FC = () => {
 };
 
 export default App;
-
 
 // import { Box, Card } from '@mui/material';
 // <Box
@@ -48,8 +47,8 @@ export default App;
 //   <CardStack />
 // </Box>
 
-
-{/* <Router>
+{
+  /* <Router>
       <div className="App">
         <Routes>
           <Route path="/" element={<Login />} />
@@ -59,4 +58,5 @@ export default App;
           <Route path="/test" element={<ViewDeck />} />
         </Routes>
       </div>
-</Router> */}
+</Router> */
+}

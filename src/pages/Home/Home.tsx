@@ -1,7 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import icons from "../../assets/icons";
 import "./Home.css";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import TextInput from "../../components/Input/textInput";
 import PrimaryBtn from "../../components/Button/PrimaryBtn";
@@ -37,7 +36,6 @@ const Home = () => {
   const [youtubeLink, setYoutubeLink] = useState<string>(""); // Holds the YouTube link
   const [showDialog, setShowDialog] = useState<boolean>(false); // Controls dialog visibility
 
-  const navigate = useNavigate();
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleNavClick = (navItem: string) => {

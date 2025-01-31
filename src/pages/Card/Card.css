@@ -78,6 +78,52 @@
   gap: 16px;
 }
 
+/*DifficultyChooser.css*/
+
+.difficultyOptions {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.difficultyBtn {
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 1);
+  border-radius: 12.71px;
+  border-color: rgba(156, 156, 156, 1);
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.difficultyTime {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.difficultyMeasure {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.hard:hover {
+  border-color: rgba(205, 21, 21, 1);
+  background-color: rgba(255, 236, 223, 1);
+}
+
+.medium:hover {
+  border-color: rgba(135, 123, 76, 1);
+  background-color: rgba(255, 246, 210, 1);
+}
+
+.easy:hover {
+  border-color: rgba(35, 184, 23, 1);
+  background-color: rgba(219, 255, 216, 1);
+}
+
 .headItems img {
   cursor: pointer;
 }
@@ -160,10 +206,6 @@
   height: 1px;
   border-bottom: 2px dotted rgba(255, 255, 255, 0.49);
   margin: 10px 0;
-}
-
-.question {
-  /* position: absolute; */
 }
 
 .answer {

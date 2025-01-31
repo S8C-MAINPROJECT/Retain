@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import "./HomeCard.css";
@@ -21,9 +21,9 @@ const HomeCard: React.FC<HomeCardProps> = ({
 }) => {
   const navigate = useNavigate();
   const handleCardClick = () => {
-        // Navigate to the Card page and pass the deck title as a parameter
-        navigate(`/card?deckTitle=${title}`); // Using query parameter for now, can be changed to path parameter if needed
-    };
+    // Navigate to the Card page and pass the deck title as a parameter
+    navigate(`/card?deckTitle=${title}`); // Using query parameter for now, can be changed to path parameter if needed
+  };
   return (
     <div className="homeCard">
       <div className="homeCard-items">
@@ -50,7 +50,10 @@ const HomeCard: React.FC<HomeCardProps> = ({
         </div>
       </div>
       <div className="button-container">
-        <div className="editAndView" onClick={() => navigate("/test")}>
+        <div
+          className="editAndView"
+          onClick={() => navigate(`/test?deckTitle=${title}`)}
+        >
           <img src={icons.edit2} />
           view and edit
         </div>

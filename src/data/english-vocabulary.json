@@ -1,22 +1,27 @@
 [
   {
     "question": "What is the synonym of 'Happy'?",
-    "answer": "The synonym of 'Happy' is 'Joyful'."
+    "answer": "The synonym of 'Happy' is 'Joyful'.",
+    "due_date": "2023-02-05"
   },
   {
     "question": "What is the antonym of 'Fast'?",
-    "answer": "The antonym of 'Fast' is 'Slow'."
+    "answer": "The antonym of 'Fast' is 'Slow'.",
+    "due_date": "2023-02-06"
   },
   {
     "question": "What is the meaning of 'Benevolent'?",
-    "answer": "The meaning of 'Benevolent' is 'Kind and Generous'."
+    "answer": "The meaning of 'Benevolent' is 'Kind and Generous'.",
+    "due_date": "2023-02-07"
   },
   {
     "question": "What is the synonym of 'Begin'?",
-    "answer": "The synonym of 'Begin' is 'Start'."
+    "answer": "The synonym of 'Begin' is 'Start'.",
+    "due_date": "2023-02-08"
   },
   {
     "question": "What is the antonym of 'Difficult'?",
-    "answer": "The antonym of 'Difficult' is 'Easy'."
+    "answer": "The antonym of 'Difficult' is 'Easy'.",
+    "due_date": "2023-02-09"
   }
 ]
