@@ -10,6 +10,8 @@ import {
   fsrs,
   generatorParameters,
   Card as FSRSCardType,
+  Rating,
+  Grade,
 } from "ts-fsrs";
 
 interface CardInStorage extends FSRSCardType {
@@ -30,8 +32,8 @@ const Card = () => {
   const [progress, setProgress] = useState(2);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [rating, setRating] = useState(0);
   const [animation, setAnimation] = useState("");
+  const [dueDate, SetDueDate] = useState(new Date());
   const [db, setDb] = useState<CardInStorage[]>([
     {
       cid: "loading-cid",
@@ -168,16 +170,17 @@ const Card = () => {
     };
   }, [showAnswer]); // Dependency array (important - see below)
 
-  const handleNext = (difficulty: number) => {
-    console.log(difficulty);
-      
-    setAnimation("slideOutLeft");
+  const handleNext = (difficulty: Grade) => {
+    const shedule = f.repeat(getCardData(0), new Date());
+    SetDueDate(shedule[difficulty].card.due);
     setTimeout(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % db.length);
-      setAnimation("slideInRight");
-    }, 400);
-    setShowAnswer(false);
-    setRating(difficulty);
+      setAnimation("slideOutLeft");
+      setTimeout(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % db.length);
+        setAnimation("slideInRight");
+      }, 400);
+      setShowAnswer(false);
+    }, 1200);
   };
 
   const handlePrev = () => {
@@ -295,18 +298,26 @@ const Card = () => {
             <br></br>
             <span className="difficultyMeasure">Again</span>
           </button>
-          <button
-            className="difficultyBtn medium"onClick={() => handleNext(4)}>
-            <span className="difficultyTime">4 day</span>
+          <button className="difficultyBtn hard" onClick={() => handleNext(2)}>
+            <span className="difficultyTime">15 min</span>
             <br></br>
-            <span className="difficultyMeasure">Easy</span>
+            <span className="difficultyMeasure">Hard</span>
           </button>
           <button className="difficultyBtn easy" onClick={() => handleNext(3)}>
             <span className="difficultyTime">1 day</span>
             <br></br>
             <span className="difficultyMeasure">Good</span>
           </button>
+          <button
+            className="difficultyBtn medium"
+            onClick={() => handleNext(4)}
+          >
+            <span className="difficultyTime">4 day</span>
+            <br></br>
+            <span className="difficultyMeasure">Easy</span>
+          </button>
         </div>
+        <div className="dueDate">Next Due Date: {dueDate.toDateString()}</div>
       </div>
     </div>
   );
