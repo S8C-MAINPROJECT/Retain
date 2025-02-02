@@ -13,6 +13,7 @@ const params = generatorParameters({
 });
 const f = fsrs(params);
 const card = createEmptyCard(new Date("2022-2-1 10:00:00")); // createEmptyCard();
+console.log(card);
 const now = new Date("2022-2-2 10:00:00"); // new Date();
 const scheduling_cards = f.repeat(card, now);
 

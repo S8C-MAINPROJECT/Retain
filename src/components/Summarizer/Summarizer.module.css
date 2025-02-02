@@ -1,0 +1,95 @@
+.summarizerContainer {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.fileUpload {
+  cursor: pointer;
+  padding: 10px 16px;
+  background: #e0f7fa;
+  border: 2px dashed #00796b;
+  border-radius: 8px;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.fileUpload input {
+  display: none;
+}
+
+.or {
+  font-size: 1rem;
+  color: #666;
+}
+
+.inputField {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+button {
+  background: #00796b;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #004d40;
+}
+
+.summaryBox {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.summaryBox h3 {
+  margin-bottom: 8px;
+  font-size: 1.4rem;
+}
+
+.downloadButton {
+  background: #00796b;
+  color: white;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.downloadButton:hover {
+  background: #004d40;
+}

@@ -297,7 +297,7 @@ const Home = () => {
                 path="src/assets/jjj.webp"
               />
             ))}
-            <AddNew onManual={() => setIsDeckModalOpen(true)} />
+            <AddNew onManual={() => setIsDeckModalOpen(true)} />
           </div>
 
           {/* Upload Options */}
@@ -387,6 +387,7 @@ const Home = () => {
               )}
             </div>
           )}
+          {activeNav !== "deck" && <div className="gg">Hi</div>}
 
           {isDeckModalOpen && (
             <div className="modal-overlay">
@@ -424,17 +425,16 @@ export default Home;
 
 // import { YoutubeTranscript } from "youtube-transcript";
 
+// const [decks, setDecks] = useState<
+//   Array<{ title: string; completed: number; total: number }>
+// >([{ title: "Capital Countries", completed: 3, total: 11 }]);
 
-  // const [decks, setDecks] = useState<
-  //   Array<{ title: string; completed: number; total: number }>
-  // >([{ title: "Capital Countries", completed: 3, total: 11 }]);
-
-  // const [deck2, setDeck2] = useState<
-  //   Array<{ title: string; completed: number; total: number }>
-  // >([
-  //   { title: "Capital Countries", completed: 3, total: 11 },
-  //   { title: "English Vocabulary", completed: 3, total: 11 },
-  // ]);
+// const [deck2, setDeck2] = useState<
+//   Array<{ title: string; completed: number; total: number }>
+// >([
+//   { title: "Capital Countries", completed: 3, total: 11 },
+//   { title: "English Vocabulary", completed: 3, total: 11 },
+// ]);
 
 // const [file, setFile] = useState<File | null>(null);
 // const [question, setQuestion] = useState('');
