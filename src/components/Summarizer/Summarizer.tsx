@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import styles from "./Summarizer.module.css";
 
 function Summarizer() {
@@ -27,12 +27,24 @@ function Summarizer() {
     );
   };
 
+  const handleClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   return (
     <div className={styles.summarizerContainer}>
       <h2>Summarize anything</h2>
 
       <div className={styles.inputContainer}>
-        <div className={styles.AddNew}>
+        <div className={styles.AddNew} onClick={handleClick}>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".pdf"
+            onChange={handleFileChange}
+            style={{ display: "none" }}
+          />
           <img src="src/assets/Add.svg" alt="" />
           <p>Click to add a pdf</p>
         </div>
