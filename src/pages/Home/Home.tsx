@@ -9,6 +9,7 @@ import SecondaryBtn from "../../components/Button/secondaryBtn";
 import HomeCard from "../../components/HomeCard/HomeCard";
 import { AddNew } from "../../components/AddNew/AddNew";
 import { jwtDecode } from "jwt-decode";
+import Summarizer from "../../components/Summarizer/Summarizer";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
 
@@ -21,7 +22,7 @@ const Home = () => {
   >([]);
 
   const [isDeckModalOpen, setIsDeckModalOpen] = useState(false);
-  const [activeNav, setActiveNav] = useState("deck");
+  const [activeNav, setActiveNav] = useState<String | null>("deck");
   const [show, setShow] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [text, setText] = useState<File | null>(null);
@@ -58,10 +59,6 @@ const Home = () => {
 
   const navigate = useNavigate();
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  const handleNavClick = (navItem: string) => {
-    setActiveNav(navItem); // Update active nav item on click
-  };
 
   const handleDeckSubmit = () => {
     if (deckTitle && totalQuestions) {
@@ -250,13 +247,13 @@ const Home = () => {
           {/* Conditionally apply 'open' class */}
           <div
             className={`nav-item ${activeNav === "deck" ? "active" : ""}`} // Conditional 'active' class
-            onClick={() => handleNavClick("deck")} // Handle click for Deck
+            onClick={() => setActiveNav("deck")} // Handle click for Deck
           >
             Deck
           </div>
           <div
             className={`nav-item ${activeNav === "summarize" ? "active" : ""}`} // Conditional 'active' class
-            onClick={() => handleNavClick("summarize")} // Handle click for Summarize
+            onClick={() => setActiveNav("summarize")} // Handle click for Summarize
           >
             Summarize
           </div>
@@ -387,7 +384,6 @@ const Home = () => {
               )}
             </div>
           )}
-          {activeNav !== "deck" && <div className="gg">Hi</div>}
 
           {isDeckModalOpen && (
             <div className="modal-overlay">
@@ -417,6 +413,7 @@ const Home = () => {
           )}
         </div>
       )}
+      {activeNav === "summarize" && <Summarizer />}
     </>
   );
 };
