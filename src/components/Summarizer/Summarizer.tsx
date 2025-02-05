@@ -32,11 +32,10 @@ function Summarizer() {
       <h2>Summarize anything</h2>
 
       <div className={styles.inputContainer}>
-        <label className={styles.fileUpload}>
-          <input type="file" accept=".pdf" onChange={handleFileChange} />
-          <span>Click to add a PDF</span>
-        </label>
-
+        <div className={styles.AddNew}>
+          <img src="src/assets/Add.svg" alt="" />
+          <p>Click to add a pdf</p>
+        </div>
         <div className={styles.or}>or</div>
 
         <input

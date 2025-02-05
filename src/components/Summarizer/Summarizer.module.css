@@ -1,10 +1,9 @@
 .summarizerContainer {
-  padding: 20px;
-  max-width: 600px;
   margin: 0 auto;
   background: #f9f9f9;
   border-radius: 12px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
 }
 
 h2 {
@@ -15,9 +14,29 @@ h2 {
 
 .inputContainer {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 10px;
   margin-bottom: 16px;
+}
+
+.AddNew {
+  width: 50%;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-left: 16px;
+  border-radius: 21px;
+  justify-content: center;
+  border: 2px dashed #0d440829;
+  color: #0000007a;
+  cursor: pointer;
+}
+
+.AddNew:hover {
+  border: 2px dashed #51c546;
 }
 
 .fileUpload {
@@ -40,7 +59,7 @@ h2 {
 }
 
 .inputField {
-  flex-grow: 1;
+  width: 50%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -54,8 +73,8 @@ h2 {
 }
 
 button {
-  background: #00796b;
-  color: white;
+  background: #ffffff;
+  color: rgb(0, 0, 0);
   padding: 8px 14px;
   border: none;
   border-radius: 8px;
@@ -64,7 +83,7 @@ button {
 }
 
 button:hover {
-  background: #004d40;
+  background: #ebebeb;
 }
 
 .summaryBox {
@@ -81,7 +100,7 @@ button:hover {
 }
 
 .downloadButton {
-  background: #00796b;
+  background: #2a2a2a;
   color: white;
   padding: 6px 10px;
   border: none;
@@ -91,5 +110,5 @@ button:hover {
 }
 
 .downloadButton:hover {
-  background: #004d40;
+  background: #000000;
 }
