@@ -20,6 +20,16 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
     console.log("isOpen:", isOpen);
   };
 
+  const fileInputImageRef = useRef<HTMLInputElement>(null);
+
+  const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
+    const imageFile = e.target.files?.[0];
+    if (imageFile) {
+      // You can add image type validation here if needed
+      setPdf(imageFile); // Still using setPdf for simplicity, consider renaming if handling PDF and Image differently later
+      console.log("Image uploaded:", imageFile.name);
+    }
+  };
   const handlePdf = (e: ChangeEvent<HTMLInputElement>) => {
     const PdfFile = e.target.files?.[0];
     if (PdfFile) {
@@ -111,7 +121,7 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
               <div
                 className="modal-box"
                 onClick={() => {
-                  fileInputRef.current?.click();
+                  fileInputImageRef.current?.click();
                 }}
               >
                 <img src="src/assets/addText.svg" alt="" />
@@ -120,8 +130,8 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
                   type="file"
                   style={{ display: "none" }}
                   accept=".png,.jpg,.jpeg"
-                  onChange={handlePdf}
-                  ref={fileInputRef}
+                  onChange={handleImage}
+                  ref={fileInputImageRef}
                 />
               </div>
               <div className="modal-box" onClick={handleManual}>
