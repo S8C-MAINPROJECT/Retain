@@ -82,12 +82,17 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
     setIsOpen(false);
   };
   return (
-    <div className="AddNew" onClick={handleClick}>
+    <div
+      className="AddNew"
+      onClick={() => {
+        setIsOpen(true);
+      }}
+    >
       <img src="src/assets/Add.svg" alt="" />
       <p onClick={handleClick}>Add a new deck</p>
       {isOpen && (
-        <div className="modal-overlay" onClick={handleClick}>
-          <div className="modal-content" onClick={handleClickNope}>
+        <div className="modal-overlay">
+          <div className="modal-content">
             <div className="modal-header">
               <h3>Add New Deck</h3>
             </div>
@@ -95,7 +100,6 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
               <div
                 className="modal-box"
                 onClick={() => {
-                  handleClick();
                   setShowDialog(true);
                 }}
               >
@@ -139,6 +143,14 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
                 Add manually
               </div>
             </div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOpen(false);
+              }}
+            >
+              close
+            </button>
           </div>
         </div>
       )}
@@ -159,7 +171,9 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
               </button>
               <button
                 className="dialogButton cancel"
-                onClick={() => setShowDialog(false)}
+                onClick={() => {
+                  setShowDialog(false);
+                }}
               >
                 Cancel
               </button>

@@ -105,7 +105,7 @@ const Card = () => {
       let storedCards = await localStorage.getItem(localStorageKey);
       if (storedCards) {
         const ParsedCards = JSON.parse(storedCards);
-        console.log("Loaded cards from local storage:", storedCards);
+        // console.log("Loaded cards from local storage:", storedCards);
         setDb(ParsedCards);
       } else if (dataFile) {
         try {
@@ -173,6 +173,7 @@ const Card = () => {
   const handleNext = (difficulty: Grade) => {
     const shedule = f.repeat(getCardData(0), new Date());
     SetDueDate(shedule[difficulty].card.due);
+    console.log(shedule[difficulty].card.due);
     setTimeout(() => {
       setAnimation("slideOutLeft");
       setTimeout(() => {
