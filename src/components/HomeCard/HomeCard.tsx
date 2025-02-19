@@ -52,7 +52,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
       <div className="button-container">
         <div
           className="editAndView"
-          onClick={() => navigate(`/test?deckTitle=${title}`)}
+          onClick={() => navigate(`/deck?deckTitle=${title}`)}
         >
           <img src={icons.edit2} />
           view and edit

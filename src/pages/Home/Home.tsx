@@ -8,37 +8,40 @@ import PrimaryBtn from "../../components/Button/PrimaryBtn";
 import SecondaryBtn from "../../components/Button/secondaryBtn";
 import HomeCard from "../../components/HomeCard/HomeCard";
 import { AddNew } from "../../components/AddNew/AddNew";
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 import Summarizer from "../../components/Summarizer/Summarizer";
-
-
 
 const Home = () => {
   const [deckTitle, setDeckTitle] = useState("");
   const [totalQuestions, setTotalQuestions] = useState("");
 
   const [decks, setDecks] = useState<
-    Array<{ title: string; completed: number; total: number }>
+    Array<{ title: string; duecount: number; totalcount: number }>
   >([]);
 
   const [isDeckModalOpen, setIsDeckModalOpen] = useState(false);
   const [activeNav, setActiveNav] = useState<String | null>("deck");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-
   // Function to extract uid from the access token
   const getUidFromToken = (token: string) => {
+    console.log(token);
     const decoded: { id: number } = jwtDecode(token);
+    console.log(decoded.id);
     return decoded.id;
+    
   };
 
   const fetchDecks = async () => {
     const token = localStorage.getItem("accessToken"); // Retrieve token
     if (!token) return;
 
-    const uid = getUidFromToken(token); // Extract uid
+    const uid = getUidFromToken(token); // Extract user ID from token
+
     try {
-      const response = await axios.get(`http://localhost:3000/decks/${uid}`);
+      const response = await axios.get(`http://localhost:3000/decks/user/${uid}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setDecks(response.data); // Update state with fetched decks
     } catch (error) {
       console.error("Error fetching decks:", error);
@@ -59,8 +62,8 @@ const Home = () => {
         ...decks,
         {
           title: deckTitle,
-          completed: 0,
-          total: parseInt(totalQuestions),
+          duecount: 0,
+          totalcount: parseInt(totalQuestions),
         },
       ]);
       setDeckTitle("");
@@ -74,8 +77,6 @@ const Home = () => {
       setDecks(decks.filter((_, i) => i !== index));
     }
   };
-
-
 
   const handleLogout = () => {
     localStorage.clear();
@@ -128,8 +129,8 @@ const Home = () => {
               <HomeCard
                 key={0}
                 title={decks[0].title}
-                completed={decks[0].completed}
-                total={decks[0].total}
+                completed={decks[0].duecount}
+                total={decks[0].totalcount}
                 onDelete={() => handleDeleteDeck(0)}
                 path="src/assets/jjj.webp"
               />
@@ -141,15 +142,14 @@ const Home = () => {
               <HomeCard
                 key={index}
                 title={deck.title}
-                completed={deck.completed}
-                total={deck.total}
+                completed={deck.duecount}
+                total={deck.totalcount}
                 onDelete={() => handleDeleteDeck(index)}
                 path="src/assets/jjj.webp"
               />
             ))}
             <AddNew onManual={() => setIsDeckModalOpen(true)} />
           </div>
-
 
           {isDeckModalOpen && (
             <div className="modal-overlay">
@@ -185,84 +185,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// import { YoutubeTranscript } from "youtube-transcript";
-
-// const [decks, setDecks] = useState<
-//   Array<{ title: string; completed: number; total: number }>
-// >([{ title: "Capital Countries", completed: 3, total: 11 }]);
-
-// const [deck2, setDeck2] = useState<
-//   Array<{ title: string; completed: number; total: number }>
-// >([
-//   { title: "Capital Countries", completed: 3, total: 11 },
-//   { title: "English Vocabulary", completed: 3, total: 11 },
-// ]);
-
-// const [file, setFile] = useState<File | null>(null);
-// const [question, setQuestion] = useState('');
-// const [answer, setAnswer] = useState('');
-// const [isModalOpen, setIsModalOpen] = useState(false);
-// const handleSubmit = () => {
-//   // Handle the submission logic here
-//   setIsModalOpen(false);
-// };
-
-//   // Fetch the transcript
-//   const transcript = await YoutubeTranscript.fetchTranscript(videoId);
-
-//   if (!transcript || transcript.length === 0) {
-//     alert("Transcript not available for this video.");
-//     setStatus("error");
-//     return;
-//   }
-
-//   // Prepare transcript for sending
-//   const formattedTranscript = transcript.map((entry) => entry.text).join(" ");
-
-//   // Send the transcript to the backend
-//   await axios.post("https://your-backend-endpoint.com/api/transcript", {
-//     transcript: formattedTranscript,
-//     videoId,
-//   });
-
-//   setStatus("success");
-//   console.log("Transcript sent to the backend successfully.");
-//   console.log("Transcript:", formattedTranscript);
-// } catch (error) {
-//   console.error("Error fetching or sending transcript:", error);
-//   setStatus("error");
-// } finally {
-//   setShowDialog(false); // Close the dialog after the operation
-//   setYoutubeLink(""); // Clear the input field
-// }
-// };
-
-// TESTING!!!
-//   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-//     if (e.target.files) {
-//       setFile(e.target.files[0]);
-//       console.log("File uploaded:", e.target.files[0].name);
-//     }
-//   }
-
-//   const handleFileUpload = async () => {
-//     if(!file) return;
-//     setStatus('uploading');
-//     setUploadProgress(0);
-//     const formData = new FormData();
-//     formData.append('file', file);
-
-//     try {
-//       await axios.post("https://httpbin.org/post", formData, { headers: { 'Content-Type': 'multipart/form-data' }, onUploadProgress: (progressEvent) => {
-//         const progress = progressEvent.total ? Math.round((progressEvent.loaded*100)/progressEvent.total) : 0;
-//         setUploadProgress(progress);
-//       },
-//       });
-//       setStatus('success');
-//       setUploadProgress(100);
-//     } catch (error) {
-//       setStatus('error');
-//       setUploadProgress(0);
-//     }
-//   }

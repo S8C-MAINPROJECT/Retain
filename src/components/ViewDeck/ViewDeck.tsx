@@ -24,36 +24,18 @@ function ViewDeck() {
 
   useEffect(() => {
     if (deckTitle) {
-      setTitle(deckTitle); // Update title if deckTitle changes
-      let filePath = "";
-      if (deckTitle === "Capital Countries") {
-        filePath = "/src/data/capital-countries.json";
-      } else if (deckTitle === "English Vocabulary") {
-        filePath = "/src/data/english-vocabulary.json";
-      }
-
-      if (filePath) {
-        fetch(filePath)
-          .then((response) => response.json())
-          .then((data) => {
-            // Assuming your JSON structure has 'question' and 'answer' fields
-            const formattedFlashcards = data.map((item: any) => ({
-              front: item.question,
-              back: item.answer,
-            }));
-            setFlashcards(formattedFlashcards);
-          })
-          .catch((error) => {
-            console.error("Error fetching flashcards:", error);
-            // Handle error appropriately, e.g., set flashcards to an empty array or show an error message
-            setFlashcards([]);
-          });
-      } else {
-        // Handle case where deckTitle doesn't match any file
-        setFlashcards([]);
-      }
+      fetch(`http://localhost:3000/flashcards/deck/${deckTitle}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setFlashcards(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching flashcards:", error);
+          setFlashcards([]);
+        });
     }
   }, [deckTitle]);
+  
 
   const handleEditClick = (index: number) => {
     setEditingIndex(index);

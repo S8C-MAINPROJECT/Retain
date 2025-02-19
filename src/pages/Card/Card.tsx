@@ -94,7 +94,7 @@ const Card = () => {
     // Determine the JSON file to load based on deckTitle
     if (deckTitle === "Capital Countries") {
       dataFile = import("../../data/capital-countries.json");
-    } else if (deckTitle === "English Vocabulary") {
+    } else if (deckTitle === "Artificial Intelligence") {
       dataFile = import("../../data/english-vocabulary.json");
     } else {
       console.warn(`Unknown deck title: ${deckTitle}. Loading default data.`);
