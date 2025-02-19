@@ -30,6 +30,7 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       console.log("Image uploaded:", imageFile.name);
     }
   };
+
   const handlePdf = (e: ChangeEvent<HTMLInputElement>) => {
     const PdfFile = e.target.files?.[0];
     if (PdfFile) {
@@ -43,36 +44,36 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       alert("Please enter a valid YouTube link.");
       return;
     }
-
     setStatus("uploading");
-
+  
     try {
-      // Extract video ID from the link
+      // Validate and extract video ID
       const videoIdMatch = youtubeLink.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
       const videoId = videoIdMatch ? videoIdMatch[1] : null;
-
       if (!videoId) {
         alert("Invalid YouTube link. Please provide a valid link.");
         setStatus("error");
         return;
       }
-
-      // Post the YouTube link to the backend
-      await axios.post("https://localhost:3000/api/youtube-summary/summarize", {
-        youtubeLink,
-      });
-
+  
+      // Post the YouTube link as JSON
+      await axios.post(
+        "http://localhost:3000/youtube/transcript",
+        { url: youtubeLink }, // Correct JSON format
+        { headers: { "Content-Type": "application/json" } } // Explicit header
+      );
+  
       setStatus("success");
-      console.log("YouTube link sent to the backend successfully.");
-      console.log("YouTube Link:", youtubeLink);
+      console.log("YouTube link sent successfully.");
     } catch (error) {
       console.error("Error sending YouTube link:", error);
       setStatus("error");
     } finally {
-      setShowDialog(false); // Close the dialog after the operation
-      setYoutubeLink(""); // Clear the input field
+      setShowDialog(false);
+      setYoutubeLink(""); // Clear input
     }
   };
+  
   const handleClickNope = (e: { stopPropagation: () => void }) => {
     e.stopPropagation();
   };
@@ -81,6 +82,7 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
     onManual();
     setIsOpen(false);
   };
+
   return (
     <div
       className="AddNew"
