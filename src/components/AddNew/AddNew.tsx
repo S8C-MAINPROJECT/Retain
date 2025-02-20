@@ -29,6 +29,13 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       setPdf(imageFile); // Still using setPdf for simplicity, consider renaming if handling PDF and Image differently later
       console.log("Image uploaded:", imageFile.name);
     }
+    try {
+      axios.post("http://localhost:3000/flashcards/generate-from-image", imageFile, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
   };
 
   const handlePdf = (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,9 +44,13 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       setPdf(PdfFile);
       console.log("PDF uploaded:", PdfFile.name);
     }
-    axios.post("http://localhost:3000/flashcards/generate-from-pdf", PdfFile, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    try {
+      axios.post("http://localhost:3000/flashcards/generate-from-pdf", PdfFile, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    } catch (error) {
+      console.error("Error uploading PDF:", error);
+    }
   };
 
   const handleYoutubeUpload = async () => {
