@@ -33,6 +33,7 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       axios.post("http://localhost:3000/flashcards/generate-from-image", imageFile, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      console.log("Image uploaded successfully.");
     } catch (error) {
       console.error("Error uploading image:", error);
     }
@@ -48,6 +49,7 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       axios.post("http://localhost:3000/flashcards/generate-from-pdf", PdfFile, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      console.log("PDF uploaded successfully");
     } catch (error) {
       console.error("Error uploading PDF:", error);
     }
@@ -76,7 +78,6 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
         { url: youtubeLink }, // Correct JSON format
         { headers: { "Content-Type": "application/json" } } // Explicit header
       );
-  
       setStatus("success");
       console.log("YouTube link sent successfully.");
     } catch (error) {
