@@ -37,6 +37,9 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       setPdf(PdfFile);
       console.log("PDF uploaded:", PdfFile.name);
     }
+    axios.post("http://localhost:3000/flashcards/generate-from-pdf", PdfFile, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
   };
 
   const handleYoutubeUpload = async () => {
