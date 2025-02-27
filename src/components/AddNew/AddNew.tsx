@@ -1,6 +1,7 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState, useEffect } from "react";
 import "./AddNew.css";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 interface AddNewProps {
   onManual: () => void;
@@ -12,46 +13,82 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [pdf, setPdf] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputImageRef = useRef<HTMLInputElement>(null);
   const [youtubeLink, setYoutubeLink] = useState<string>("");
   const [showDialog, setShowDialog] = useState<boolean>(false);
   const [status, setStatus] = useState<UploadStatus>("idle");
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-    console.log("isOpen:", isOpen);
+  const [uid, setUid] = useState<number | null>(null);
+
+  const getUidFromToken = (token: string) => {
+    console.log(token);
+    const decoded: { id: number } = jwtDecode(token);
+    console.log(decoded.id);
+    return decoded.id;
   };
 
-  const fileInputImageRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+      const token = localStorage.getItem("accessToken");
+      if (token) {
+          setUid(getUidFromToken(token));
+      }
+  }, []);
+  
+  if (!uid) return null;
+  
+  const fetchDeckNumber = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/decks/latestdeck/${uid}`);
+      const { did } = response.data;
+      return did + 1;
+    } catch (error) {
+      console.error("Failed to fetch deck number:", error);
+    }
+  };
 
-  const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const imageFile = e.target.files?.[0];
     if (imageFile) {
-      // You can add image type validation here if needed
-      setPdf(imageFile); // Still using setPdf for simplicity, consider renaming if handling PDF and Image differently later
+      setPdf(imageFile);
       console.log("Image uploaded:", imageFile.name);
     }
+    const deckNumber = await fetchDeckNumber();
+
     try {
-      axios.post("http://localhost:3000/flashcards/generate-from-image", imageFile, {
+      const formData = new FormData();
+      formData.append("image", imageFile as Blob);
+      formData.append("deckNumber", deckNumber.toString());
+
+      await axios.post("http://localhost:3000/question-answer/generate-from-image", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log("Image uploaded successfully.");
+      setStatus("success");
+      console.log("Image posted successfully.");
     } catch (error) {
       console.error("Error uploading image:", error);
+      setStatus("error");
     }
   };
 
-  const handlePdf = (e: ChangeEvent<HTMLInputElement>) => {
+  const handlePdf = async (e: ChangeEvent<HTMLInputElement>) => {
     const PdfFile = e.target.files?.[0];
     if (PdfFile) {
       setPdf(PdfFile);
       console.log("PDF uploaded:", PdfFile.name);
     }
+    const deckNumber = await fetchDeckNumber();
     try {
-      axios.post("http://localhost:3000/flashcards/generate-from-pdf", PdfFile, {
+      const formData = new FormData();
+      formData.append("pdf", PdfFile as Blob);
+      formData.append("deckNumber", deckNumber.toString());
+
+      await axios.post("http://localhost:3000/question-answer/generate-from-pdf", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log("PDF uploaded successfully");
+      console.log("PDF posted successfully");
+      setStatus("success");
     } catch (error) {
       console.error("Error uploading PDF:", error);
+      setStatus("error");
     }
   };
 
@@ -61,36 +98,25 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       return;
     }
     setStatus("uploading");
-  
+    const deckNumber = await fetchDeckNumber();
     try {
-      // Validate and extract video ID
-      const videoIdMatch = youtubeLink.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
-      const videoId = videoIdMatch ? videoIdMatch[1] : null;
-      if (!videoId) {
-        alert("Invalid YouTube link. Please provide a valid link.");
-        setStatus("error");
-        return;
-      }
-  
-      // Post the YouTube link as JSON
       await axios.post(
         "http://localhost:3000/youtube/transcript",
-        { url: youtubeLink }, // Correct JSON format
-        { headers: { "Content-Type": "application/json" } } // Explicit header
+        {
+          url: youtubeLink,
+          deckNumber,
+        },
+        { headers: { "Content-Type": "application/json" } }
       );
       setStatus("success");
-      console.log("YouTube link sent successfully.");
+      console.log("YouTube link posted successfully.");
     } catch (error) {
       console.error("Error sending YouTube link:", error);
       setStatus("error");
     } finally {
       setShowDialog(false);
-      setYoutubeLink(""); // Clear input
+      setYoutubeLink("");
     }
-  };
-  
-  const handleClickNope = (e: { stopPropagation: () => void }) => {
-    e.stopPropagation();
   };
 
   const handleManual = () => {
@@ -106,7 +132,7 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       }}
     >
       <img src="src/assets/Add.svg" alt="" />
-      <p onClick={handleClick}>Add a new deck</p>
+      <p>Add a new deck</p>
       {isOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -114,60 +140,29 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
               <h3>Add New Deck</h3>
             </div>
             <div className="modal-box-container">
-              <div
-                className="modal-box"
-                onClick={() => {
-                  setShowDialog(true);
-                }}
-              >
+              <div className="modal-box" onClick={() => setShowDialog(true)}>
                 <img src="src/assets/addYoutube.svg" alt="" />
                 Youtube link
               </div>
-              <div
-                className="modal-box"
-                onClick={() => {
-                  fileInputRef.current?.click();
-                }}
-              >
+              <div className="modal-box" onClick={() => fileInputRef.current?.click()}>
                 <img src="src/assets/addPDF.svg" alt="" />
                 Upload a pdf
-                <input // Hidden file input
-                  type="file"
-                  accept=".pdf"
-                  style={{ display: "none" }}
-                  onChange={handlePdf}
-                  ref={fileInputRef}
-                />
+                <input type="file" accept=".pdf" style={{ display: "none" }} onChange={handlePdf} ref={fileInputRef} />
               </div>
-              <div
-                className="modal-box"
-                onClick={() => {
-                  fileInputImageRef.current?.click();
-                }}
-              >
+              <div className="modal-box" onClick={() => fileInputImageRef.current?.click()}>
                 <img src="src/assets/addText.svg" alt="" />
                 Upload an image
-                <input
-                  type="file"
-                  style={{ display: "none" }}
-                  accept=".png,.jpg,.jpeg"
-                  onChange={handleImage}
-                  ref={fileInputImageRef}
-                />
+                <input type="file" style={{ display: "none" }} accept=".png,.jpg,.jpeg" onChange={handleImage} ref={fileInputImageRef} />
               </div>
               <div className="modal-box" onClick={handleManual}>
                 <img src="src/assets/addDeck.svg" alt="" />
                 Add manually
               </div>
             </div>
-            <button
-              onClick={(e) => {
+            <button onClick={(e) => {
                 e.stopPropagation();
                 setIsOpen(false);
-              }}
-            >
-              close
-            </button>
+              }}>Close</button>
           </div>
         </div>
       )}
@@ -201,6 +196,8 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
     </div>
   );
 };
+
+
 
 // const handlePdfUpload = async () => {
 //   if (!pdf) return;

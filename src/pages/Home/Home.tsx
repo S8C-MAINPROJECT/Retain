@@ -29,7 +29,6 @@ const Home = () => {
     const decoded: { id: number } = jwtDecode(token);
     console.log(decoded.id);
     return decoded.id;
-    
   };
 
   const fetchDecks = async () => {
