@@ -51,12 +51,12 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       setPdf(imageFile);
       console.log("Image uploaded:", imageFile.name);
     }
-    const deckNumber = await fetchDeckNumber();
+    const deckId = await fetchDeckNumber();
 
     try {
       const formData = new FormData();
       formData.append("image", imageFile as Blob);
-      formData.append("deckNumber", deckNumber.toString());
+      formData.append("deckId", deckId.toString());
 
       await axios.post("http://localhost:3000/question-answer/generate-from-image", formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -75,11 +75,11 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       setPdf(PdfFile);
       console.log("PDF uploaded:", PdfFile.name);
     }
-    const deckNumber = await fetchDeckNumber();
+    const deckId = await fetchDeckNumber();
     try {
       const formData = new FormData();
       formData.append("pdf", PdfFile as Blob);
-      formData.append("deckNumber", deckNumber.toString());
+      formData.append("deckId", deckId.toString());
 
       await axios.post("http://localhost:3000/question-answer/generate-from-pdf", formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -98,13 +98,13 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       return;
     }
     setStatus("uploading");
-    const deckNumber = await fetchDeckNumber();
+    const deckId = await fetchDeckNumber();
     try {
       await axios.post(
         "http://localhost:3000/youtube/transcript",
         {
           url: youtubeLink,
-          deckNumber,
+          deckId,
         },
         { headers: { "Content-Type": "application/json" } }
       );
