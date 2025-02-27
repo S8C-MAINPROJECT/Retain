@@ -45,53 +45,63 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
     }
   };
 
-  const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    const imageFile = e.target.files?.[0];
-    if (imageFile) {
+// 📸 Handle Image Upload
+const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
+  const imageFile = e.target.files?.[0];
+  if (imageFile) {
       setPdf(imageFile);
       console.log("Image uploaded:", imageFile.name);
-    }
-    const deckId = await fetchDeckNumber();
+  }
+  
+  const deckId = await fetchDeckNumber();
 
-    try {
+  try {
       const formData = new FormData();
-      formData.append("image", imageFile as Blob);
+      formData.append("image", imageFile as Blob); // Keep "image" as key to match backend
+      formData.append("count", "5");
       formData.append("deckId", deckId.toString());
 
       await axios.post("http://localhost:3000/question-answer/generate-from-image", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+          headers: { "Content-Type": "multipart/form-data" },
       });
+      
       setStatus("success");
       console.log("Image posted successfully.");
-    } catch (error) {
+  } catch (error) {
       console.error("Error uploading image:", error);
       setStatus("error");
-    }
-  };
+  }
+};
 
-  const handlePdf = async (e: ChangeEvent<HTMLInputElement>) => {
-    const PdfFile = e.target.files?.[0];
-    if (PdfFile) {
+// 📄 Handle PDF Upload
+const handlePdf = async (e: ChangeEvent<HTMLInputElement>) => {
+  const PdfFile = e.target.files?.[0];
+  if (PdfFile) {
       setPdf(PdfFile);
       console.log("PDF uploaded:", PdfFile.name);
-    }
-    const deckId = await fetchDeckNumber();
-    try {
+  }
+
+  const deckId = await fetchDeckNumber();
+
+  try {
       const formData = new FormData();
-      formData.append("pdf", PdfFile as Blob);
+      formData.append("pdf", PdfFile as Blob); // Keep "pdf" as key to match backend
+      formData.append("count", "5");
       formData.append("deckId", deckId.toString());
 
       await axios.post("http://localhost:3000/question-answer/generate-from-pdf", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+          headers: { "Content-Type": "multipart/form-data" },
       });
+
       console.log("PDF posted successfully");
       setStatus("success");
-    } catch (error) {
+  } catch (error) {
       console.error("Error uploading PDF:", error);
       setStatus("error");
-    }
-  };
+  }
+};
 
+// Handle YouTube Upload
   const handleYoutubeUpload = async () => {
     if (!youtubeLink.trim()) {
       alert("Please enter a valid YouTube link.");
@@ -104,6 +114,7 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
         "http://localhost:3000/youtube/transcript",
         {
           url: youtubeLink,
+          count: 5,
           deckId,
         },
         { headers: { "Content-Type": "application/json" } }
