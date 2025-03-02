@@ -7,7 +7,7 @@ import styles from "./Login.module.css";
 import logo from "./Assets/logo.svg";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance"; // Use the configured Axios instance
-import React from "react";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
