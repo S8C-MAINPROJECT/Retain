@@ -1,84 +1,3 @@
-// import { useState, useRef } from "react";
-// import styles from "./Summarizer.module.css";
-
-// function Summarizer() {
-//   const [file, setFile] = useState<File | null>(null);
-//   const [youtubeUrl, setYoutubeUrl] = useState<string>("");
-//   const [summary, setSummary] = useState<string>("");
-
-//   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     if (event.target.files) {
-//       setFile(event.target.files[0]);
-//       setSummary("");
-//     }
-//   };
-
-//   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setYoutubeUrl(event.target.value);
-//     setSummary("");
-//   };
-
-//   const handleSummarize = (type: "brief" | "medium" | "detailed") => {
-//     // Simulate a summary response
-//     setSummary(
-//       `This is a ${type} summary for ${
-//         file ? file.name : youtubeUrl ? youtubeUrl : "your input"
-//       }.`
-//     );
-//   };
-
-//   const handleClick = () => {
-//     fileInputRef.current?.click();
-//   };
-
-//   const fileInputRef = useRef<HTMLInputElement | null>(null);
-//   return (
-//     <div className={styles.summarizerContainer}>
-//       <h2>Summarize anything</h2>
-
-//       <div className={styles.inputContainer}>
-//         <div className={styles.AddNew} onClick={handleClick}>
-//           <input
-//             ref={fileInputRef}
-//             type="file"
-//             accept=".pdf"
-//             onChange={handleFileChange}
-//             style={{ display: "none" }}
-//           />
-//           <img src="src/assets/Add.svg" alt="" />
-//           <p>Click to add a pdf</p>
-//         </div>
-//         <div className={styles.or}>or</div>
-
-//         <input
-//           type="text"
-//           placeholder="Enter a YouTube link"
-//           value={youtubeUrl}
-//           onChange={handleUrlChange}
-//           className={styles.inputField}
-//         />
-//       </div>
-
-//       <div className={styles.buttonGroup}>
-//         <button onClick={() => handleSummarize("brief")}>Brief</button>
-//         <button onClick={() => handleSummarize("medium")}>Medium</button>
-//         <button onClick={() => handleSummarize("detailed")}>Detailed</button>
-//       </div>
-
-//       {summary && (
-//         <div className={styles.summaryBox}>
-//           <h3>Summary</h3>
-//           <p>{summary}</p>
-//           <button className={styles.downloadButton}>Download as PDF</button>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default Summarizer;
-
-
 import { useState, useRef } from "react";
 import styles from "./Summarizer.module.css";
 import axios from "axios";
@@ -199,7 +118,7 @@ function Summarizer() {
               <p>{file ? `Uploaded: ${file.name}` : "Click to add a PDF or Image"}</p>
             </div>
             <div className={styles.or}>or</div>
-
+          
             <input
               type="text"
               placeholder="Enter a YouTube link"

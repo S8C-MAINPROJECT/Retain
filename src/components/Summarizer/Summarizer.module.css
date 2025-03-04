@@ -92,14 +92,6 @@ h2 {
   transition: background 0.3s, color 0.3s;
 }
 
-button.active {
-  border: 1px solid #51c546;
-}
-
-button:hover {
-  background: #ebebeb;
-}
-
 /* Selected button style */
 .buttonGroup button.selected {
   background: rgb(100, 97, 97);
