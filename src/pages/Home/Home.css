@@ -1,25 +1,36 @@
 .home {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  padding-top: 8rem;
+  height: fit-content;
+  margin-inline: 3rem;
+  margin-top: 6.8rem;
+  border: #e3e3e3 solid 1px;
+  border-bottom: #c5ffc0 solid 1px;
+  border-radius: 10px;
+  box-shadow: 1px 7px 20px 0px rgb(231 231 231) inset;
+  transition: box-shadow 0.25s ease-in-out;
 }
 
 .home h3 {
   font-weight: 300;
-  padding: 0 2rem;
-  font-size: 1.15em;
+  padding-inline: 2rem;
+  padding-top: 2rem;
+  font-size: 1.3em;
 }
 h3 span {
   font-weight: 400;
 }
+
 .homeHeader {
   position: fixed;
-  padding: 2.5rem 2rem;
+  top: 0;
+  padding-inline: 2rem;
+  margin-inline: 20px;
+  padding-top: 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: calc(100% - 40px);
   background-color: #fff;
 }
 .logo {
@@ -55,13 +66,19 @@ h3 span {
 }
 
 .nav-item {
+  position: relative;
   cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 5px;
+  padding: 8px 24px;
+  padding-bottom: 12px;
+  border-radius: 10px;
+  transition: box-shadow 0.25s ease-out;
 }
 
 .nav-item.active {
-  background-color: #f0f0f0;
+  border-radius: 6px;
+  border: 1px solid #dfdfdf;
+  border-bottom: #51c546 solid 2px;
+  box-shadow: 6px 5px 16px 0px rgba(0, 0, 0, 0.1) inset;
 }
 
 .decks {

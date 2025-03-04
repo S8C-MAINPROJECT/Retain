@@ -20,10 +20,10 @@ const App: React.FC = () => {
 
           {/* Protected Routes - Only accessible after login */}
           <Route element={<PrivateRoute />}>
-          <Route path="/home" element={<Home />} />
-          <Route path="/card" element={<Card />} />
-          <Route path="/deck" element={<ViewDeck />} />
-          <Route path="/test" element={<Summarizer />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/card" element={<Card />} />
+            <Route path="/deck" element={<ViewDeck />} />
+            <Route path="/test" element={<Summarizer />} />
           </Route>
         </Routes>
       </div>

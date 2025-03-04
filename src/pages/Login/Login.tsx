@@ -8,7 +8,6 @@ import logo from "./Assets/logo.svg";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance"; // Use the configured Axios instance
 
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,10 +17,13 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axiosInstance.post("http://localhost:3000/auth/login", {
-        email,
-        password,
-      });
+      const response = await axiosInstance.post(
+        "http://localhost:3000/auth/login",
+        {
+          email,
+          password,
+        }
+      );
 
       const { accessToken, refreshToken, user } = response.data;
 
@@ -30,7 +32,7 @@ const Login = () => {
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("user", JSON.stringify(user));
 
-      console.log("Login successful",JSON.stringify(user));
+      console.log("Login successful", JSON.stringify(user));
 
       // Redirect to the home page
       navigate("/home");
@@ -42,9 +44,12 @@ const Login = () => {
 
   return (
     <div className={styles.signup}>
-      
       <div className={styles.signupBoundingbox}>
-        <img className={styles.signupimg} src="src/pages/Login/Assets/whole.png"  alt="" />
+        <img
+          className={styles.signupimg}
+          src="src/pages/Login/Assets/whole.png"
+          alt=""
+        />
         <div className={styles.signupBoundingboxText}>
           <div className={styles.nameAndLogo}>
             <img src={logo} alt="Logo" />
@@ -52,8 +57,11 @@ const Login = () => {
           </div>
           <div className={styles.signupBoundingboxTextInner}>
             <h1>Login</h1>
-            {error ? <p className={styles.error}>{error}</p>:<h5>Enter your credentials to continue</h5>}
-            
+            {error ? (
+              <p className={styles.error}>{error}</p>
+            ) : (
+              <h5>Enter your credentials to continue</h5>
+            )}
           </div>
           <div className={styles.signupField}>
             <TextField
@@ -68,7 +76,10 @@ const Login = () => {
           </div>
           <div className={styles.signupButtons}>
             <PrimaryBtn name="Login" onClick={handleLogin} />
-            <SecondaryBtn name="SignUp Instead" onClick={() => navigate("/signup")} />
+            <SecondaryBtn
+              name="SignUp Instead"
+              onClick={() => navigate("/signup")}
+            />
           </div>
         </div>
       </div>

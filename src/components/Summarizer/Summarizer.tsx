@@ -78,7 +78,6 @@
 
 // export default Summarizer;
 
-
 import { useState, useRef } from "react";
 import styles from "./Summarizer.module.css";
 import axios from "axios";
@@ -89,7 +88,9 @@ function Summarizer() {
   const [summary, setSummary] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [mode, setMode] = useState<"brief" | "medium" | "detailed" | null>(null);
+  const [mode, setMode] = useState<"brief" | "medium" | "detailed" | null>(
+    null
+  );
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -129,14 +130,21 @@ function Summarizer() {
         formData.append("file", file);
         formData.append("mode", mode);
 
-        response = await axios.post("http://localhost:3000/summarizer/pdf", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
+        response = await axios.post(
+          "http://localhost:3000/summarizer/pdf",
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
       } else if (youtubeUrl.trim()) {
-        response = await axios.post("http://localhost:3000/summarizer/youtube", {
-          url: youtubeUrl,
-          mode,
-        });
+        response = await axios.post(
+          "http://localhost:3000/summarizer/youtube",
+          {
+            url: youtubeUrl,
+            mode,
+          }
+        );
       }
 
       if (response && response.data.summary) {
@@ -181,14 +189,34 @@ function Summarizer() {
       </div>
 
       <div className={styles.buttonGroup}>
-        <button className={mode === "brief" ? styles.active : ""} onClick={() => setMode("brief")}>Brief</button>
-        <button className={mode === "medium" ? styles.active : ""} onClick={() => setMode("medium")}>Medium</button>
-        <button className={mode === "detailed" ? styles.active : ""} onClick={() => setMode("detailed")}>Detailed</button>
+        <button
+          className={mode === "brief" ? styles.active : ""}
+          onClick={() => setMode("brief")}
+        >
+          Brief
+        </button>
+        <button
+          className={mode === "medium" ? styles.active : ""}
+          onClick={() => setMode("medium")}
+        >
+          Medium
+        </button>
+        <button
+          className={mode === "detailed" ? styles.active : ""}
+          onClick={() => setMode("detailed")}
+        >
+          Detailed
+        </button>
       </div>
-
-      <button className={styles.generateButton} onClick={handleGenerateSummary} disabled={loading}>
-        {loading ? "Generating summary..." : "Generate"}
-      </button>
+      <div className={styles.buttonGroup}>
+        <button
+          className={styles.generateButton}
+          onClick={handleGenerateSummary}
+          disabled={loading}
+        >
+          {loading ? "Generating summary..." : "Generate"}
+        </button>
+      </div>
 
       {error && <p className={styles.errorMessage}>{error}</p>}
 
@@ -203,4 +231,3 @@ function Summarizer() {
 }
 
 export default Summarizer;
-
