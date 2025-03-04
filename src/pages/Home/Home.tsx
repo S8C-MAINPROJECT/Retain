@@ -8,7 +8,7 @@ import PrimaryBtn from "../../components/Button/PrimaryBtn";
 import SecondaryBtn from "../../components/Button/secondaryBtn";
 import HomeCard from "../../components/HomeCard/HomeCard";
 import { AddNew } from "../../components/AddNew/AddNew";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import Summarizer from "../../components/Summarizer/Summarizer";
 
 const Home = () => {
@@ -38,9 +38,12 @@ const Home = () => {
     const uid = getUidFromToken(token); // Extract user ID from token
 
     try {
-      const response = await axios.get(`http://localhost:3000/decks/user/${uid}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        `http://localhost:3000/decks/user/${uid}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setDecks(response.data); // Update state with fetched decks
     } catch (error) {
       console.error("Error fetching decks:", error);
@@ -51,6 +54,7 @@ const Home = () => {
   useEffect(() => {
     fetchDecks();
   }, []);
+
 
   const navigate = useNavigate();
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);

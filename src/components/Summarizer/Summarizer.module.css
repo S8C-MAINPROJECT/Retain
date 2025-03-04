@@ -1,8 +1,13 @@
 .summarizerContainer {
-  margin: 0 auto;
+  margin-inline: 3rem;
+  margin-top: 6.8rem;
+  border: #e3e3e3 solid 1px;
+  border-radius: 10px;
+  box-shadow: 1px 7px 20px 0px rgb(231 231 231) inset;
+  border-bottom: #c5ffc0 solid 1px;
   padding: 1rem;
-  padding-top: 8rem;
-  border-radius: 12px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 h2 {
@@ -87,7 +92,11 @@ h2 {
   transition: background 0.3s, color 0.3s;
 }
 
-.buttonGroup button:hover {
+button.active {
+  border: 1px solid #51c546;
+}
+
+button:hover {
   background: #ebebeb;
 }
 
