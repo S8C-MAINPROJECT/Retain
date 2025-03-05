@@ -33,17 +33,17 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       }
   }, []);
   
-  if (!uid) return null;
+  if (!uid) return console.log("User ID not found.");
   
-  const fetchDeckNumber = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3000/decks/latestdeck/${uid}`);
-      const { did } = response.data;
-      return did + 1;
-    } catch (error) {
-      console.error("Failed to fetch deck number:", error);
-    }
-  };
+  // const fetchDeckNumber = async () => {
+  //   try {
+  //     const response = await axios.get(`http://localhost:3000/decks/latestdeck/${uid}`);
+  //     const { did } = response.data;
+  //     return did + 1;
+  //   } catch (error) {
+  //     console.error("Failed to fetch deck number:", error);
+  //   }
+  // };
 
 // 📸 Handle Image Upload
 const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -53,13 +53,14 @@ const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
       console.log("Image uploaded:", imageFile.name);
   }
   
-  const deckId = await fetchDeckNumber();
+  // const deckId = await fetchDeckNumber();
 
   try {
       const formData = new FormData();
       formData.append("image", imageFile as Blob); // Keep "image" as key to match backend
       formData.append("count", "5");
-      formData.append("deckId", deckId.toString());
+      formData.append("uid", uid.toString());
+      // formData.append("deckId", deckId.toString());
 
       await axios.post("http://localhost:3000/question-answer/generate-from-image", formData, {
           headers: { "Content-Type": "multipart/form-data" },
@@ -81,13 +82,14 @@ const handlePdf = async (e: ChangeEvent<HTMLInputElement>) => {
       console.log("PDF uploaded:", PdfFile.name);
   }
 
-  const deckId = await fetchDeckNumber();
+  // const deckId = await fetchDeckNumber();
 
   try {
       const formData = new FormData();
       formData.append("pdf", PdfFile as Blob); // Keep "pdf" as key to match backend
       formData.append("count", "5");
-      formData.append("deckId", deckId.toString());
+      formData.append("uid", uid.toString());
+      // formData.append("deckId", deckId.toString());
 
       await axios.post("http://localhost:3000/question-answer/generate-from-pdf", formData, {
           headers: { "Content-Type": "multipart/form-data" },
@@ -108,14 +110,15 @@ const handlePdf = async (e: ChangeEvent<HTMLInputElement>) => {
       return;
     }
     setStatus("uploading");
-    const deckId = await fetchDeckNumber();
+    // const deckId = await fetchDeckNumber();
     try {
       await axios.post(
         "http://localhost:3000/youtube/transcript",
         {
           url: youtubeLink,
           count: 5,
-          deckId,
+          uid: uid,
+          
         },
         { headers: { "Content-Type": "application/json" } }
       );
