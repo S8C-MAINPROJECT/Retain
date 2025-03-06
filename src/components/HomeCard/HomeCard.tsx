@@ -52,7 +52,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
       <div className="button-container">
         <div
           className="editAndView"
-          onClick={() => navigate(`/deck?deckTitle=${title}`)}
+          onClick={() => navigate("/deck", { state: { did: 42, title: `${title}` } })}
         >
           <img src={icons.edit2} />
           view and edit
@@ -72,3 +72,5 @@ const HomeCard: React.FC<HomeCardProps> = ({
 };
 
 export default HomeCard;
+// onClick={() => navigate("/deck", { state: { did: 42, title: `${title}` } })}
+// onClick={() => navigate(`/deck?deckTitle=${title}`)}

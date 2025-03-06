@@ -7,34 +7,41 @@ import TextInput from "../Input/textInput";
 import PrimaryBtn from "../Button/PrimaryBtn";
 import SecondaryBtn from "../Button/secondaryBtn";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 
 interface Flashcard {
-  front: string;
-  back: string;
+  question: string;
+  answer: string;
 }
 
-function ViewDeck() {
+const ViewDeck = () => {
   const location = useLocation();
-  const deckTitle = new URLSearchParams(location.search).get("deckTitle");
+  const { did, title } = location.state ?? { did: null, title: "Untitled" };
+  if (!did) {
+    console.error("Invalid deck ID");
+    return;
+  }  
   const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [currentEdit, setCurrentEdit] = useState<Flashcard | null>(null);
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const Navigate = useNavigate();
-  const [title, setTitle] = useState(deckTitle || "Deck Title"); // Set title from deckTitle or default
 
   useEffect(() => {
-    if (deckTitle) {
-      fetch(`http://localhost:3000/flashcards/deck/${deckTitle}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setFlashcards(data);
+    if (title) {
+      axios
+        .get(`http://localhost:3000/flashcards/${did}`)
+        .then((response) => {
+          setFlashcards(response.data);
         })
         .catch((error) => {
           console.error("Error fetching flashcards:", error);
           setFlashcards([]);
         });
     }
-  }, [deckTitle]);
+  }, [title]);
   
 
   const handleEditClick = (index: number) => {
@@ -62,13 +69,21 @@ function ViewDeck() {
     setCurrentEdit(null);
   };
 
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleSubmit = () => {
     // Add new card logic here, potentially updating the JSON file or handling in memory
-    const newFlashcard: Flashcard = { front: question, back: answer };
+    const newFlashcard: Flashcard = { question: question, answer: answer };
     setFlashcards([...flashcards, newFlashcard]); // Update state
+    try {
+      axios.post(`http://localhost:3000/flashcards/create`, {
+        question,
+        answer,
+        did,
+      });
+      console.log("Flashcard added successfully");
+    } catch (error) {
+      console.error("Error adding flashcard:", error);
+    }
     setIsModalOpen(false);
     setQuestion(""); // Clear input fields
     setAnswer("");
@@ -85,7 +100,7 @@ function ViewDeck() {
         />
       </div>
       <div className={styles.header}>
-        <h1>{title}</h1>
+        <h1>{}</h1>
       </div>
 
       <div className={styles.container}>
@@ -110,15 +125,15 @@ function ViewDeck() {
               <>
                 <div className={styles.frontSide}>
                   <textarea
-                    value={currentEdit?.front || ""}
-                    onChange={(e) => handleInputChange("front", e.target.value)}
+                    value={currentEdit?.question || ""}
+                    onChange={(e) => handleInputChange("question", e.target.value)}
                     className={styles.textArea}
                   />
                 </div>
                 <div className={styles.backSide}>
                   <textarea
-                    value={currentEdit?.back || ""}
-                    onChange={(e) => handleInputChange("back", e.target.value)}
+                    value={currentEdit?.answer || ""}
+                    onChange={(e) => handleInputChange("answer", e.target.value)}
                     className={styles.textArea}
                   />
                 </div>
@@ -130,10 +145,10 @@ function ViewDeck() {
             ) : (
               <>
                 <div className={styles.cardSide}>
-                  <p>{card.front}</p>
+                  <p>{card.question}</p>
                 </div>
                 <div className={styles.cardSide}>
-                  <p>{card.back}</p>
+                  <p>{card.answer}</p>
                 </div>
                 <img
                   src={icons.edit2}

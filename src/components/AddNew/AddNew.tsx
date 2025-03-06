@@ -34,6 +34,7 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
   }, []);
   
   if (!uid) return console.log("User ID not found.");
+  console.log(uid)
   
   // const fetchDeckNumber = async () => {
   //   try {
@@ -62,7 +63,7 @@ const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
       formData.append("uid", uid.toString());
       // formData.append("deckId", deckId.toString());
 
-      await axios.post("http://localhost:3000/question-answer/generate-from-image", formData, {
+      await axios.post("http://localhost:3000/question-answer/image", formData, {
           headers: { "Content-Type": "multipart/form-data" },
       });
       
@@ -71,7 +72,10 @@ const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
   } catch (error) {
       console.error("Error uploading image:", error);
       setStatus("error");
+  } finally {
+    setIsOpen(false);
   }
+
 };
 
 // 📄 Handle PDF Upload
@@ -91,7 +95,7 @@ const handlePdf = async (e: ChangeEvent<HTMLInputElement>) => {
       formData.append("uid", uid.toString());
       // formData.append("deckId", deckId.toString());
 
-      await axios.post("http://localhost:3000/question-answer/generate-from-pdf", formData, {
+      await axios.post("http://localhost:3000/question-answer/pdf", formData, {
           headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -100,6 +104,8 @@ const handlePdf = async (e: ChangeEvent<HTMLInputElement>) => {
   } catch (error) {
       console.error("Error uploading PDF:", error);
       setStatus("error");
+  } finally {
+    setIsOpen(false);
   }
 };
 
@@ -113,7 +119,7 @@ const handlePdf = async (e: ChangeEvent<HTMLInputElement>) => {
     // const deckId = await fetchDeckNumber();
     try {
       await axios.post(
-        "http://localhost:3000/youtube/transcript",
+        "http://localhost:3000/question-answer/youtube",
         {
           url: youtubeLink,
           count: 5,
@@ -128,8 +134,8 @@ const handlePdf = async (e: ChangeEvent<HTMLInputElement>) => {
       console.error("Error sending YouTube link:", error);
       setStatus("error");
     } finally {
-      setShowDialog(false);
       setYoutubeLink("");
+      setIsOpen(false);
     }
   };
 
