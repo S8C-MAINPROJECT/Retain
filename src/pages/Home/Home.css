@@ -86,6 +86,7 @@ h3 span {
   align-items: center;
   padding: 2rem;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .homeCard-items {

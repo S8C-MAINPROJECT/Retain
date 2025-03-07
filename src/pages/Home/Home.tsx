@@ -12,7 +12,6 @@ import { jwtDecode } from "jwt-decode";
 import Summarizer from "../../components/Summarizer/Summarizer";
 
 const Home = () => {
-
   const [deckTitle, setDeckTitle] = useState("");
   const [totalQuestions, setTotalQuestions] = useState("");
   const [decks, setDecks] = useState<
@@ -53,7 +52,6 @@ const Home = () => {
   useEffect(() => {
     fetchDecks();
   }, []);
-
 
   const navigate = useNavigate();
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -142,6 +140,7 @@ const Home = () => {
           </div>
           <h3>All Decks</h3>
           <div className="decks">
+            <AddNew onManual={() => setIsDeckModalOpen(true)} />
             {decks.map((deck, index) => (
               <HomeCard
                 key={index}
@@ -153,7 +152,6 @@ const Home = () => {
                 path="src/assets/jjj.webp"
               />
             ))}
-            <AddNew onManual={() => setIsDeckModalOpen(true)} />
           </div>
 
           {isDeckModalOpen && (
