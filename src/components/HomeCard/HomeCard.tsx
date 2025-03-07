@@ -6,6 +6,7 @@ import icons from "../../assets/icons";
 
 interface HomeCardProps {
   title: string;
+  did: number;
   completed: number;
   total: number;
   onDelete: () => void;
@@ -14,6 +15,7 @@ interface HomeCardProps {
 
 const HomeCard: React.FC<HomeCardProps> = ({
   title,
+  did,
   completed,
   total,
   onDelete,
@@ -23,6 +25,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
   const handleCardClick = () => {
     // Navigate to the Card page and pass the deck title as a parameter
     navigate(`/card?deckTitle=${title}`); // Using query parameter for now, can be changed to path parameter if needed
+    navigate("/two", { state: { did: did, title: title } })
   };
   return (
     <div className="homeCard">
@@ -52,7 +55,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
       <div className="button-container">
         <div
           className="editAndView"
-          onClick={() => navigate("/deck", { state: { did: 42, title: `${title}` } })}
+          onClick={() => navigate("/deck", { state: { did: did, title: `${title}` } })}
         >
           <img src={icons.edit2} />
           view and edit

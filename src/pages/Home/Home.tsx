@@ -12,13 +12,12 @@ import { jwtDecode } from "jwt-decode";
 import Summarizer from "../../components/Summarizer/Summarizer";
 
 const Home = () => {
+
   const [deckTitle, setDeckTitle] = useState("");
   const [totalQuestions, setTotalQuestions] = useState("");
-
   const [decks, setDecks] = useState<
-    Array<{ title: string; duecount: number; totalcount: number }>
+    Array<{ did: number; title: string; duecount: number; totalcount: number }>
   >([]);
-
   const [isDeckModalOpen, setIsDeckModalOpen] = useState(false);
   const [activeNav, setActiveNav] = useState<String | null>("deck");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -64,6 +63,7 @@ const Home = () => {
       setDecks([
         ...decks,
         {
+          did: decks.length + 1,
           title: deckTitle,
           duecount: 0,
           totalcount: parseInt(totalQuestions),
@@ -131,6 +131,7 @@ const Home = () => {
             {decks.length > 0 && (
               <HomeCard
                 key={0}
+                did={decks[0].did}
                 title={decks[0].title}
                 completed={decks[0].duecount}
                 total={decks[0].totalcount}
@@ -144,6 +145,7 @@ const Home = () => {
             {decks.map((deck, index) => (
               <HomeCard
                 key={index}
+                did={deck.did}
                 title={deck.title}
                 completed={deck.duecount}
                 total={deck.totalcount}
