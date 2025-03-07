@@ -24,7 +24,7 @@ interface CardInStorage extends FSRSCardType {
 const Card = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  let deckTitle = params.get("deckTitle");
+  let deckTitle = params.get("title");
   if (deckTitle) {
     deckTitle = decodeURIComponent(deckTitle);
   }
