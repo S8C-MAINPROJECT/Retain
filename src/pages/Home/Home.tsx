@@ -81,9 +81,11 @@ const Home = () => {
       axios.post(
         "http://localhost:3000/decks",
         {
-          title: deckTitle,
+          did: decks.length + 1,
+          uid: uid,
           totalcount: totalQuestions,
-          uid,
+          duecount: 0,
+          title: deckTitle,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
