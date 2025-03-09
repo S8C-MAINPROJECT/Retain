@@ -91,7 +91,11 @@ const Home = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-    } catch (error) {}
+      console.log("Deck created successfully.");
+      fetchDecks();
+    } catch (error) {
+      console.error("Error creating deck:", error);
+    }
   };
 
   const handleDeleteDeck = (index: number) => {
