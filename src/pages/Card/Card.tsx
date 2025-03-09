@@ -89,8 +89,9 @@ const Card = () => {
 
   useEffect(() => {
     const deckTitle = params.get("deckTitle");
-    const did = params.get("did"); // Encode the deckTitle for use in the URL
+    const did = params.get("did"); // Get the deck ID from the URL query string
 
+    // Fetch cards from the API using the deck ID
     const loadCards = async () => {
       try {
         const response = await axios.get(

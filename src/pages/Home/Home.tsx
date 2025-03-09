@@ -72,6 +72,24 @@ const Home = () => {
       setTotalQuestions("");
       setIsDeckModalOpen(false);
     }
+    try {
+      const token = localStorage.getItem("accessToken");
+      if (!token) return;
+
+      const uid = getUidFromToken(token);
+
+      axios.post(
+        "http://localhost:3000/decks",
+        {
+          title: deckTitle,
+          totalcount: totalQuestions,
+          uid,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+    } catch (error) {}
   };
 
   const handleDeleteDeck = (index: number) => {
