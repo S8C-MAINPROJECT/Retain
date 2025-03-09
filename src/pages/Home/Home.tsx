@@ -92,7 +92,7 @@ const Home = () => {
         }
       );
       console.log("Deck created successfully.");
-      fetchDecks();
+      // fetchDecks();
     } catch (error) {
       console.error("Error creating deck:", error);
     }
