@@ -33,8 +33,13 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       }
   }, []);
   
-  if (!uid) return console.log("User ID not found.");
-  console.log(uid)
+  if (!uid) {
+    return (
+      <div>
+        <p>Loading user ID...</p>
+      </div>
+    );
+  }
   
   // const fetchDeckNumber = async () => {
   //   try {

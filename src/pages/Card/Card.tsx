@@ -1,4 +1,5 @@
 // src/pages/Card/Card.tsx
+import axios from "axios";
 import { useState, useEffect } from "react";
 import "./Card.css";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
@@ -24,7 +25,7 @@ interface CardInStorage extends FSRSCardType {
 const Card = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  let deckTitle = params.get("title");
+  let deckTitle = params.get("deckTitle");
   if (deckTitle) {
     deckTitle = decodeURIComponent(deckTitle);
   }
@@ -87,72 +88,54 @@ const Card = () => {
   // console.log(card1);
 
   useEffect(() => {
-    console.log("Deck Title in Card:", deckTitle);
-    let dataFile = null;
-    let localStorageKey = `card_${deckTitle}`;
-
-    // Determine the JSON file to load based on deckTitle
-    if (deckTitle === "Capital Countries") {
-      dataFile = import("../../data/capital-countries.json");
-    } else if (deckTitle === "Artificial Intelligence") {
-      dataFile = import("../../data/english-vocabulary.json");
-    } else {
-      console.warn(`Unknown deck title: ${deckTitle}. Loading default data.`);
-      dataFile = import("../../data/capital-countries.json"); // Default fallback
-    }
+    const deckTitle = params.get("deckTitle");
+    const did = params.get("did"); // Encode the deckTitle for use in the URL
 
     const loadCards = async () => {
-      let storedCards = await localStorage.getItem(localStorageKey);
-      if (storedCards) {
-        const ParsedCards = JSON.parse(storedCards);
-        // console.log("Loaded cards from local storage:", storedCards);
-        setDb(ParsedCards);
-      } else if (dataFile) {
-        try {
-          const module = await dataFile;
-          const initialCardsFromJSON = module.default;
-          const initializedCards: CardInStorage[] = initialCardsFromJSON.map(
-            (cardData: { question: string; answer: string }, index: number) => {
-              const fsrsCard = createEmptyCard(new Date()); // Initialize FSRS card with current date
-              return {
-                // Spread FSRS initial properties
-                cid: String(index + 1), // Simple CID, consider UUID for real app
-                did: "1", // Default Deck ID
-                front: cardData.question,
-                back: cardData.answer,
-                ...fsrsCard,
-              };
-            }
-          );
-          console.log("from data");
-          setDb(initializedCards);
-          localStorage.setItem(
-            localStorageKey,
-            JSON.stringify(initializedCards)
-          ); // Store initialized cards
-        } catch (error) {
-          console.error("Error loading or initializing deck data:", error);
-          setDb([
-            {
-              cid: "error-cid",
-              did: "error-did",
-              front: "Error loading data.",
-              back: "Please check console.",
-              due: new Date(),
-              stability: 0,
-              difficulty: 0,
-              elapsed_days: 0,
-              scheduled_days: 0,
-              lapses: 0,
-              reps: 0,
-              state: 0,
-            },
-          ]);
-        }
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/flashcards/${did}`
+        );
+        const apiCards: CardInStorage[] = response.data.map((item: any) => ({
+          cid: item._id, // Or however you get the CID from your API response
+          did: item.did,
+          front: item.question,
+          back: item.answer,
+          due: new Date(item.due_date), // Parse the date string
+          // ... map other properties from your API response
+          stability: 0,
+          difficulty: 0,
+          elapsed_days: 0,
+          scheduled_days: 0,
+          lapses: 0,
+          reps: 0,
+          state: 0,
+        })); // Assuming the API returns an array of CardInStorage objects
+        setDb(apiCards);
+      } catch (error: any) {
+        console.error("Error loading data from API:", error);
+        setDb([
+          {
+            cid: "error-cid",
+            did: "error-did",
+            front: "Error loading data from API.",
+            back: error.message || "Please check console.",
+            due: new Date(),
+            stability: 0,
+            difficulty: 0,
+            elapsed_days: 0,
+            scheduled_days: 0,
+            lapses: 0,
+            reps: 0,
+            state: 0,
+          },
+        ]);
       }
     };
 
     loadCards();
+
+    console.log(db);
   }, [deckTitle]);
 
   useEffect(() => {
@@ -249,7 +232,7 @@ const Card = () => {
 
             <div className="question_container">
               <h2 className="question">
-                {getCardData(0).front}
+                {getCardData(0)?.front || ""}
                 <img
                   src={icons.speakbtn}
                   alt="Speaker Icon"
@@ -264,10 +247,10 @@ const Card = () => {
 
             <div className="separator"></div>
             <div className="question">
-              <p>
+              <div>
                 {showAnswer ? (
                   <div className="answer">
-                    {getCardData(0).back}
+                    {getCardData(0)?.back || ""}
                     <img
                       src={icons.speakbtn}
                       alt="Speaker Icon"
@@ -281,7 +264,7 @@ const Card = () => {
                 ) : (
                   <div className="reveal">Tap or [Space] to reveal</div>
                 )}
-              </p>
+              </div>
             </div>
           </div>
         </div>

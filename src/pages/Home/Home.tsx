@@ -67,6 +67,7 @@ const Home = () => {
           totalcount: parseInt(totalQuestions),
         },
       ]);
+      console.log(decks);
       setDeckTitle("");
       setTotalQuestions("");
       setIsDeckModalOpen(false);

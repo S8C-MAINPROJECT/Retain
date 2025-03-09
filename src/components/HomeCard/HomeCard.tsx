@@ -23,9 +23,8 @@ const HomeCard: React.FC<HomeCardProps> = ({
 }) => {
   const navigate = useNavigate();
   const handleCardClick = () => {
-    // Navigate to the Card page and pass the deck title as a parameter
-    navigate(`/card?deckTitle=${title}`); // Using query parameter for now, can be changed to path parameter if needed
-    navigate("/two", { state: { did: did, title: title } })
+    // Navigate to the Card page and pass the deck title and did as parameters
+    navigate(`/card?deckTitle=${title}&did=${did}`);
   };
   return (
     <div className="homeCard">
@@ -55,7 +54,9 @@ const HomeCard: React.FC<HomeCardProps> = ({
       <div className="button-container">
         <div
           className="editAndView"
-          onClick={() => navigate("/deck", { state: { did: did, title: `${title}` } })}
+          onClick={() =>
+            navigate("/deck", { state: { did: did, title: `${title}` } })
+          }
         >
           <img src={icons.edit2} />
           view and edit
