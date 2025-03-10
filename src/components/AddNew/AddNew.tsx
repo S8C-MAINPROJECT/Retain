@@ -141,6 +141,7 @@ const handlePdf = async (e: ChangeEvent<HTMLInputElement>) => {
     } finally {
       setYoutubeLink("");
       setIsOpen(false);
+      setShowDialog(false);
     }
   };
 
