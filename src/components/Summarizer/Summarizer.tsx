@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import styles from "./Summarizer.module.css";
 import axios from "axios";
+import jsPDF from "jspdf";
 import PrimaryBtn from "../../components/Button/PrimaryBtn";
 
 function Summarizer() {
@@ -9,9 +10,7 @@ function Summarizer() {
   const [summary, setSummary] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [mode, setMode] = useState<"brief" | "medium" | "detailed" | null>(
-    null
-  );
+  const [mode, setMode] = useState<"brief" | "medium" | "detailed" | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -70,7 +69,6 @@ function Summarizer() {
           headers: { "Content-Type": "multipart/form-data" },
         });
       } else if (youtubeUrl.trim()) {
-        console.log("youtubeUrl", youtubeUrl);
         response = await axios.post("http://localhost:3000/summarizer/youtube", {
           url: youtubeUrl,
           mode,
@@ -85,6 +83,26 @@ function Summarizer() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDownloadPDF = () => {
+    if (!summary) return;
+
+    const doc = new jsPDF();
+    doc.setFontSize(14);
+    doc.text("Summary", 15, 20);
+    doc.setFontSize(12);
+    
+    const maxWidth = 180;
+    const lineHeight = 7;
+    const marginTop = 30;
+    
+    const splitSummary = doc.splitTextToSize(summary, maxWidth);
+    splitSummary.forEach((line: string | string[], index: number) => {
+      doc.text(line, 15, marginTop + index * lineHeight);
+    });
+
+    doc.save("summary.pdf");
   };
 
   const handleClick = () => {
@@ -152,8 +170,15 @@ function Summarizer() {
           summary && (
             <div className={styles.summaryBox}>
               <h3>Summary</h3>
-              <p>{summary}</p>
-              <button className={styles.downloadButton}>Download as PDF</button>
+              {/* Properly formatted summary with preserved line breaks */}
+              <div className={styles.summaryText}>
+                {summary.split("\n").map((line, index) => (
+                  <p key={index}>{line}</p>
+                ))}
+              </div>
+              <button className={styles.downloadButton} onClick={handleDownloadPDF}>
+                Download as PDF
+              </button>
             </div>
           )
         )}
