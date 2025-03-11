@@ -17,6 +17,9 @@ const Home = () => {
   const [decks, setDecks] = useState<
     Array<{ did: number; title: string; duecount: number; totalcount: number }>
   >([]);
+  const [dueDecks, setDueDecks] = useState<
+    Array<{ did: number; title: string; duecount: number; totalcount: number }>
+  >([]);
   const [isDeckModalOpen, setIsDeckModalOpen] = useState(false);
   const [activeNav, setActiveNav] = useState<String | null>("deck");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,13 +39,21 @@ const Home = () => {
     const uid = getUidFromToken(token); // Extract user ID from token
 
     try {
-      const response = await axios.get(
+      const response1 = await axios.get(
         `http://localhost:3000/decks/user/${uid}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setDecks(response.data); // Update state with fetched decks
+      setDecks(response1.data); // Update state with fetched decks
+
+      const response2 = await axios.get(
+        `http://localhost:3000/decks/due-cards/${uid}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setDueDecks(response2.data); // Update state with fetched
     } catch (error) {
       console.error("Error fetching decks:", error);
     }
@@ -149,20 +160,21 @@ const Home = () => {
             Welcome Back! you got <span id="no_lessons">3</span> lessons to
             review
           </h3>
-
           <div className="decks">
-            {decks.length > 0 && (
-              <HomeCard
-                key={0}
-                did={decks[0].did}
-                title={decks[0].title}
-                completed={decks[0].duecount}
-                total={decks[0].totalcount}
-                onDelete={() => handleDeleteDeck(0)}
-                path="src/assets/jjj.webp"
-              />
-            )}
+            {dueDecks.length > 0 &&
+              dueDecks.map((dueDeck, index) => (
+                <HomeCard
+                  key={index}
+                  did={dueDeck.did}
+                  title={dueDeck.title}
+                  completed={dueDeck.duecount}
+                  total={dueDeck.totalcount}
+                  onDelete={() => handleDeleteDeck(index)} // Pass the current index
+                  path="src/assets/jjj.webp"
+                />
+              ))}
           </div>
+
           <h3>All Decks</h3>
           <div className="decks">
             <AddNew onManual={() => setIsDeckModalOpen(true)} />
