@@ -16,7 +16,7 @@
 // } from "ts-fsrs";
 
 // interface CardInStorage extends FSRSCardType {
-//   cid: string; // Card ID, maybe generated using UUID or similar
+//   fid: string; // Card ID, maybe generated using UUID or similar
 //   did: string; // Deck ID - if needed for organizing decks
 //   front: string;
 //   back: string;
@@ -37,7 +37,7 @@
 //   const [dueDate, SetDueDate] = useState(new Date());
 //   const [db, setDb] = useState<CardInStorage[]>([
 //     {
-//       cid: "loading-cid",
+//       fid: "loading-fid",
 //       did: "loading-did",
 //       front: "Loading...",
 //       back: "Please wait.",
@@ -53,7 +53,7 @@
 //   ]);
 //   // Define type for db state
 //   // const card1 = {
-//   //   cid: "1",
+//   //   fid: "1",
 //   //   did: "1",
 //   //   front: "What is the synonym of 'Happy'?",
 //   //   back: "The synonym of 'Happy' is 'Joyful'.",
@@ -75,8 +75,8 @@
 //   // const card = createEmptyCard(new Date("2022-2-1 10:00:00"));
 //   // const now = new Date("2022-2-2 10:00:00"); // new Date();
 //   // const scheduling_cards1 = f.repeat(
-//   //   // Create a new object excluding cid, did, front, and back
-//   //   (({ cid, did, front, back, ...card1WithoutExcluded }) =>
+//   //   // Create a new object excluding fid, did, front, and back
+//   //   (({ fid, did, front, back, ...card1WithoutExcluded }) =>
 //   //     card1WithoutExcluded)(card1),
 //   //   now
 //   // );
@@ -98,7 +98,7 @@
 //           `http://localhost:3000/flashcards/${did}`
 //         );
 //         const apiCards: CardInStorage[] = response.data.map((item: any) => ({
-//           cid: item._id, // Or however you get the CID from your API response
+//           fid: item._id, // Or however you get the fid from your API response
 //           did: item.did,
 //           front: item.question,
 //           back: item.answer,
@@ -117,7 +117,7 @@
 //         console.error("Error loading data from API:", error);
 //         setDb([
 //           {
-//             cid: "error-cid",
+//             fid: "error-fid",
 //             did: "error-did",
 //             front: "Error loading data from API.",
 //             back: error.message || "Please check console.",
@@ -327,7 +327,7 @@ import {
 } from "ts-fsrs";
 
 interface CardInStorage extends FSRSCardType {
-  cid: string;
+  fid: string;
   did: string;
   front: string;
   back: string;
@@ -348,7 +348,7 @@ const Card = () => {
 
   const [db, setDb] = useState<CardInStorage[]>([
     {
-      cid: "loading-cid",
+      fid: "loading-fid",
       did: "loading-did",
       front: "Loading...",
       back: "Please wait.",
@@ -372,7 +372,7 @@ const Card = () => {
           `http://localhost:3000/flashcards/${did}`
         );
         const apiCards: CardInStorage[] = response.data.map((item: any) => ({
-          cid: item._id,
+          fid: item._id,
           did: item.did,
           front: item.question,
           back: item.answer,
@@ -390,7 +390,7 @@ const Card = () => {
         console.error("Error loading data from API:", error);
         setDb([
           {
-            cid: "error-cid",
+            fid: "error-fid",
             did: "error-did",
             front: "Error loading data from API.",
             back: error.message || "Please check console.",
