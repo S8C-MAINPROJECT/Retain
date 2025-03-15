@@ -8,7 +8,7 @@ import axios from "axios";
 interface HomeCardProps {
   title: string;
   did: number;
-  completed: number;
+  dueCount: number;
   total: number;
   onDelete: (did: number) => void;
   path: string;
@@ -17,7 +17,7 @@ interface HomeCardProps {
 const HomeCard: React.FC<HomeCardProps> = ({
   title,
   did,
-  completed,
+  dueCount,
   total,
   onDelete,
   path,
@@ -51,12 +51,12 @@ const HomeCard: React.FC<HomeCardProps> = ({
           </div>
           <div className="progress">
             <p>
-              Today: {completed}/{total}
+              Today: {dueCount}/{total}
             </p>
           </div>
           <div className="pgBar-home">
             <ProgressBar
-              progress={completed}
+              progress={dueCount}
               total={total}
               activecolor="rgba(81, 197, 70, 1)"
               deactivecolor="rgba(171, 250, 164, 1)"
@@ -67,17 +67,12 @@ const HomeCard: React.FC<HomeCardProps> = ({
       <div className="button-container">
         <div
           className="editAndView"
-          onClick={() =>
-            navigate("/deck", { state: { did, title } })
-          }
+          onClick={() => navigate("/deck", { state: { did, title } })}
         >
           <img src={icons.edit2} alt="Edit Icon" />
           view and edit
         </div>
-        <button
-          className="delete-button"
-          onClick={handleDelete}
-        >
+        <button className="delete-button" onClick={handleDelete}>
           × Delete deck
         </button>
       </div>

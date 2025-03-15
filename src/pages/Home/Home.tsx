@@ -23,6 +23,7 @@ const Home = () => {
   const [isDeckModalOpen, setIsDeckModalOpen] = useState(false);
   const [activeNav, setActiveNav] = useState<String | null>("deck");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [dueCardsMap, setDueCardsMap] = useState<Record<number, number>>({});
 
   // Function to extract uid from the access token
   const getUidFromToken = (token: string) => {
@@ -32,37 +33,67 @@ const Home = () => {
     return decoded.id;
   };
 
-  const fetchDecks = async () => {
-    const token = localStorage.getItem("accessToken"); // Retrieve token
-    if (!token) return;
-
-    const uid = getUidFromToken(token); // Extract user ID from token
-
-    try {
-      const response1 = await axios.get(
-        `http://localhost:3000/decks/user/${uid}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setDecks(response1.data); // Update state with fetched decks
-
-      const response2 = await axios.get(
-        `http://localhost:3000/decks/due-cards/${uid}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setDueDecks(response2.data); // Update state with fetched
-    } catch (error) {
-      console.error("Error fetching decks:", error);
-    }
-  };
-
-  // Call fetchDecks when the component mounts
   useEffect(() => {
+    async function fetchDecks() {
+      const token = localStorage.getItem("accessToken");
+      if (!token) return;
+
+      const uid = getUidFromToken(token);
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/decks/user/${uid}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setDecks(response.data);
+      } catch (error) {
+        console.error("Error fetching decks:", error);
+      }
+    }
+
     fetchDecks();
-  }, []);
+  }, []); // Runs only once when the component mounts
+
+  useEffect(() => {
+    if (decks.length === 0) return; // Prevent running on first render when decks are empty
+
+    async function fetchDueCardsCount() {
+      try {
+        const dueCardsArray = await Promise.all(
+          decks.map(async (deck: any) => {
+            try {
+              const response = await axios.get(
+                `http://localhost:3000/flashcards/${deck.did}`
+              );
+
+              const currentDate = new Date();
+              const dueCards = response.data.filter(
+                (card: any) => new Date(card.due_date) <= currentDate
+              );
+
+              return { did: deck.did, dueCount: dueCards.length };
+            } catch (error) {
+              console.error(
+                `Error fetching cards for deck ${deck.did}:`,
+                error
+              );
+              return { did: deck.did, dueCount: 0 };
+            }
+          })
+        );
+
+        const dueCardsObj = dueCardsArray.reduce((acc, item) => {
+          acc[item.did] = item.dueCount;
+          return acc;
+        }, {} as Record<number, number>);
+
+        setDueCardsMap(dueCardsObj);
+      } catch (error) {
+        console.error("Error fetching due cards:", error);
+      }
+    }
+
+    fetchDueCardsCount();
+  }, [decks]); // Runs when `decks` changes
 
   const navigate = useNavigate();
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -161,18 +192,21 @@ const Home = () => {
             review
           </h3>
           <div className="decks">
-            {dueDecks.length > 0 &&
-              dueDecks.map((dueDeck, index) => (
-                <HomeCard
-                  key={index}
-                  did={dueDeck.did}
-                  title={dueDeck.title}
-                  completed={dueDeck.duecount}
-                  total={dueDeck.totalcount}
-                  onDelete={() => handleDeleteDeck(index)} // Pass the current index
-                  path="src/assets/jjj.webp"
-                />
-              ))}
+            {decks.length > 0 &&
+              decks.map(
+                (dueDeck, index) =>
+                  dueCardsMap[dueDeck.did] >= 1 && (
+                    <HomeCard
+                      key={index}
+                      did={dueDeck.did}
+                      title={dueDeck.title}
+                      dueCount={dueCardsMap[dueDeck.did]}
+                      total={dueDeck.totalcount}
+                      onDelete={() => handleDeleteDeck(index)} // Pass the current index
+                      path="src/assets/jjj.webp"
+                    />
+                  )
+              )}
           </div>
 
           <h3>All Decks</h3>
@@ -183,7 +217,7 @@ const Home = () => {
                 key={index}
                 did={deck.did}
                 title={deck.title}
-                completed={deck.duecount}
+                dueCount={deck.duecount}
                 total={deck.totalcount}
                 onDelete={() => handleDeleteDeck(index)}
                 path="src/assets/jjj.webp"
