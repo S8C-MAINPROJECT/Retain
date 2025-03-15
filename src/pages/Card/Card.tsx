@@ -16,7 +16,7 @@
 // } from "ts-fsrs";
 
 // interface CardInStorage extends FSRSCardType {
-//   fid: string; // Card ID, maybe generated using UUID or similar
+//   cid: string; // Card ID, maybe generated using UUID or similar
 //   did: string; // Deck ID - if needed for organizing decks
 //   front: string;
 //   back: string;
@@ -37,7 +37,7 @@
 //   const [dueDate, SetDueDate] = useState(new Date());
 //   const [db, setDb] = useState<CardInStorage[]>([
 //     {
-//       fid: "loading-fid",
+//       cid: "loading-cid",
 //       did: "loading-did",
 //       front: "Loading...",
 //       back: "Please wait.",
@@ -53,7 +53,7 @@
 //   ]);
 //   // Define type for db state
 //   // const card1 = {
-//   //   fid: "1",
+//   //   cid: "1",
 //   //   did: "1",
 //   //   front: "What is the synonym of 'Happy'?",
 //   //   back: "The synonym of 'Happy' is 'Joyful'.",
@@ -75,8 +75,8 @@
 //   // const card = createEmptyCard(new Date("2022-2-1 10:00:00"));
 //   // const now = new Date("2022-2-2 10:00:00"); // new Date();
 //   // const scheduling_cards1 = f.repeat(
-//   //   // Create a new object excluding fid, did, front, and back
-//   //   (({ fid, did, front, back, ...card1WithoutExcluded }) =>
+//   //   // Create a new object excluding cid, did, front, and back
+//   //   (({ cid, did, front, back, ...card1WithoutExcluded }) =>
 //   //     card1WithoutExcluded)(card1),
 //   //   now
 //   // );
@@ -98,7 +98,7 @@
 //           `http://localhost:3000/flashcards/${did}`
 //         );
 //         const apiCards: CardInStorage[] = response.data.map((item: any) => ({
-//           fid: item._id, // Or however you get the fid from your API response
+//           cid: item._id, // Or however you get the CID from your API response
 //           did: item.did,
 //           front: item.question,
 //           back: item.answer,
@@ -117,7 +117,7 @@
 //         console.error("Error loading data from API:", error);
 //         setDb([
 //           {
-//             fid: "error-fid",
+//             cid: "error-cid",
 //             did: "error-did",
 //             front: "Error loading data from API.",
 //             back: error.message || "Please check console.",
@@ -293,7 +293,7 @@
 //             <br></br>
 //             <span className="difficultyMeasure">Good</span>
 //           </button>
-//           <button 
+//           <button
 //             className="difficultyBtn medium"
 //             onClick={() => handleNext(4)}
 //           >
@@ -310,9 +310,6 @@
 
 // export default Card;
 
-
-
-
 import axios from "axios";
 import { useState, useEffect } from "react";
 import "./Card.css";
@@ -327,7 +324,7 @@ import {
 } from "ts-fsrs";
 
 interface CardInStorage extends FSRSCardType {
-  fid: string;
+  cid: string;
   did: string;
   front: string;
   back: string;
@@ -348,7 +345,7 @@ const Card = () => {
 
   const [db, setDb] = useState<CardInStorage[]>([
     {
-      fid: "loading-fid",
+      cid: "loading-cid",
       did: "loading-did",
       front: "Loading...",
       back: "Please wait.",
@@ -371,26 +368,29 @@ const Card = () => {
         const response = await axios.get(
           `http://localhost:3000/flashcards/${did}`
         );
-        const apiCards: CardInStorage[] = response.data.map((item: any) => ({
-          fid: item._id,
-          did: item.did,
-          front: item.question,
-          back: item.answer,
-          due: new Date(item.due_date),
-          stability: item.stability || 0,
-          difficulty: item.difficulty || 0,
-          elapsed_days: item.elapsed_days || 0,
-          scheduled_days: item.scheduled_days || 0,
-          lapses: item.lapses || 0,
-          reps: item.reps || 0,
-          state: item.state || 0,
-        }));
+        const currentDate = new Date();
+        const apiCards: CardInStorage[] = response.data
+          .map((item: any) => ({
+            cid: item._id,
+            did: item.did,
+            front: item.question,
+            back: item.answer,
+            due: new Date(item.due_date),
+            stability: item.stability || 0,
+            difficulty: item.difficulty || 0,
+            elapsed_days: item.elapsed_days || 0,
+            scheduled_days: item.scheduled_days || 0,
+            lapses: item.lapses || 0,
+            reps: item.reps || 0,
+            state: item.state || 0,
+          }))
+          .filter((card: CardInStorage) => card.due <= currentDate);
         setDb(apiCards);
       } catch (error: any) {
         console.error("Error loading data from API:", error);
         setDb([
           {
-            fid: "error-fid",
+            cid: "error-cid",
             did: "error-did",
             front: "Error loading data from API.",
             back: error.message || "Please check console.",
