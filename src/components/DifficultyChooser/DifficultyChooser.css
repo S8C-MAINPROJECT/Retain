@@ -1,0 +1,54 @@
+.difficulty-chooser {
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .difficulty-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+  }
+  
+  .difficulty-option {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .difficulty-option:hover {
+    border-color: #ffa500; /* Orange border on hover */
+    transform: scale(1.1); /* Slightly enlarges on hover */
+  }
+  
+  .difficulty-option:active {
+    transform: scale(0.9); /* Shrinks slightly when clicked */
+  }
+  
+  .difficulty-option.selected {
+    /* border-color: gold; */
+    /* background-color: #ffecb3; */
+  }
+  
+  .previous-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.1s ease-in-out;
+  }
+  
+  .previous-button:hover {
+    background-color: #d6d6d6;
+  }
+  
+  .previous-button:active {
+    transform: scale(0.95); /* Adds a click effect */
+  }
+  
