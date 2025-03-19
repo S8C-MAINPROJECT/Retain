@@ -60,6 +60,8 @@ const Home = () => {
     fetchDecks();
   }, []); // Runs only once when the component mounts
 
+  
+
   useEffect(() => {
     if (decks.length === 0) return; // Prevent running on first render when decks are empty
 
