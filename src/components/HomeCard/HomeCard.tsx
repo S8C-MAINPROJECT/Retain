@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import "./HomeCard.css";
@@ -42,6 +42,11 @@ const HomeCard: React.FC<HomeCardProps> = ({
     else navigate(`/customcard?deckTitle=${title}&did=${did}`);
   };
 
+  const imagePaths = ["src/assets/Frame 95.jpg", "src/assets/Frame 94.jpg"];
+  const [selectedImagePath] = useState(
+    imagePaths[Math.floor(Math.random() * imagePaths.length)]
+  );
+
   return (
     <div className="homeCard">
       <div className="homeCard-items">
@@ -53,9 +58,8 @@ const HomeCard: React.FC<HomeCardProps> = ({
             <h5>{title}</h5>
           </div>
           <div className="progress">
-            <p>
-              Today: {dueCount}/{total}
-            </p>
+            {custom == false && <p>{dueCount} card(s) to review</p>}
+            {custom == true && <p>Review all now</p>}
           </div>
           <div className="pgBar-home">
             <ProgressBar
