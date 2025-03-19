@@ -213,7 +213,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-      const [count, setCount] = useState(0);
       {activeNav === "deck" && (
         <div className="home">
           <h3>
