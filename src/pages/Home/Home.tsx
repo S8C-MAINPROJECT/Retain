@@ -10,6 +10,7 @@ import HomeCard from "../../components/HomeCard/HomeCard";
 import { AddNew } from "../../components/AddNew/AddNew";
 import { jwtDecode } from "jwt-decode";
 import Summarizer from "../../components/Summarizer/Summarizer";
+import EmotionFeedback from "../../components/EmotionFeeback/Emotion";
 
 const Home = () => {
   const [deckTitle, setDeckTitle] = useState("");
@@ -24,6 +25,7 @@ const Home = () => {
   const [activeNav, setActiveNav] = useState<String | null>("deck");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [dueCardsMap, setDueCardsMap] = useState<Record<number, number>>({});
+  const [isEmotionFeedbackOpen, setIsEmotionFeedbackOpen] = useState(true);
 
   // Function to extract uid from the access token
   const getUidFromToken = (token: string) => {
@@ -151,8 +153,24 @@ const Home = () => {
     navigate("/");
   };
 
+  const handleEmotionSubmit = (emotion: string) => {
+    console.log("Emotion submitted:", emotion);
+    setIsEmotionFeedbackOpen(false);
+    // Here you might want to do something with the emotion, like send it to a server
+  };
+
+  const handleEmotionModalClose = () => {
+    setIsEmotionFeedbackOpen(false);
+  };
+
   return (
     <>
+      {isEmotionFeedbackOpen && (
+        <EmotionFeedback
+          onClose={handleEmotionModalClose}
+          onSubmit={handleEmotionSubmit}
+        />
+      )}
       {/* Header */}
       <div className="homeHeader">
         <div className="logo">
@@ -204,6 +222,7 @@ const Home = () => {
                       total={dueDeck.totalcount}
                       onDelete={() => handleDeleteDeck(index)} // Pass the current index
                       path="src/assets/jjj.webp"
+                      custom={false}
                     />
                   )
               )}
@@ -221,6 +240,7 @@ const Home = () => {
                 total={deck.totalcount}
                 onDelete={() => handleDeleteDeck(index)}
                 path="src/assets/jjj.webp"
+                custom={true}
               />
             ))}
           </div>

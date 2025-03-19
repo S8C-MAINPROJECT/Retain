@@ -12,6 +12,7 @@ interface HomeCardProps {
   total: number;
   onDelete: (did: number) => void;
   path: string;
+  custom: boolean;
 }
 
 const HomeCard: React.FC<HomeCardProps> = ({
@@ -21,6 +22,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
   total,
   onDelete,
   path,
+  custom,
 }) => {
   const navigate = useNavigate();
 
@@ -36,7 +38,8 @@ const HomeCard: React.FC<HomeCardProps> = ({
   };
 
   const handleCardClick = () => {
-    navigate(`/card?deckTitle=${title}&did=${did}`);
+    if (custom == false) navigate(`/card?deckTitle=${title}&did=${did}`);
+    else navigate(`/customcard?deckTitle=${title}&did=${did}`);
   };
 
   return (

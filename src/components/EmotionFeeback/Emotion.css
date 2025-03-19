@@ -1,0 +1,91 @@
+.emotion-feedback-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(82, 82, 82, 0.25); /* Semi-transparent background */
+  backdrop-filter: blur(8px); /* Adds blur effect */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's on top of other content */
+}
+
+.emotion-feedback-modal {
+  background-color: #fff;
+  padding-block: 100px;
+  padding-inline: 60px;
+  border-radius: 24px;
+  width: 530px; /* Adjust as needed */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: relative; /* For close button positioning */
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.emotion-feedback-modal h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.5em;
+  letter-spacing: -1px;
+  color: #333;
+}
+
+.emotion-feedback-modal p {
+  color: rgba(0, 0, 0, 0.46);
+  margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.emojis-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.emoji-button {
+  background: none;
+  border: 0.5px solid rgba(0, 0, 0, 0.15);
+  font-size: 1.5em;
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  border-radius: 25%;
+  transition: background-color 0.25s, border-color 0.5s, font-size 0.1s ease-out;
+}
+
+.emoji-button:hover,
+.emoji-button.selected {
+  background-color: rgba(255, 246, 210, 1);
+  border-color: rgba(149, 119, 0, 1);
+  font-size: 2.5rem;
+}
+
+.selected-label {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: medium;
+  text-transform: capitalize;
+}
+
+.submit-button {
+  background-color: #000;
+  color: white;
+  border: none;
+  padding: 10px 100px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  display: block;
+  margin: 0 auto;
+}

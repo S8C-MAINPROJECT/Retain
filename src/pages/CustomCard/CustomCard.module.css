@@ -1,0 +1,284 @@
+.central-card-component {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.card.slideInRight {
+  animation: slideInFromRight 0.4s ease forwards;
+}
+
+.card.slideOutLeft {
+  animation: slideOutToLeft 0.4s ease forwards;
+}
+
+.card.slideInLeft {
+  animation: slideInFromLeft 0.4s ease forwards;
+}
+
+.card.slideOutRight {
+  animation: slideOutToRight 0.4s ease forwards;
+}
+
+.headItems {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  background-color: none;
+  margin-top: 51px;
+  gap: 16px;
+}
+
+/*DifficultyChooser.css*/
+
+.difficultyOptions {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.difficultyBtn {
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 1);
+  border-radius: 12.71px;
+  border-color: rgba(156, 156, 156, 1);
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.difficultyTime {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.difficultyMeasure {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.hard:hover {
+  border-color: rgba(205, 21, 21, 1);
+  background-color: rgba(255, 236, 223, 1);
+}
+
+.medium:hover {
+  border-color: rgba(135, 123, 76, 1);
+  background-color: rgba(255, 246, 210, 1);
+}
+
+.easy:hover {
+  border-color: rgba(35, 184, 23, 1);
+  background-color: rgba(219, 255, 216, 1);
+}
+
+.headItems img {
+  cursor: pointer;
+}
+
+.cardContainer {
+  text-align: center;
+}
+
+.cardStack {
+  position: relative;
+  width: 300px;
+  height: 350px;
+  overflow: hidden;
+}
+
+.card {
+  width: 300px;
+  height: 350px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: rgba(42, 42, 42, 0.75);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.card.previousCard {
+  transform: translateX(-40px) scale(0.9); /* shift the card to prev */
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.card.currentCard {
+  transform: translateX(0) scale(1);
+  opacity: 1;
+  background-color: #2a2a2a;
+  z-index: 2;
+}
+
+.card.nextCard {
+  transform: translateX(40px) scale(0.9); /* shift the card to next */
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.card.fadeOut {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.card.fadeIn {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.question img {
+  position: relative;
+  width: 20px;
+  height: auto;
+  border-radius: 10px 10px 0 0;
+  left: 220px;
+}
+.question {
+  font-size: 20px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 1);
+  margin: 0 20px;
+  padding: 0 0px;
+  text-align: left;
+}
+
+.separator {
+  width: 80%;
+  height: 1px;
+  border-bottom: 2px dotted rgba(255, 255, 255, 0.49);
+  margin: 10px 0;
+}
+
+.answer {
+  font-size: 20px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 1);
+  text-align: left;
+}
+
+.reveal {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.49);
+  font-weight: 400;
+  width: 100%;
+  position: relative;
+  top: 45px;
+}
+
+.cardHeader {
+  margin: 10px 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navigation {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.navButton {
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 16px;
+  background-color: #2a2a2a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.navButton:hover {
+  background-color: #444;
+}
+
+.cardHeader {
+  padding-top: 4px;
+}
+
+.cardHeader-item {
+  padding: 0 15px;
+}
+
+.current-count {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 1);
+}
+
+.total-count {
+  font-size: 16px;
+  color: rgba(177, 177, 177, 1);
+}
+
+.pgBar-card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.dueDate {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+  color: rgb(150, 150, 150);
+}

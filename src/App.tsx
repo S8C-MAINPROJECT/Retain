@@ -8,7 +8,7 @@ import SignUp from "./pages/Signup/SignUp";
 import ViewDeck from "./components/ViewDeck/ViewDeck";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Summarizer from "./components/Summarizer/Summarizer";
-
+import CustomCard from "./pages/CustomCard/CustomCard";
 const App: React.FC = () => {
   return (
     <Router>
@@ -22,6 +22,7 @@ const App: React.FC = () => {
           <Route element={<PrivateRoute />}>
             <Route path="/home" element={<Home />} />
             <Route path="/card" element={<Card />} />
+            <Route path="/customcard" element={<CustomCard />} />
             <Route path="/deck" element={<ViewDeck />} />
             <Route path="/test" element={<Summarizer />} />
           </Route>
