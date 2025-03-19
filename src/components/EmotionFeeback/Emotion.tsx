@@ -1,14 +1,15 @@
 import React from "react";
 import "./Emotion.css";
+import axios from "axios";
 
 interface EmotionFeedbackProps {
   onClose: () => void;
-  onSubmit: (emotion: string) => void;
+  setIsEmotionFeedbackOpen: React.Dispatch<React.SetStateAction<boolean>>; // Accept state setter
 }
 
 const EmotionFeedback: React.FC<EmotionFeedbackProps> = ({
   onClose,
-  onSubmit,
+  setIsEmotionFeedbackOpen
 }) => {
   const emotions = [
     { emoji: "😤", label: "frustrated" },
@@ -27,8 +28,18 @@ const EmotionFeedback: React.FC<EmotionFeedbackProps> = ({
 
   const handleSubmit = () => {
     if (selectedEmotion) {
-      onSubmit(selectedEmotion);
+      try {
+      axios.post("http://localhost:3000/emotions", {
+        emotion: selectedEmotion,
+      });
+      console.log("Emotion created successfully.");
+    } catch (error) {
+      console.error("Error creating emotion:", error);
+    }
+    finally {
+      setIsEmotionFeedbackOpen(false);
       onClose();
+     }
     } else {
       alert("Please select an emotion");
     }

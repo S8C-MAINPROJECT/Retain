@@ -31,11 +31,13 @@ const Login = () => {
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("hasEmotionModalClosed", "false");
+
 
       console.log("Login successful", JSON.stringify(user));
 
-      // Redirect to the home page
-      navigate("/home");
+      // Redirect to the home page with a boolean prop
+      navigate("/home", { state: { isLoggedIn: true } });
     } catch (err) {
       console.error("Login error:", err);
       setError("Invalid login credentials. Please try again.");

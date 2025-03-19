@@ -1,7 +1,7 @@
 import { ChangeEvent, useState, useEffect } from "react";
 import icons from "../../assets/icons";
 import "./Home.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import TextInput from "../../components/Input/textInput";
 import PrimaryBtn from "../../components/Button/PrimaryBtn";
@@ -13,6 +13,10 @@ import Summarizer from "../../components/Summarizer/Summarizer";
 import EmotionFeedback from "../../components/EmotionFeeback/Emotion";
 
 const Home = () => {
+  const location = useLocation();
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    location.state ? location.state.isLoggedIn : false
+  );
   const [deckTitle, setDeckTitle] = useState("");
   const [totalQuestions, setTotalQuestions] = useState("");
   const [decks, setDecks] = useState<
@@ -26,6 +30,7 @@ const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [dueCardsMap, setDueCardsMap] = useState<Record<number, number>>({});
   const [isEmotionFeedbackOpen, setIsEmotionFeedbackOpen] = useState(true);
+  const [count, setCount] = useState(0);
 
   // Function to extract uid from the access token
   const getUidFromToken = (token: string) => {
@@ -95,7 +100,11 @@ const Home = () => {
     }
 
     fetchDueCardsCount();
-  }, [decks]); // Runs when `decks` changes
+    const countDueDecks = decks.filter(
+      (dueDeck) => dueCardsMap[dueDeck.did] >= 1
+    ).length;
+    setCount(countDueDecks);
+  }, [decks, dueCardsMap]); // Runs when `decks` changes
 
   const navigate = useNavigate();
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -156,19 +165,20 @@ const Home = () => {
   const handleEmotionSubmit = (emotion: string) => {
     console.log("Emotion submitted:", emotion);
     setIsEmotionFeedbackOpen(false);
+
     // Here you might want to do something with the emotion, like send it to a server
   };
 
   const handleEmotionModalClose = () => {
-    setIsEmotionFeedbackOpen(false);
+    setIsLoggedIn(false);
   };
 
   return (
     <>
-      {isEmotionFeedbackOpen && (
+      {isLoggedIn && (
         <EmotionFeedback
           onClose={handleEmotionModalClose}
-          onSubmit={handleEmotionSubmit}
+          setIsEmotionFeedbackOpen={setIsEmotionFeedbackOpen}
         />
       )}
       {/* Header */}
@@ -203,12 +213,15 @@ const Home = () => {
           </div>
         </div>
       </div>
+      const [count, setCount] = useState(0);
       {activeNav === "deck" && (
         <div className="home">
           <h3>
-            Welcome Back! you got <span id="no_lessons">3</span> lessons to
-            review
+            Welcome Back! You got <span id="no_lessons">{count}</span>{" "}
+            {count === 1 ? "lesson" : count === 0 ? "lessons" : "lessons"} to
+            review.
           </h3>
+
           <div className="decks">
             {decks.length > 0 &&
               decks.map(
