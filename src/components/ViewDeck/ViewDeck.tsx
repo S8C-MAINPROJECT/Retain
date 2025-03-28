@@ -1,4 +1,4 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from "./ViewDeck.module.css";
 import "../HomeCard/HomeCard.css";
 import icons from "../../assets/icons";
@@ -10,6 +10,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
 interface Flashcard {
+  fid: string; // Add this line
   question: string;
   answer: string;
 }
@@ -20,7 +21,7 @@ const ViewDeck = () => {
   if (!did) {
     console.error("Invalid deck ID");
     return;
-  }  
+  }
   const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [currentEdit, setCurrentEdit] = useState<Flashcard | null>(null);
@@ -30,7 +31,7 @@ const ViewDeck = () => {
   const Navigate = useNavigate();
 
   useEffect(() => {
-    if (title) {
+    if (did) {
       axios
         .get(`http://localhost:3000/flashcards/${did}`)
         .then((response) => {
@@ -41,7 +42,7 @@ const ViewDeck = () => {
           setFlashcards([]);
         });
     }
-  }, [title]);
+  }, [did]); // Change dependency from `title` to `did`
   
 
   const handleEditClick = (index: number) => {
@@ -61,33 +62,57 @@ const ViewDeck = () => {
       setFlashcards(updatedFlashcards);
       setEditingIndex(null);
       setCurrentEdit(null);
+  
+      axios
+        .patch(
+          `http://localhost:3000/flashcards/update/${flashcards[editingIndex].fid}`,
+          {
+            question: currentEdit.question,
+            answer: currentEdit.answer,
+          }
+        )
+        .then((response) => {
+          console.log("Flashcard updated successfully", response.data);
+        })
+        .catch((error) => {
+          console.error("Error updating flashcard:", error);
+        });
     }
   };
+  
 
   const handleCancel = () => {
     setEditingIndex(null);
     setCurrentEdit(null);
   };
 
-
   const handleSubmit = () => {
-    // Add new card logic here, potentially updating the JSON file or handling in memory
-    const newFlashcard: Flashcard = { question: question, answer: answer };
-    setFlashcards([...flashcards, newFlashcard]); // Update state
-    try {
-      axios.post(`http://localhost:3000/flashcards/create`, {
+    const newFlashcard: Flashcard = { 
+      fid: Date.now().toString(), // Temporary ID until backend assigns one
+      question, 
+      answer 
+    };
+  
+    setFlashcards([...flashcards, newFlashcard]);
+  
+    axios
+      .post(`http://localhost:3000/flashcards/create`, {
         question,
         answer,
         did,
+      })
+      .then((response) => {
+        console.log("Flashcard added successfully", response.data);
+      })
+      .catch((error) => {
+        console.error("Error adding flashcard:", error);
       });
-      console.log("Flashcard added successfully");
-    } catch (error) {
-      console.error("Error adding flashcard:", error);
-    }
+  
     setIsModalOpen(false);
-    setQuestion(""); // Clear input fields
+    setQuestion("");
     setAnswer("");
   };
+  
 
   return (
     <>
@@ -126,14 +151,18 @@ const ViewDeck = () => {
                 <div className={styles.frontSide}>
                   <textarea
                     value={currentEdit?.question || ""}
-                    onChange={(e) => handleInputChange("question", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("question", e.target.value)
+                    }
                     className={styles.textArea}
                   />
                 </div>
                 <div className={styles.backSide}>
                   <textarea
                     value={currentEdit?.answer || ""}
-                    onChange={(e) => handleInputChange("answer", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("answer", e.target.value)
+                    }
                     className={styles.textArea}
                   />
                 </div>
@@ -190,6 +219,6 @@ const ViewDeck = () => {
       )}
     </>
   );
-}
+};
 
 export default ViewDeck;
