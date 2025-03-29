@@ -4,6 +4,7 @@ import "./Card.css";
 import icons from "../../assets/icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
+  createEmptyCard,
   fsrs,
   generatorParameters,
   Card as FSRSCardType,
@@ -56,6 +57,8 @@ const Card = () => {
         );
         console.log("Total flashcards:", flashcardsResponse.data.total);
         setTotal(flashcardsResponse.data.total);
+        const card = createEmptyCard(new Date("2022-2-1 10:00:00")); // createEmptyCard();
+        console.log(card);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -193,7 +196,7 @@ const Card = () => {
 
       setDueDate(new Date(updatedCard.due));
 
-      console.log("Updated due date:", updatedCard.due);
+      console.log("Updated due date:", updatedCard);
 
       setTimeout(() => {
         setAnimation("slideOutLeft");

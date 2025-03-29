@@ -11,6 +11,13 @@ import { AddNew } from "../../components/AddNew/AddNew";
 import { jwtDecode } from "jwt-decode";
 import Summarizer from "../../components/Summarizer/Summarizer";
 import EmotionFeedback from "../../components/EmotionFeeback/Emotion";
+import {
+  fsrs,
+  generatorParameters,
+  Card as FSRSCardType,
+  Grade,
+  createEmptyCard,
+} from "ts-fsrs";
 
 const Home = () => {
   const location = useLocation();
@@ -59,8 +66,6 @@ const Home = () => {
 
     fetchDecks();
   }, []); // Runs only once when the component mounts
-
-  
 
   useEffect(() => {
     if (decks.length === 0) return; // Prevent running on first render when decks are empty
