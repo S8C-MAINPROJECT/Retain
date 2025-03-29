@@ -196,7 +196,7 @@ const Card = () => {
 
       setDueDate(new Date(updatedCard.due));
 
-      console.log("Updated due date:", updatedCard);
+      console.log("Updated due date:", updatedCard.due);
 
       setTimeout(() => {
         setAnimation("slideOutLeft");
