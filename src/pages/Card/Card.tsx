@@ -15,7 +15,7 @@ import ProgressBar from "../../components/ProgressBar/ProgressBar";
 
 interface CardInStorage extends FSRSCardType {
   _id: string;
-  fid: string;
+  fid: Number;
   did: string;
   front: string;
   back: string;
@@ -34,7 +34,7 @@ const Card = () => {
   const p = useParams();
   const { d } = p;
   const { dd } = p;
-  
+
   const did = params.get("did");
   let deckTitle = params.get("deckTitle");
   if (deckTitle) {
@@ -56,7 +56,7 @@ const Card = () => {
         );
         const deckId = response.data.did;
         console.log("Deck ID:", deckId);
-        console.log("Params:", d , "Deck Title:", dd);
+        console.log("Params:", d, "Deck Title:", dd);
         // Fetch total flashcards using deckId
         const flashcardsResponse = await axios.get(
           `http://localhost:3000/flashcards/total-flashcards/${deckId}`
@@ -76,7 +76,7 @@ const Card = () => {
   const [db, setDb] = useState<CardInStorage[]>([
     {
       _id: "loading-id",
-      fid: "loading-fid",
+      fid: 999,
       did: "loading-did",
       front: "Loading...",
       back: "Please wait.",
@@ -155,9 +155,9 @@ const Card = () => {
       } catch (error: any) {
         console.error("Error loading data from API:", error);
         setDb([
-          { 
+          {
             _id: "error-id",
-            fid: "error-fid",
+            fid: 888,
             did: "error-did",
             front: "Error loading data from API.",
             back: error.message || "Please check console.",
@@ -200,6 +200,7 @@ const Card = () => {
       const response = await axios.post("http://localhost:3000/sfrs/review", {
         card: currentCard,
         difficulty: difficulty,
+        fid: currentCard.fid,
       });
 
       const updatedCard = response.data;
