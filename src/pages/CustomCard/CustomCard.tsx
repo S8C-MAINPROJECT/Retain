@@ -13,7 +13,7 @@ import DifficultyChooser from "../../components/DifficultyChooser/DifficultyChoo
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 
 interface CardInStorage extends FSRSCardType {
-  cid: string;
+  fid: string;
   did: string;
   front: string;
   back: string;
@@ -35,7 +35,7 @@ const Card = () => {
   }
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [total, setTotal] = useState(5);  
+  const [total, setTotal] = useState(5);
   const [showAnswer, setShowAnswer] = useState(false);
   const [animation, setAnimation] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
@@ -44,27 +44,29 @@ const Card = () => {
     const fetchDeckAndFlashcards = async () => {
       try {
         // Fetch Deck ID
-        const response = await axios.get(`http://localhost:3000/decks/deckIdfromTitle/${deckTitle}`);
+        const response = await axios.get(
+          `http://localhost:3000/decks/deckIdfromTitle/${deckTitle}`
+        );
         const deckId = response.data.did;
         console.log("Deck ID:", deckId);
-  
+
         // Fetch total flashcards using deckId
-        const flashcardsResponse = await axios.get(`http://localhost:3000/flashcards/total-flashcards/${deckId}`);
+        const flashcardsResponse = await axios.get(
+          `http://localhost:3000/flashcards/total-flashcards/${deckId}`
+        );
         console.log("Total flashcards:", flashcardsResponse.data.total);
         setTotal(flashcardsResponse.data.total);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-  
+
     fetchDeckAndFlashcards(); // Call the async function
-  
   }, [deckTitle]); // Add deckTitle as a dependency if it changes
-  
 
   const [db, setDb] = useState<CardInStorage[]>([
     {
-      cid: "loading-cid",
+      fid: "loading-fid",
       did: "loading-did",
       front: "Loading...",
       back: "Please wait.",
@@ -79,7 +81,9 @@ const Card = () => {
     },
   ]);
 
-  const [selectedDifficulty, setSelectedDifficulty] = useState<Grade | null>(null);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<Grade | null>(
+    null
+  );
 
   const handleDifficultySelection = (difficulty: Grade) => {
     setSelectedDifficulty(difficulty);
@@ -96,7 +100,7 @@ const Card = () => {
         );
         const currentDate = new Date();
         const apiCards: CardInStorage[] = response.data.map((item: any) => ({
-          cid: item._id,
+          fid: item._id,
           did: item.did,
           front: item.question,
           back: item.answer,
@@ -114,7 +118,7 @@ const Card = () => {
         console.error("Error loading data from API:", error);
         setDb([
           {
-            cid: "error-cid",
+            fid: "error-fid",
             did: "error-did",
             front: "Error loading data from API.",
             back: error.message || "Please check console.",
@@ -197,16 +201,20 @@ const Card = () => {
 
   return (
     <div className="Gparant">
-      <div className="RetainHeading" onClick={() => navigate("/home")} style={{cursor: "pointer"}}>
-          <img src={icons.retainSymbol} alt="Retain Logo" />
-          <span className="home-heading">Retain</span>
-        </div>
+      <div
+        className="RetainHeading"
+        onClick={() => navigate("/home")}
+        style={{ cursor: "pointer" }}
+      >
+        <img src={icons.retainSymbol} alt="Retain Logo" />
+        <span className="home-heading">Retain</span>
+      </div>
       <div className="parent">
-      <div className="left">
-        <div className="central-card-component">
-          <div>
-            <div className="headItems">
-              {/* <img
+        <div className="left">
+          <div className="central-card-component">
+            <div>
+              <div className="headItems">
+                {/* <img
                 src="src/assets/closebtn.svg"
                 alt="Close Button"
                 id="closebtn"
@@ -214,76 +222,76 @@ const Card = () => {
                   navigate("/home");
                 }}
               /> */}
-              {/* <p>Retain</p> */}
-              <p>{deckTitle ? deckTitle : "Capital Countries"}</p>
+                {/* <p>Retain</p> */}
+                <p>{deckTitle ? deckTitle : "Capital Countries"}</p>
+              </div>
             </div>
-          </div>
-          <div className="pgBar-card">
-            {/* <ProgressBar
+            <div className="pgBar-card">
+              {/* <ProgressBar
               progress={currentIndex + 1}
               total={db.length}
               activecolor="rgba(104,104,104,1)"
               deactivecolor="white"
             /> */}
-          </div>
-          <div className="cardContainer">
-            <div className="cardStack">
-              <div
-                className={`card currentCard ${animation}`}
-                onClick={() => setShowAnswer(!showAnswer)}
-              >
-                <div className="cardHeader">
-                  <p className="cardHeader-item">
-                    <span className="current-count">{currentIndex + 1}/</span>
-                    <span className="total-count">{db.length}</span>
-                  </p>
-                </div>
+            </div>
+            <div className="cardContainer">
+              <div className="cardStack">
+                <div
+                  className={`card currentCard ${animation}`}
+                  onClick={() => setShowAnswer(!showAnswer)}
+                >
+                  <div className="cardHeader">
+                    <p className="cardHeader-item">
+                      <span className="current-count">{currentIndex + 1}/</span>
+                      <span className="total-count">{db.length}</span>
+                    </p>
+                  </div>
 
-                <div className="question_container">
-                  <h2 className="question">
-                    {getCardData(0)?.front || ""}
-                    <img
-                      src={icons.speakbtn}
-                      alt="Speaker Icon"
-                      className="speaker-icon"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        speakText(getCardData(0).front);
-                      }}
-                    />
-                  </h2>
-                </div>
-
-                <div className="separator"></div>
-                <div className="question">
-                  {showAnswer ? (
-                    <div className="answer">
-                      {getCardData(0)?.back || ""}
+                  <div className="question_container">
+                    <h2 className="question">
+                      {getCardData(0)?.front || ""}
                       <img
                         src={icons.speakbtn}
                         alt="Speaker Icon"
                         className="speaker-icon"
                         onClick={(e) => {
                           e.stopPropagation();
-                          speakText(getCardData(0).back);
+                          speakText(getCardData(0).front);
                         }}
                       />
-                    </div>
-                  ) : (
-                    <div className="reveal">Tap or [Space] to reveal</div>
-                  )}
+                    </h2>
+                  </div>
+
+                  <div className="separator"></div>
+                  <div className="question">
+                    {showAnswer ? (
+                      <div className="answer">
+                        {getCardData(0)?.back || ""}
+                        <img
+                          src={icons.speakbtn}
+                          alt="Speaker Icon"
+                          className="speaker-icon"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            speakText(getCardData(0).back);
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <div className="reveal">Tap or [Space] to reveal</div>
+                    )}
+                  </div>
                 </div>
+              </div>
+
+              <div className="navigation">
+                {/* <button onClick={handlePrev} className="navButton">
+                Previous
+              </button> */}
               </div>
             </div>
 
-            <div className="navigation">
-              {/* <button onClick={handlePrev} className="navButton">
-                Previous
-              </button> */}
-            </div>
-          </div>
-
-          {/* <div className="difficultyOptions">
+            {/* <div className="difficultyOptions">
           <button className="difficultyBtn hard" onClick={() => handleNext(1)}>
             Again (15 min)
           </button>
@@ -297,28 +305,35 @@ const Card = () => {
             Easy (4 days)
           </button>
         </div> */}
-          <div className="dueDate">Next Due Date: {dueDate.toDateString()}</div>
-          
+            <div className="dueDate">
+              Next Due Date: {dueDate.toDateString()}
+            </div>
+          </div>
+        </div>
+        <div className="middleLine"></div>
+        <div className="right">
+          <div className="progressContainerRight">
+            <p className="progressCountKeeper">
+              {currentIndex} out of {total} complete
+            </p>
+            <ProgressBar
+              progress={currentIndex}
+              total={5}
+              activecolor="rgba(81, 197, 70, 1)"
+              deactivecolor="rgba(171, 250, 164, 1)"
+            />
+          </div>
+          <p className="keepGoing">Keep going!</p>
+          <div className="emojis-container">
+            <DifficultyChooser onDifficultySelect={handleDifficultySelection} />
+          </div>
         </div>
       </div>
-      <div className="middleLine"></div>
-      <div className="right">
-      <div className="progressContainerRight">
-        <p className="progressCountKeeper">{currentIndex} out of {total} complete</p>
-        <ProgressBar progress={currentIndex} total={5} activecolor="rgba(81, 197, 70, 1)" deactivecolor="rgba(171, 250, 164, 1)" />
-      </div>
-      <p className="keepGoing">Keep going!</p>
-      <div className="emojis-container">
-        <DifficultyChooser onDifficultySelect={handleDifficultySelection} />
-      </div>
-      </div>
-    </div>
     </div>
   );
 };
 
 export default Card;
-
 
 // // src/pages/Card/Card.tsx
 // import axios from "axios";

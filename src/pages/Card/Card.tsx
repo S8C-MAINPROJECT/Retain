@@ -14,7 +14,7 @@ import DifficultyChooser from "../../components/DifficultyChooser/DifficultyChoo
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 
 interface CardInStorage extends FSRSCardType {
-  cid: string;
+  fid: string;
   did: string;
   front: string;
   back: string;
@@ -69,7 +69,7 @@ const Card = () => {
 
   const [db, setDb] = useState<CardInStorage[]>([
     {
-      cid: "loading-cid",
+      fid: "loading-fid",
       did: "loading-did",
       front: "Loading...",
       back: "Please wait.",
@@ -129,7 +129,7 @@ const Card = () => {
         const currentDate = new Date();
         const apiCards: CardInStorage[] = response.data
           .map((item: any) => ({
-            cid: item._id,
+            fid: item._id,
             did: item.did,
             front: item.question,
             back: item.answer,
@@ -148,7 +148,7 @@ const Card = () => {
         console.error("Error loading data from API:", error);
         setDb([
           {
-            cid: "error-cid",
+            fid: "error-fid",
             did: "error-did",
             front: "Error loading data from API.",
             back: error.message || "Please check console.",
@@ -196,7 +196,7 @@ const Card = () => {
 
       setDueDate(new Date(updatedCard.due));
 
-      console.log("Updated due date:", updatedCard.due);
+      console.log("Updated due date:", updatedCard);
 
       setTimeout(() => {
         setAnimation("slideOutLeft");
