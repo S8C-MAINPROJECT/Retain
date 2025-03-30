@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import "./Card.css";
 import icons from "../../assets/icons";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   createEmptyCard,
   fsrs,
@@ -14,6 +14,7 @@ import DifficultyChooser from "../../components/DifficultyChooser/DifficultyChoo
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 
 interface CardInStorage extends FSRSCardType {
+  _id: string;
   fid: string;
   did: string;
   front: string;
@@ -30,6 +31,11 @@ const Card = () => {
   ];
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  const p = useParams();
+  const { d } = p;
+  const { dd } = p;
+  
+  const did = params.get("did");
   let deckTitle = params.get("deckTitle");
   if (deckTitle) {
     deckTitle = decodeURIComponent(deckTitle);
@@ -50,7 +56,7 @@ const Card = () => {
         );
         const deckId = response.data.did;
         console.log("Deck ID:", deckId);
-
+        console.log("Params:", d , "Deck Title:", dd);
         // Fetch total flashcards using deckId
         const flashcardsResponse = await axios.get(
           `http://localhost:3000/flashcards/total-flashcards/${deckId}`
@@ -69,6 +75,7 @@ const Card = () => {
 
   const [db, setDb] = useState<CardInStorage[]>([
     {
+      _id: "loading-id",
       fid: "loading-fid",
       did: "loading-did",
       front: "Loading...",
@@ -129,7 +136,8 @@ const Card = () => {
         const currentDate = new Date();
         const apiCards: CardInStorage[] = response.data
           .map((item: any) => ({
-            fid: item._id,
+            _id: item._id,
+            fid: item.fid,
             did: item.did,
             front: item.question,
             back: item.answer,
@@ -147,7 +155,8 @@ const Card = () => {
       } catch (error: any) {
         console.error("Error loading data from API:", error);
         setDb([
-          {
+          { 
+            _id: "error-id",
             fid: "error-fid",
             did: "error-did",
             front: "Error loading data from API.",
@@ -187,16 +196,18 @@ const Card = () => {
   const handleNext = async (difficulty: Grade) => {
     try {
       const currentCard = getCardData(0);
+      console.log("fid", currentCard.fid);
       const response = await axios.post("http://localhost:3000/sfrs/review", {
         card: currentCard,
         difficulty: difficulty,
       });
 
       const updatedCard = response.data;
+      console.log("Updated card:", updatedCard);
 
       setDueDate(new Date(updatedCard.due));
 
-      console.log("Updated due date:", updatedCard);
+      console.log("Updated due date:", updatedCard.due);
 
       setTimeout(() => {
         setAnimation("slideOutLeft");

@@ -13,6 +13,7 @@ import DifficultyChooser from "../../components/DifficultyChooser/DifficultyChoo
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 
 interface CardInStorage extends FSRSCardType {
+  _id: string;
   fid: string;
   did: string;
   front: string;
@@ -66,6 +67,7 @@ const Card = () => {
 
   const [db, setDb] = useState<CardInStorage[]>([
     {
+      _id: "loading-_id",
       fid: "loading-fid",
       did: "loading-did",
       front: "Loading...",
@@ -100,7 +102,8 @@ const Card = () => {
         );
         const currentDate = new Date();
         const apiCards: CardInStorage[] = response.data.map((item: any) => ({
-          fid: item._id,
+          _id: item._id,
+          fid: item.fid,
           did: item.did,
           front: item.question,
           back: item.answer,
@@ -118,6 +121,7 @@ const Card = () => {
         console.error("Error loading data from API:", error);
         setDb([
           {
+            _id: "error-_id",
             fid: "error-fid",
             did: "error-did",
             front: "Error loading data from API.",
@@ -155,6 +159,7 @@ const Card = () => {
   const handleNext = async (difficulty: Grade) => {
     try {
       const currentCard = getCardData(0);
+      console.log("fid", currentCard.fid);
       const response = await axios.post("http://localhost:3000/sfrs/review", {
         card: currentCard,
         difficulty: difficulty,
@@ -163,7 +168,7 @@ const Card = () => {
       const updatedCard = response.data;
       setDueDate(new Date(updatedCard.due));
 
-      console.log("Updated due date:", updatedCard.due);
+      console.log("Updated due date:", updatedCard);
 
       setTimeout(() => {
         setAnimation("slideOutLeft");
