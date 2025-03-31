@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import "./Card.css";
 import icons from "../../assets/icons";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { createEmptyCard, Card as FSRSCardType, Grade } from "ts-fsrs";
+import { Card as FSRSCardType, Grade } from "ts-fsrs";
 import DifficultyChooser from "../../components/DifficultyChooser/DifficultyChooser";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 
@@ -16,20 +16,12 @@ interface CardInStorage extends FSRSCardType {
 }
 
 const Card = () => {
-  const emotions = [
-    { emoji: "😤", label: "frustrated" },
-    { emoji: "😥", label: "sad" },
-    { emoji: "😊", label: "happy" },
-    { emoji: "😄", label: "confident" },
-    { emoji: "🤩", label: "very confident" },
-  ];
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const p = useParams();
   const { d } = p;
   const { dd } = p;
 
-  const did = params.get("did");
   let deckTitle = params.get("deckTitle");
   if (deckTitle) {
     deckTitle = decodeURIComponent(deckTitle);
@@ -39,7 +31,6 @@ const Card = () => {
   const [total, setTotal] = useState(5);
   const [showAnswer, setShowAnswer] = useState(false);
   const [animation, setAnimation] = useState("");
-  const [dueDate, setDueDate] = useState(new Date());
 
   useEffect(() => {
     const fetchDeckAndFlashcards = async () => {
@@ -57,8 +48,6 @@ const Card = () => {
         );
         console.log("Total flashcards:", flashcardsResponse.data.total);
         setTotal(flashcardsResponse.data.total);
-        const card = createEmptyCard(new Date("2022-2-1 10:00:00")); // createEmptyCard();
-        console.log(card);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -70,7 +59,7 @@ const Card = () => {
   const [db, setDb] = useState<CardInStorage[]>([
     {
       _id: "loading-id",
-      fid: 999,
+      fid: 404,
       did: "loading-did",
       front: "Loading...",
       back: "Please wait.",
@@ -85,12 +74,7 @@ const Card = () => {
     },
   ]);
 
-  const [selectedDifficulty, setSelectedDifficulty] = useState<Grade | null>(
-    null
-  );
-
   const handleDifficultySelection = (difficulty: Grade) => {
-    setSelectedDifficulty(difficulty);
     handleNext(difficulty);
   };
   const handleEmotions = (cardDetails: any) => {
@@ -151,7 +135,7 @@ const Card = () => {
         setDb([
           {
             _id: "error-id",
-            fid: 888,
+            fid: 404,
             did: "error-did",
             front: "Error loading data from API.",
             back: error.message || "Please check console.",
@@ -199,9 +183,6 @@ const Card = () => {
 
       const updatedCard = response.data;
       console.log("Updated card:", updatedCard);
-
-      setDueDate(new Date(updatedCard.due));
-
       console.log("Updated due date:", updatedCard.due);
 
       setTimeout(() => {
@@ -216,18 +197,6 @@ const Card = () => {
       console.error("Error updating card:", error);
     }
   };
-
-  const handlePrev = () => {
-    setAnimation("slideOutRight");
-    setTimeout(() => {
-      setCurrentIndex((prevIndex) =>
-        prevIndex === 0 ? prevIndex : prevIndex - 1
-      );
-      setAnimation("slideInLeft");
-    }, 400);
-    setShowAnswer(false);
-  };
-
   const getCardData = (offset: number) => {
     const index = (currentIndex + offset + db.length) % db.length;
     return db[index];
@@ -253,25 +222,8 @@ const Card = () => {
           <div className="central-card-component">
             <div>
               <div className="headItems">
-                {/* <img
-                src="src/assets/closebtn.svg"
-                alt="Close Button"
-                id="closebtn"
-                onClick={() => {
-                  navigate("/home");
-                }}
-              /> */}
-                {/* <p>Retain</p> */}
                 <p>{deckTitle ? deckTitle : "Capital Countries"}</p>
               </div>
-            </div>
-            <div className="pgBar-card">
-              {/* <ProgressBar
-              progress={currentIndex + 1}
-              total={db.length}
-              activecolor="rgba(104,104,104,1)"
-              deactivecolor="white"
-            /> */}
             </div>
             <div className="cardContainer">
               <div className="cardStack">
@@ -322,31 +274,7 @@ const Card = () => {
                   </div>
                 </div>
               </div>
-
-              <div className="navigation">
-                {/* <button onClick={handlePrev} className="navButton">
-                Previous
-              </button> */}
-              </div>
             </div>
-
-            {/* <div className="difficultyOptions">
-          <button className="difficultyBtn hard" onClick={() => handleNext(1)}>
-            Again (15 min)
-          </button>
-          <button className="difficultyBtn hard" onClick={() => handleNext(2)}>
-            Hard (15 min)
-          </button>
-          <button className="difficultyBtn easy" onClick={() => handleNext(3)}>
-            Good (1 day)
-          </button>
-          <button className="difficultyBtn medium" onClick={() => handleNext(4)}>
-            Easy (4 days)
-          </button>
-        </div> */}
-            {/* <div className="dueDate">
-              Next Due Date: {dueDate.toDateString()}
-            </div> */}
           </div>
         </div>
         <div className="middleLine"></div>
