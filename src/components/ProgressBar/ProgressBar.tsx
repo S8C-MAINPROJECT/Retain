@@ -1,7 +1,4 @@
 import React from 'react';
-// import { Box, LinearProgress } from '@mui/material';
-// import './ProgressBar.css';
-
 interface ProgressBarProps {
   progress: number; // Progress is a number (e.g., 0 to 5)
   total: number;
@@ -30,27 +27,3 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progress, total, activecolor,
 };
 
 export default ProgressBar;
-
-
-{/* <Box sx={{ width: "100%", marginBottom: "20px" }}>
-      <LinearProgress
-        variant="determinate"
-        value={progress}
-        sx={{
-          backgroundColor: "#f3f3f3",
-          "& .MuiLinearProgress-bar": {
-            backgroundColor: "#ff7043",
-          },
-        }}
-      />
-    </Box> */}
-
-    {/* <div className='progressBar'>
-        <div className='active-Progress'></div>
-        <div className='active-Progress'></div>
-        <div className='active-Progress'></div>
-        <div className='deactive-Progress'></div>
-        <div className='deactive-Progress'></div>
-        <div className='deactive-Progress'></div>
-        <div className='deactive-Progress'></div>
-      </div> */}

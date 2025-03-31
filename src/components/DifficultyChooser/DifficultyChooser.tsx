@@ -5,6 +5,11 @@ interface DifficultyChooserProps {
   onDifficultySelect: (difficulty: number) => void; // Accepts a function
 }
 
+const handlePrevious = () => {
+  // Logic for handling the previous button click
+  console.log("Previous button clicked");
+}
+
 const DifficultyChooser: React.FC<DifficultyChooserProps> = ({ onDifficultySelect }) => {
   return (
     <div className="difficulty-chooser">
@@ -31,7 +36,7 @@ const DifficultyChooser: React.FC<DifficultyChooserProps> = ({ onDifficultySelec
           <p>4 days</p>
         </div>
       </div>
-      <button className="previous-button">Go to previous</button>
+      <button className="previous-button" onClick={handlePrevious}>Go to previous</button>
     </div>
   );
 };

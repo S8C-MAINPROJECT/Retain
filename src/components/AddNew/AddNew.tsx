@@ -42,16 +42,6 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
     );
   }
 
-  // const fetchDeckNumber = async () => {
-  //   try {
-  //     const response = await axios.get(`http://localhost:3000/decks/latestdeck/${uid}`);
-  //     const { did } = response.data;
-  //     return did + 1;
-  //   } catch (error) {
-  //     console.error("Failed to fetch deck number:", error);
-  //   }
-  // };
-
   // 📸 Handle Image Upload
   const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const imageFile = e.target.files?.[0];
@@ -280,27 +270,3 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
   );
 };
 
-// const handlePdfUpload = async () => {
-//   if (!pdf) return;
-//   setStatus("uploading");
-//   setUploadProgress(0);
-//   const formData = new FormData();
-//   formData.append("pdf", pdf);
-
-//   try {
-//     await axios.post("http://localhost:3000/api/file", formData, {
-//       headers: { "Content-Type": "multipart/form-data" },
-//       onUploadProgress: (progressEvent) => {
-//         const progress = progressEvent.total
-//           ? Math.round((progressEvent.loaded * 100) / progressEvent.total)
-//           : 0;
-//         setUploadProgress(progress);
-//       },
-//     });
-//     setStatus("success");
-//     setUploadProgress(100);
-//   } catch (error) {
-//     setStatus("error");
-//     setUploadProgress(0);
-//   }
-// };
