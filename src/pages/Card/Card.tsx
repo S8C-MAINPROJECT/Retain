@@ -283,12 +283,14 @@ const Card = () => {
             <p className="progressCountKeeper">
               {currentIndex} out of {total} complete
             </p>
-            <ProgressBar
-              progress={currentIndex}
-              total={5}
-              activecolor="rgba(81, 197, 70, 1)"
-              deactivecolor="rgba(171, 250, 164, 1)"
-            />
+            <div className="progressBar">
+              <ProgressBar
+                progress={currentIndex}
+                total={5}
+                activecolor="rgba(81, 197, 70, 1)"
+                deactivecolor="rgba(171, 250, 164, 1)"
+              />
+            </div>
           </div>
           <p className="keepGoing">Keep going!</p>
           <div className="emojis-container">

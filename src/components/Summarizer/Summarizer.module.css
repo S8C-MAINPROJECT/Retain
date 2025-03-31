@@ -1,19 +1,18 @@
 .summarizerContainer {
-  margin-inline: 3rem;
-  margin-top: 6.8rem;
+  margin-inline: clamp(1rem, 5vw, 3rem); /* Responsive margin */
+  margin-top: 6.8rem; /* Keep consistent top margin */
   border: #e3e3e3 solid 1px;
   border-radius: 10px;
   box-shadow: 1px 7px 20px 0px rgb(231 231 231) inset;
   border-bottom: #c5ffc0 solid 1px;
-  padding: 1rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding: clamp(1rem, 4vw, 2rem); /* Responsive padding */
+  box-sizing: border-box;
 }
 
 h2 {
   text-align: center;
-  font-size: 1.8rem;
-  margin-bottom: 16px;
+  font-size: clamp(1.5rem, 5vw, 1.8rem); /* Responsive font size */
+  margin-bottom: clamp(12px, 3vw, 16px); /* Responsive margin */
 }
 
 
@@ -26,19 +25,21 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
+  gap: clamp(8px, 2.5vw, 10px); /* Responsive gap */
+  margin-bottom: clamp(12px, 3vw, 16px); /* Responsive margin */
 }
 
 .AddNew {
-  width: 50%;
-  height: 10rem;
+  width: 100%; /* Full width */
+  max-width: 500px; /* Max width */
+  min-height: 10rem; /* Keep min height */
+  height: auto; /* Allow height to adjust */
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  margin-left: 16px;
-  border-radius: 21px;
+  gap: clamp(6px, 2vw, 8px); /* Responsive gap */
+  margin-left: 0; /* Remove fixed margin */
+  border-radius: clamp(16px, 4vw, 21px); /* Responsive radius */
   justify-content: center;
   border: 2px dashed #0d440829;
   color: #0000007a;
@@ -69,24 +70,27 @@ h2 {
 }
 
 .inputField {
-  width: 50%;
-  padding: 10px;
+  width: 100%; /* Full width */
+  max-width: 500px; /* Max width */
+  padding: clamp(8px, 2vw, 10px); /* Responsive padding */
   border: 1px solid #ccc;
   border-radius: 8px;
+  box-sizing: border-box;
 }
 
 .buttonGroup {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
+  gap: clamp(8px, 2vw, 10px); /* Responsive gap */
+  margin-top: clamp(8px, 2vw, 10px); /* Responsive margin */
+  flex-wrap: wrap; /* Allow buttons to wrap */
 }
 
 .buttonGroup button {
   background: #ffffff;
   color: rgb(0, 0, 0);
-  padding: 8px 14px;
-  border: none;
+  padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 14px); /* Responsive padding */
+  border: 1px solid #ddd; /* Add subtle border */
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s, color 0.3s;
@@ -101,25 +105,29 @@ h2 {
 
 .summaryBox {
   background: #ffffff;
-  padding: 16px;
+  padding: clamp(12px, 3vw, 16px); /* Responsive padding */
   border-radius: 12px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
+  margin-top: clamp(16px, 4vw, 20px); /* Responsive margin */
+  width: 100%; /* Ensure it takes available width */
+  box-sizing: border-box;
 }
 
 .summaryBox h3 {
-  margin-bottom: 8px;
-  font-size: 1.4rem;
+  margin-top: 0; /* Remove default top margin */
+  margin-bottom: clamp(6px, 2vw, 8px); /* Responsive margin */
+  font-size: clamp(1.2rem, 4vw, 1.4rem); /* Responsive font size */
 }
 
 .downloadButton {
   background: #2a2a2a;
   color: white;
-  padding: 6px 10px;
+  padding: clamp(5px, 1.5vw, 6px) clamp(8px, 2vw, 10px); /* Responsive padding */
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: clamp(8px, 2vw, 10px); /* Responsive margin */
+  font-size: clamp(0.8rem, 2vw, 0.9rem); /* Responsive font size */
 }
 
 .downloadButton:hover {
@@ -130,19 +138,19 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: clamp(12px, 3vw, 16px); /* Responsive gap */
 }
 
 .generateButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: clamp(6px, 1.5vw, 8px); /* Responsive gap */
   background: linear-gradient(135deg, #6a5af9, #9b51e0);
   color: white;
-  font-size: 18px;
+  font-size: clamp(1rem, 3vw, 1.125rem); /* Responsive font size (18px) */
   font-weight: bold;
-  padding: 12px 24px;
+  padding: clamp(10px, 2.5vw, 12px) clamp(20px, 5vw, 24px); /* Responsive padding */
   border: none;
   border-radius: 50px;
   cursor: pointer;
@@ -162,8 +170,8 @@ h2 {
 }
 
 .generateButton img {
-  width: 20px;
-  height: 20px;
+  width: clamp(18px, 4vw, 20px); /* Responsive icon size */
+  height: clamp(18px, 4vw, 20px); /* Responsive icon size */
 }
 
 @keyframes bounce {
@@ -177,4 +185,3 @@ h2 {
 .bouncing img {
   animation: bounce 0.65s infinite ease-in-out;
 }
-

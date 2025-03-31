@@ -1,11 +1,15 @@
 .AddNew {
-  width: 345px;
-  height: 180px;
+  /* width: 345px; */ /* Remove fixed width */
+  /* height: 180px; */ /* Remove fixed height */
+  width: 100%; /* Take full available width */
+  max-width: 345px; /* Keep max width */
+  min-height: 180px; /* Keep minimum height */
+  aspect-ratio: 345 / 180; /* Maintain aspect ratio */
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  border-radius: 21px;
+  gap: clamp(6px, 2vw, 8px); /* Responsive gap */
+  border-radius: clamp(16px, 4vw, 21px); /* Responsive radius */
   justify-content: center;
   border: 2px dashed #0d440829;
   color: #0000007a;
@@ -27,17 +31,20 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 1rem; /* Add padding for smaller screens */
 }
 
 .modal-content {
   background-color: white;
-  padding: 2rem;
+  padding: clamp(1.5rem, 5vw, 2rem); /* Responsive padding */
   border-radius: 8px;
-  width: fit-content;
+  width: auto; /* Let content determine width */
+  max-width: 90%; /* Limit max width */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  align-items: center; /* Center content */
+  gap: clamp(1rem, 3vw, 1.5rem); /* Responsive gap */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .modal-header {
@@ -45,14 +52,35 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0; /* Remove bottom margin, rely on gap */
+  padding-bottom: clamp(0.5rem, 2vw, 1rem); /* Add padding bottom */
+  border-bottom: 1px solid #eee; /* Add separator */
+}
+/* Add responsive styles for modal header h3 and img if needed, similar to Home.css */
+.modal-header h3 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: clamp(1.1rem, 3vw, 1.25rem); /* Responsive font size */
+  margin: 0; /* Remove default margin */
+}
+.modal-header img {
+  /* Assuming close button */
+  cursor: pointer;
+  width: clamp(20px, 5vw, 24px); /* Responsive size */
+  height: clamp(20px, 5vw, 24px); /* Responsive size */
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+.modal-header img:hover {
+  opacity: 1;
 }
 
 .modal-box-container {
   display: flex;
   justify-content: center;
-  gap: 16px;
-  width: 360px;
+  gap: clamp(12px, 3vw, 16px); /* Responsive gap */
+  width: 100%; /* Take full width */
+  max-width: 400px; /* Adjust max width if needed */
   flex-wrap: wrap;
 }
 
@@ -60,14 +88,49 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 172px;
-  gap: 8px;
-  padding: 16px 24px;
-  border-radius: 21px;
+  /* width: 172px; */ /* Remove fixed width */
+  flex-basis: clamp(140px, 40%, 172px); /* Flexible basis */
+  flex-grow: 1; /* Allow boxes to grow */
+  gap: clamp(6px, 2vw, 8px); /* Responsive gap */
+  padding: clamp(12px, 3vw, 16px) clamp(16px, 4vw, 24px); /* Responsive padding */
+  border-radius: clamp(16px, 4vw, 21px); /* Responsive radius */
   border: 2px dashed #0d440829;
   text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.modal-box:hover {
+  border-color: #51c546;
+  background-color: #f8f8f8;
 }
 
 .modal-box img {
-  width: 48px;
+  width: clamp(40px, 10vw, 48px); /* Responsive image size */
+  height: auto;
 }
+.modal-box p {
+  /* Style text inside modal box if needed */
+  font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+  color: #333;
+  margin: 0;
+}
+
+/* Add styles for the close button if it exists */
+.modal-content > button {
+  /* Assuming a direct child button is for closing */
+  margin-top: clamp(1rem, 3vw, 1.5rem);
+  padding: clamp(8px, 2vw, 10px) clamp(15px, 4vw, 20px);
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+}
+.modal-content > button:hover {
+  background-color: #5a6268;
+}
+
+/* Add styles for dialog box similar to Home.css if needed */
+/* Assuming .dialogOverlay, .dialogBox etc. from Home.css are reused or defined elsewhere */

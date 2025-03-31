@@ -1,21 +1,50 @@
 .home {
   display: flex;
   flex-direction: column;
-  height: fit-content;
-  margin-inline: 3rem;
-  margin-top: 6.8rem;
+  /* Calculate height based on viewport minus header (6.8rem) and footer (80px) */
+  height: calc(100vh - 6.8rem - 80px);
+  overflow-y: auto; /* Enable vertical scrolling ONLY for this container */
+  margin-inline: clamp(1rem, 5vw, 3rem); /* Responsive margin */
+  margin-top: 6.8rem; /* Keep top margin for header space */
+  /* Reduce padding-bottom, no longer needed to avoid footer overlap */
+  padding-bottom: clamp(1rem, 4vw, 2rem);
   border: #e3e3e3 solid 1px;
   border-bottom: #c5ffc0 solid 1px;
   border-radius: 10px;
   box-shadow: 1px 7px 20px 0px rgb(231 231 231) inset;
   transition: box-shadow 0.25s ease-in-out;
+  box-sizing: border-box; /* Include padding/border in element's total width/height */
+
+  /* Subtle Scrollbar Styles (WebKit & Firefox) */
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #c1c1c1 #f1f1f1; /* For Firefox: thumb track */
+}
+
+/* WebKit Scrollbar Styles */
+.home::-webkit-scrollbar {
+  width: 2px; /* Width of the scrollbar */
+}
+
+.home::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the tracking area */
+  border-radius: 10px;
+}
+
+.home::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1; /* Color of the scroll thumb */
+  border-radius: 10px; /* Roundness of the scroll thumb */
+  border: 2px solid #f1f1f1; /* Creates padding around thumb */
+}
+
+.home::-webkit-scrollbar-thumb:hover {
+  background-color: #a8a8a8; /* Darker color on hover */
 }
 
 .home h3 {
   font-weight: 300;
-  padding-inline: 2rem;
-  padding-top: 2rem;
-  font-size: 1.3em;
+  padding-inline: clamp(1rem, 4vw, 2rem); /* Responsive padding */
+  padding-top: clamp(1rem, 4vw, 2rem); /* Responsive padding */
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem); /* Responsive font size */
 }
 h3 span {
   font-weight: 400;
@@ -24,54 +53,85 @@ h3 span {
 .homeHeader {
   position: fixed;
   top: 0;
-  padding-inline: 2rem;
-  margin-inline: 20px;
-  padding-top: 3rem;
+  left: 0; /* Ensure it spans full width */
+  right: 0; /* Ensure it spans full width */
+  padding-inline: clamp(1rem, 4vw, 2rem); /* Responsive padding */
+  margin-inline: 0; /* Remove side margin, use padding */
+  padding-top: clamp(1.5rem, 4vh, 2rem); /* Responsive padding */
+  padding-bottom: clamp(0.5rem, 2vh, 1rem); /* Add bottom padding */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: calc(100% - 40px);
+  width: 100%; /* Full width */
   background-color: #fff;
+  z-index: 10; /* Ensure header is above content */
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Optional: subtle shadow */
 }
 .logo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: clamp(6px, 1.5vw, 8px); /* Responsive gap */
+}
+.logo img {
+  height: clamp(24px, 6vw, 32px); /* Responsive logo size */
+  width: auto;
 }
 
 .home-heading {
   font-weight: 500;
-  font-size: 32px;
-  line-height: 14.18px;
+  font-size: clamp(1.5rem, 5vw, 2rem); /* Responsive font size */
+  line-height: 1.2; /* Adjusted line-height */
   letter-spacing: -1px;
 }
 
 .hamburger-menu {
-  display: none;
-  width: 20px;
-  height: 10px;
+  display: none; /* Hidden by default, shown in media query */
+  width: 24px; /* Slightly larger tap target */
+  height: 18px; /* Slightly larger tap target */
   cursor: pointer;
+  flex-direction: column;
+  justify-content: space-between; /* Distribute lines evenly */
+  gap: 4px; /* Consistent gap */
 }
 
 .hamburger-menu div {
   width: 100%;
-  height: 1px;
+  height: 2px; /* Slightly thicker lines */
   background-color: black;
+  border-radius: 1px; /* Rounded ends */
+  transition: all 0.3s ease; /* Smooth transition for animation */
+}
+
+/* Optional: Hamburger animation */
+.hamburger-menu.open .bar1 {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+.hamburger-menu.open .bar2 {
+  opacity: 0;
+}
+.hamburger-menu.open .bar3 {
+  transform: rotate(45deg) translate(-5px, -6px);
 }
 
 .nav-items {
   display: flex;
-  gap: 20px;
+  gap: clamp(10px, 3vw, 20px); /* Responsive gap */
   align-items: center;
 }
 
 .nav-item {
   position: relative;
   cursor: pointer;
-  padding: 8px 24px;
-  padding-bottom: 12px;
+  padding: clamp(6px, 1.5vw, 8px) clamp(12px, 3vw, 24px); /* Responsive padding */
+  padding-bottom: clamp(8px, 2vw, 12px); /* Responsive bottom padding */
   border-radius: 10px;
-  transition: box-shadow 0.25s ease-out;
+  transition: box-shadow 0.25s ease-out, background-color 0.2s ease-out;
+  font-size: clamp(0.9rem, 2vw, 1rem); /* Responsive font size */
+  white-space: nowrap; /* Prevent wrapping */
+}
+.nav-item:hover {
+  background-color: #f0f0f0; /* Subtle hover effect */
 }
 
 .nav-item.active {
@@ -83,104 +143,115 @@ h3 span {
 
 .decks {
   display: flex;
-  align-items: center;
-  padding: 2rem;
-  gap: 1rem;
+  align-items: flex-start; /* Align items to top */
+  padding: clamp(1rem, 4vw, 2rem); /* Responsive padding */
+  gap: clamp(1rem, 3vw, 1.5rem); /* Responsive gap */
   flex-wrap: wrap;
+  flex-grow: 1; /* Allow decks area to grow */
+  justify-content: center; /* Center decks when they wrap */
 }
 
-.homeCard-items {
-  display: flex;
-  top: 14px;
-  left: 13px;
-}
-
-.left-side-items {
-  width: 75px;
-  height: 65px;
-  border-radius: 18px;
-  background-color: #e5e5e5;
-}
-
-.right-side-items {
-  width: 220px;
-  padding-left: 10px;
-}
+/* Removed duplicated .homeCard-items, .left-side-items, .right-side-items */
 
 .homeFooter {
   width: 100%;
-  height: 100px;
+  height: 80px; /* Slightly reduced height */
   background-color: rgba(255, 255, 255, 1);
-  border-radius: 40px 40px 0px 0px;
+  border-radius: 30px 30px 0px 0px; /* Adjusted radius */
   border-width: 0.25px;
   position: fixed;
+  left: 0; /* Ensure it spans full width */
+  right: 0; /* Ensure it spans full width */
   bottom: 0;
-  box-shadow: 0px 0px 13.7px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0px -2px 10px 0 rgba(0, 0, 0, 0.15); /* Adjusted shadow */
   display: flex;
   justify-content: center;
-  z-index: 1;
+  align-items: flex-start; /* Align button towards top */
+  z-index: 5; /* Below header but above content */
+  box-sizing: border-box;
 }
 
 .homeFooter-button {
   background-color: rgba(255, 255, 255, 1);
   border-radius: 50%;
-  border-width: 0.25px;
+  border: 0.25px solid rgba(0, 0, 0, 0.1); /* Subtle border */
   width: 60px;
   height: 60px;
-  box-shadow: 0px 0px 13.7px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 10px 0 rgba(0, 0, 0, 0.2); /* Adjusted shadow */
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2;
+  z-index: 2; /* Above footer background */
   position: relative;
-  bottom: 32.5px;
+  bottom: 30px; /* Adjusted position */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.homeFooter-button:hover {
+  transform: scale(1.05);
 }
 
 .homeFooter-button button {
-  background-color: rgba(255, 255, 255, 1);
+  background-color: transparent; /* Make inner button transparent */
+  border: none;
+  padding: 0;
+  display: flex; /* Ensure icon inside is centered */
+  align-items: center;
+  justify-content: center;
+}
+.homeFooter-button img {
+  /* Style the icon if it's an img */
+  width: 24px;
+  height: 24px;
 }
 
 .uploadOptionsfooter {
   display: flex;
   flex-direction: row;
+  /* Styling might be needed depending on context */
 }
 .uploadOptions {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 20px;
+  gap: clamp(15px, 4vw, 20px); /* Responsive gap */
   width: 100%;
-  position: absolute;
-  bottom: 12rem;
+  position: absolute; /* Revisit positioning if needed */
+  bottom: 12rem; /* Revisit positioning if needed */
 }
 
 .uploadButton {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: clamp(8px, 2vw, 10px) clamp(12px, 3vw, 15px); /* Responsive padding */
   position: relative;
-  top: 50px;
-}
-
-.homeCard-items {
-  display: flex;
-  top: 14px;
-  left: 13px;
+  top: 50px; /* Revisit positioning if needed */
+  /* Add other button styles */
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .add-card-btn {
-  height: 40px;
-  width: 170px;
-  display: flex;
-  padding: 10px 15px;
+  /* This seems like a generic button style, maybe rename? */
+  height: auto; /* Allow height to adjust */
+  width: auto; /* Allow width to adjust */
+  max-width: 170px; /* Set max-width */
+  display: inline-flex; /* Use inline-flex */
+  padding: clamp(8px, 2vw, 10px) clamp(12px, 3vw, 15px); /* Responsive padding */
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: clamp(8px, 1.5vw, 10px); /* Responsive gap */
   border-radius: 16px;
   background: #dedede;
   border: 0;
   font-weight: 300;
-  font-size: 16px;
+  font-size: clamp(0.9rem, 2vw, 1rem); /* Responsive font size */
   cursor: pointer;
+  white-space: nowrap; /* Prevent text wrapping */
+  transition: background-color 0.2s ease;
+}
+.add-card-btn:hover {
+  background-color: #ccc;
 }
 
 .modal-overlay {
@@ -189,23 +260,25 @@ h3 span {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6); /* Slightly darker overlay */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 1rem; /* Add padding for smaller screens */
 }
 
 .modal-content {
   background-color: white;
-  padding: 2rem;
+  padding: clamp(1.5rem, 5vw, 2rem); /* Responsive padding */
   border-radius: 8px;
-  width: 90%;
-  max-width: 500px;
+  width: 90%; /* Responsive width */
+  max-width: 500px; /* Max width */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  align-items: stretch; /* Stretch items like inputs */
+  gap: clamp(1rem, 3vw, 1.5rem); /* Responsive gap */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .modal-header {
@@ -213,65 +286,39 @@ h3 span {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0; /* Remove bottom margin, rely on gap */
+  padding-bottom: clamp(0.5rem, 2vw, 1rem); /* Add padding bottom */
+  border-bottom: 1px solid #eee; /* Add separator */
 }
 
 .modal-header h3 {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
+  font-size: clamp(1.1rem, 3vw, 1.25rem); /* Responsive font size */
+  margin: 0; /* Remove default margin */
 }
 
 .modal-header img {
+  /* Assuming this is the close button */
   cursor: pointer;
-  width: 24px;
-  height: 24px;
+  width: clamp(20px, 5vw, 24px); /* Responsive size */
+  height: clamp(20px, 5vw, 24px); /* Responsive size */
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+.modal-header img:hover {
+  opacity: 1;
 }
 
 .modal-buttons {
   display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
+  gap: clamp(0.8rem, 2vw, 1rem); /* Responsive gap */
+  margin-top: clamp(0.5rem, 2vw, 1rem); /* Responsive margin */
+  justify-content: flex-end; /* Align buttons to the right */
+  flex-wrap: wrap; /* Allow buttons to wrap on small screens */
 }
 
-.left-side-items {
-  width: 75px;
-  height: 65px;
-  border-radius: 18px;
-  background-color: #e5e5e5;
-}
-
-.right-side-items {
-  width: 220px;
-  padding-left: 10px;
-}
-
-.homeFooter {
-  width: 100%;
-  height: 100px;
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 40px 40px 0px 0px;
-  border-width: 0.25px;
-  bottom: 0;
-  box-shadow: 0px 0px 13.7px 0 rgba(0, 0, 0, 0.25);
-  display: flex;
-  justify-content: center;
-  z-index: 1;
-}
-
-.homeFooter-button {
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 50%;
-  border-width: 0.25px;
-  width: 60px;
-  height: 60px;
-  box-shadow: 0px 0px 13.7px 0 rgba(0, 0, 0, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-  position: relative;
-  bottom: 32.5px;
-}
+/* Removed duplicated .left-side-items and .right-side-items */
 
 .dialogOverlay {
   position: fixed;
@@ -279,52 +326,63 @@ h3 span {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6); /* Match modal overlay */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 1rem; /* Add padding */
 }
 
 .dialogBox {
   background: #fff;
-  padding: 20px;
+  padding: clamp(1rem, 4vw, 1.5rem); /* Responsive padding */
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  width: 90%; /* Responsive width */
+  max-width: 350px; /* Adjusted max-width */
   text-align: center;
+  box-sizing: border-box;
 }
 
 .dialogBox h3 {
-  margin-bottom: 15px;
-  font-size: 18px;
+  margin-top: 0; /* Remove top margin */
+  margin-bottom: clamp(1rem, 3vw, 1.5rem); /* Responsive margin */
+  font-size: clamp(1rem, 3vw, 1.1rem); /* Responsive font size */
 }
 
 .youtubeInput {
+  /* Assuming this is a text input */
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
+  padding: clamp(8px, 2vw, 10px); /* Responsive padding */
+  margin-bottom: clamp(1rem, 3vw, 1.5rem); /* Responsive margin */
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: clamp(0.9rem, 2.5vw, 1rem); /* Responsive font size */
+  box-sizing: border-box;
 }
 
 .dialogActions {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Keep space between */
+  gap: clamp(0.5rem, 2vw, 1rem); /* Add gap */
+  flex-wrap: wrap; /* Allow wrapping */
 }
 
 .dialogButton {
-  padding: 10px 15px;
+  padding: clamp(8px, 2vw, 10px) clamp(12px, 3vw, 15px); /* Responsive padding */
   border: none;
   border-radius: 5px;
   cursor: pointer;
   background-color: #007bff;
   color: #fff;
   transition: background-color 0.2s;
+  font-size: clamp(0.9rem, 2.5vw, 1rem); /* Responsive font size */
+  flex-grow: 1; /* Allow buttons to grow */
 }
 
 .dialogButton.cancel {
-  background-color: #dc3545;
+  background-color: #6c757d; /* Grey cancel button */
 }
 
 .dialogButton:hover {
@@ -332,55 +390,115 @@ h3 span {
 }
 
 .dialogButton.cancel:hover {
-  background-color: #c82333;
+  background-color: #5a6268;
 }
 
-@media (max-width: 768px) {
-  .uploadOptions {
-    position: fixed;
-    bottom: 12rem;
+/* --- Media Queries --- */
+
+/* Tablet and larger */
+@media (min-width: 769px) {
+  .decks {
+    justify-content: flex-start; /* Align decks to start on larger screens */
   }
-  .uploadButton {
-    padding-left: 10px;
-    padding-right: 10px;
-    position: relative;
-    /* top: 200px; */
+}
+
+/* Small Tablet / Large Phone */
+@media (max-width: 768px) {
+  .home {
+    padding-bottom: 100px; /* Ensure enough space for footer */
   }
   .decks {
-    display: flex;
     flex-direction: column;
-    min-height: fit-content;
-    padding: 2rem 0;
+    align-items: center; /* Center items when stacked */
+    padding: clamp(1rem, 4vw, 2rem) 0; /* Adjust padding */
   }
-}
-@media (min-height: 768px) {
   .uploadOptions {
-    margin-top: 72px;
+    /* Consider adjusting positioning or layout */
+    bottom: 8rem; /* Example adjustment */
+  }
+  .modal-content,
+  .dialogBox {
+    width: 95%; /* Slightly wider on smaller screens */
   }
 }
 
+/* Mobile phones */
 @media (max-width: 506px) {
+  .homeHeader {
+    padding-top: clamp(1rem, 3vh, 1.5rem);
+    padding-bottom: clamp(0.5rem, 2vh, 0.8rem);
+  }
+  .hamburger-menu {
+    display: flex; /* Show hamburger */
+  }
   .nav-items {
-    display: none;
+    display: none; /* Hide nav items by default */
     flex-direction: column;
     position: absolute;
-    top: 60px;
+    top: 100%; /* Position below header */
+    left: 0;
     right: 0;
     background-color: white;
     width: 100%;
     padding: 20px;
-    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 10;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
+    z-index: 9; /* Below header overlay */
     align-items: flex-start;
+    gap: 15px; /* Adjust gap for vertical layout */
+    border-top: 1px solid #eee;
   }
 
   .nav-items.open {
-    display: flex;
-    margin-top: 20px;
+    display: flex; /* Show when open */
   }
-  .hamburger-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+  .nav-item {
+    width: 100%; /* Make nav items full width */
+    text-align: left;
+    padding: 10px 20px; /* Adjust padding */
+  }
+  .nav-item.active {
+    border-bottom-width: 0; /* Remove bottom border */
+    background-color: #f0f0f0; /* Indicate active state differently */
+  }
+  .homeFooter {
+    height: 70px; /* Adjust footer height */
+  }
+  .homeFooter-button {
+    width: 55px; /* Adjust button size */
+    height: 55px;
+    bottom: 25px; /* Adjust position */
+  }
+  .dialogActions {
+    flex-direction: column; /* Stack dialog buttons */
+  }
+  .dialogButton {
+    width: 100%; /* Make dialog buttons full width */
   }
 }
+
+/* Adjustments for very small screens if needed */
+@media (max-width: 360px) {
+  .home {
+    margin-inline: clamp(0.5rem, 3vw, 1rem);
+  }
+  .home h3 {
+    font-size: clamp(1rem, 4vw, 1.1rem);
+  }
+  .home-heading {
+    font-size: clamp(1.3rem, 6vw, 1.5rem);
+  }
+  .nav-item {
+    padding: 8px 15px;
+  }
+  .add-card-btn {
+    font-size: clamp(0.8rem, 3vw, 0.9rem);
+    padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 12px);
+  }
+}
+
+/* Redundant media query cleanup */
+/* @media (min-height: 768px) {
+  .uploadOptions {
+    margin-top: 72px;
+  }
+} */ /* This might conflict or be unnecessary with other positioning */

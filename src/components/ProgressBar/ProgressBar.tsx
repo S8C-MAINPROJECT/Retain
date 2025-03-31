@@ -6,17 +6,22 @@ interface ProgressBarProps {
   deactivecolor: string;
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ progress, total, activecolor, deactivecolor }) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({
+  progress,
+  total,
+  activecolor,
+  deactivecolor,
+}) => {
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: 5, margin:2}}>
+      <div style={{ display: "flex", gap: 5, margin: 2 }}>
         {Array.from({ length: total }, (_, index) => (
           <div
             key={index}
             style={{
-              height: '5px',
-              width: '25px',
-              borderRadius: '25px',
+              height: "5px",
+              width: "25px",
+              borderRadius: "25px",
               backgroundColor: index < progress ? activecolor : deactivecolor, // Active bars are white
             }}
           ></div>

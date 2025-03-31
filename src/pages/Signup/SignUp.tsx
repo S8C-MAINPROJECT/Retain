@@ -11,16 +11,16 @@ import axiosInstance from "../../utils/axiosInstance"; // Use the configured Axi
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); // ✅ Added confirm password
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState(false); // ✅ State to track confirm password field error
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false); //State to track confirm password field error
 
   const navigate = useNavigate();
 
   const handleSignup = async () => {
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
-      setConfirmPasswordError(true); // ✅ Highlight the confirm password field
+      setConfirmPasswordError(true); // Highlight the confirm password field
       return;
     }
 
@@ -58,9 +58,13 @@ const SignUp = () => {
           </div>
           <div className={styles.signupBoundingboxTextInner}>
             <h1>SignUp</h1>
-            {error? <h5 className={styles.error}>{error}</h5>:<h5>Create an account</h5>}
+            {error ? (
+              <h5 className={styles.error}>{error}</h5>
+            ) : (
+              <h5>Create an account</h5>
+            )}
           </div>
-          
+
           <div className={styles.signupField}>
             <TextField
               placeholder="Email"
@@ -79,13 +83,18 @@ const SignUp = () => {
                 setConfirmPasswordError(false);
               }}
               label="Confirm Password" // ✅ Now the second field is labeled correctly
-              style={confirmPasswordError ? { borderBottom: "2px solid red" } : {}}
+              style={
+                confirmPasswordError ? { borderBottom: "2px solid red" } : {}
+              }
             />
           </div>
-          
+
           <div className={styles.signupButtons}>
             <PrimaryBtn name="SignUp" onClick={handleSignup} />
-            <SecondaryBtn name="I already have an account" onClick={() => navigate("/")} />
+            <SecondaryBtn
+              name="I already have an account"
+              onClick={() => navigate("/")}
+            />
           </div>
         </div>
       </div>
