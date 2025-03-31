@@ -3,13 +3,7 @@ import { useState, useEffect } from "react";
 import "./Card.css";
 import icons from "../../assets/icons";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import {
-  createEmptyCard,
-  fsrs,
-  generatorParameters,
-  Card as FSRSCardType,
-  Grade,
-} from "ts-fsrs";
+import { createEmptyCard, Card as FSRSCardType, Grade } from "ts-fsrs";
 import DifficultyChooser from "../../components/DifficultyChooser/DifficultyChooser";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 

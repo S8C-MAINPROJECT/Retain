@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import icons from "../../assets/icons";
 import "./Home.css";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -11,13 +11,6 @@ import { AddNew } from "../../components/AddNew/AddNew";
 import { jwtDecode } from "jwt-decode";
 import Summarizer from "../../components/Summarizer/Summarizer";
 import EmotionFeedback from "../../components/EmotionFeeback/Emotion";
-import {
-  fsrs,
-  generatorParameters,
-  Card as FSRSCardType,
-  Grade,
-  createEmptyCard,
-} from "ts-fsrs";
 
 const Home = () => {
   const location = useLocation();
@@ -27,9 +20,6 @@ const Home = () => {
   const [deckTitle, setDeckTitle] = useState("");
   const [totalQuestions, setTotalQuestions] = useState("");
   const [decks, setDecks] = useState<
-    Array<{ did: number; title: string; duecount: number; totalcount: number }>
-  >([]);
-  const [dueDecks, setDueDecks] = useState<
     Array<{ did: number; title: string; duecount: number; totalcount: number }>
   >([]);
   const [isDeckModalOpen, setIsDeckModalOpen] = useState(false);
@@ -167,13 +157,6 @@ const Home = () => {
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
-  };
-
-  const handleEmotionSubmit = (emotion: string) => {
-    console.log("Emotion submitted:", emotion);
-    setIsEmotionFeedbackOpen(false);
-
-    // Here you might want to do something with the emotion, like send it to a server
   };
 
   const handleEmotionModalClose = () => {
