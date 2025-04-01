@@ -252,12 +252,12 @@ const Card = () => {
         <div className="right">
           <div className="progressContainerRight">
             <p className="progressCountKeeper">
-              {currentIndex} out of {total} complete
+              {db.length - currentIndex} cards to review !
             </p>
             <div className="progressBar">
               <ProgressBar
                 progress={currentIndex}
-                total={5}
+                total={db.length}
                 activecolor="rgba(81, 197, 70, 1)"
                 deactivecolor="rgba(171, 250, 164, 1)"
               />

@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import "./Card.css";
 import icons from "../../assets/icons";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Card as FSRSCardType, Grade } from 'ts-fsrs';
-import DifficultyChooser from '../../components/DifficultyChooser/DifficultyChooser';
-import ProgressBar from '../../components/ProgressBar/ProgressBar';
-import CompletionModal from '../../components/CompletionModal/CompletionModal'; // Import the modal
+import { Card as FSRSCardType, Grade } from "ts-fsrs";
+import DifficultyChooser from "../../components/DifficultyChooser/DifficultyChooser";
+import ProgressBar from "../../components/ProgressBar/ProgressBar";
+import CompletionModal from "../../components/CompletionModal/CompletionModal"; // Import the modal
 
 interface CardInStorage extends FSRSCardType {
   _id: string;
@@ -31,7 +31,7 @@ const Card = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [total, setTotal] = useState(5);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [animation, setAnimation] = useState('');
+  const [animation, setAnimation] = useState("");
   const [isCompletionModalOpen, setIsCompletionModalOpen] = useState(false); // State for modal visibility
 
   useEffect(() => {
@@ -83,11 +83,11 @@ const Card = () => {
   // Handler for closing the modal and navigating
   const handleModalClose = () => {
     setIsCompletionModalOpen(false);
-    navigate('/home'); // Navigate after closing the modal
+    navigate("/home"); // Navigate after closing the modal
   };
 
   const handleEmotions = (cardDetails: any) => {
-    if (cardDetails.cardType === 'new') {
+    if (cardDetails.cardType === "new") {
       if (cardDetails.emotionalResponse === "confident") {
         cardDetails.easeFactor = 2.5;
         cardDetails.nextInterval = 1;
@@ -195,7 +195,7 @@ const Card = () => {
       console.log("Updated due date:", updatedCard.due);
 
       setTimeout(() => {
-        setAnimation('slideOutLeft');
+        setAnimation("slideOutLeft");
         setTimeout(() => {
           if (currentIndex === db.length - 1 && db.length > 0) {
             // Last card reviewed and db is not empty
@@ -203,7 +203,7 @@ const Card = () => {
           } else if (db.length > 0) {
             // Move to the next card (ensure db is not empty)
             setCurrentIndex((prevIndex) => prevIndex + 1);
-            setAnimation('slideInRight');
+            setAnimation("slideInRight");
           }
           setShowAnswer(false); // Reset answer visibility for the next card or after completion
         }, 400); // Animation duration
@@ -296,12 +296,12 @@ const Card = () => {
         <div className="right">
           <div className="progressContainerRight">
             <p className="progressCountKeeper">
-              {currentIndex} out of {total} complete
+              {db.length - currentIndex} card(s) to review !
             </p>
             <div className="progressBar">
               <ProgressBar
                 progress={currentIndex}
-                total={5}
+                total={db.length}
                 activecolor="rgba(81, 197, 70, 1)"
                 deactivecolor="rgba(171, 250, 164, 1)"
               />

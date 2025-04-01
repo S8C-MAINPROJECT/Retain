@@ -1,5 +1,4 @@
-import React from 'react';
-import './CompletionModal.css'; // Import the CSS for styling
+import React from "react";
 
 interface CompletionModalProps {
   isOpen: boolean;
@@ -18,10 +17,16 @@ const CompletionModal: React.FC<CompletionModalProps> = ({
   }
 
   return (
-    <div className="modal-overlay" onClick={onClose}> {/* Optional: Close on overlay click */}
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}> {/* Prevent closing when clicking inside content */}
+    <div className="modal-overlay" onClick={onClose}>
+      {" "}
+      {/* Optional: Close on overlay click */}
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        {" "}
+        {/* Prevent closing when clicking inside content */}
         <p>{message}</p>
-        <button className='modal-button' onClick={onClose}>OK</button>
+        <button className="modal-button" onClick={onClose}>
+          OK
+        </button>
       </div>
     </div>
   );
