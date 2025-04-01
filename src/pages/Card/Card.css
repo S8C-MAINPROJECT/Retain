@@ -344,3 +344,168 @@
   width: 2px;
   background-color: rgba(0, 0, 0, 0.25);
 }
+
+/* --- Responsive Styles --- */
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .parent {
+    justify-content: space-around; /* Adjust spacing */
+    padding: 0 20px;
+  }
+
+  .cardStack,
+  .card {
+    width: 280px; /* Slightly smaller cards */
+    height: 330px;
+  }
+
+  .question {
+    font-size: 18px;
+  }
+
+  .answer {
+    font-size: 18px;
+  }
+
+  .progressContainerRight {
+    display: none;
+  }
+
+  .progressCountKeeper {
+    font-size: 26px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .Gparant {
+    min-height: 100vh; /* Ensure full height */
+  }
+
+  .RetainHeading {
+    top: 15px;
+    left: 15px;
+  }
+  .RetainHeading span {
+    font-size: 18px; /* Smaller heading */
+  }
+
+  .parent {
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    gap: 20px; /* Reduce gap */
+  }
+
+  .left,
+  .right {
+    width: 100%; /* Take full width */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .central-card-component {
+    width: 100%;
+  }
+
+  .headItems {
+    margin-top: 30px; /* Adjust margin */
+    gap: 10px;
+  }
+
+  .cardStack {
+    max-width: 300px; /* Max width */
+    height: 350px; /* Keep height or adjust as needed */
+    margin: 0 auto; /* Center stack */
+  }
+
+  .card {
+    width: 100%; /* Card takes full width of stack */
+    height: 350px;
+  }
+
+  /* Adjust card positioning for smaller stack */
+  .card.previousCard {
+    transform: translateX(-20px) scale(0.9);
+  }
+  .card.nextCard {
+    transform: translateX(20px) scale(0.9);
+  }
+
+  .question {
+    font-size: 18px; /* Smaller font */
+    margin: 0 15px;
+  }
+
+  .question img {
+    width: 18px;
+    left: auto; /* Reset left positioning */
+    right: 15px; /* Position to the right */
+    top: 5px; /* Adjust top position */
+    position: absolute; /* Ensure positioning context */
+  }
+
+  .answer {
+    font-size: 18px; /* Smaller font */
+    margin: 0 15px;
+  }
+
+  .answer img {
+    width: 18px;
+    left: auto; /* Reset left positioning */
+    right: 15px; /* Position to the right */
+    top: 5px; /* Adjust top position */
+    position: absolute; /* Ensure positioning context */
+  }
+
+  .reveal {
+    font-size: 14px; /* Smaller font */
+    top: 30px; /* Adjust position */
+  }
+
+  .difficultyOptions {
+    margin-top: 20px;
+    gap: 15px;
+  }
+
+  .difficultyBtn {
+    padding: 3px 6px;
+    font-size: 12px;
+  }
+
+  .difficultyTime {
+    font-size: 10px;
+  }
+
+  .difficultyMeasure {
+    font-size: 14px;
+  }
+
+  .middleLine {
+    display: none; /* Hide the vertical line */
+  }
+
+  .progressContainerRight {
+    display: none;
+  }
+
+  .progressCountKeeper {
+    font-size: 24px; /* Smaller font */
+  }
+
+  .emojis-container {
+    margin-top: 15px;
+  }
+
+  .keepGoing {
+    display: none;
+  }
+
+  .navButton {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+}

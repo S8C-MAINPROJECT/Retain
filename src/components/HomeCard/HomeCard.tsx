@@ -61,14 +61,6 @@ const HomeCard: React.FC<HomeCardProps> = ({
             {custom == false && <p>{dueCount} card(s) to review</p>}
             {custom == true && <p>Review all now</p>}
           </div>
-          <div className="pgBar-home">
-            <ProgressBar
-              progress={dueCount}
-              total={total}
-              activecolor="rgba(81, 197, 70, 1)"
-              deactivecolor="rgba(171, 250, 164, 1)"
-            />
-          </div>
         </div>
       </div>
       <div className="button-container">

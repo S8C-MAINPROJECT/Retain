@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import "./Card.css";
 import icons from "../../assets/icons";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Card as FSRSCardType, Grade } from "ts-fsrs";
-import DifficultyChooser from "../../components/DifficultyChooser/DifficultyChooser";
-import ProgressBar from "../../components/ProgressBar/ProgressBar";
+import { Card as FSRSCardType, Grade } from 'ts-fsrs';
+import DifficultyChooser from '../../components/DifficultyChooser/DifficultyChooser';
+import ProgressBar from '../../components/ProgressBar/ProgressBar';
+import CompletionModal from '../../components/CompletionModal/CompletionModal'; // Import the modal
 
 interface CardInStorage extends FSRSCardType {
   _id: string;
@@ -30,7 +31,8 @@ const Card = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [total, setTotal] = useState(5);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [animation, setAnimation] = useState("");
+  const [animation, setAnimation] = useState('');
+  const [isCompletionModalOpen, setIsCompletionModalOpen] = useState(false); // State for modal visibility
 
   useEffect(() => {
     const fetchDeckAndFlashcards = async () => {
@@ -77,8 +79,15 @@ const Card = () => {
   const handleDifficultySelection = (difficulty: Grade) => {
     handleNext(difficulty);
   };
+
+  // Handler for closing the modal and navigating
+  const handleModalClose = () => {
+    setIsCompletionModalOpen(false);
+    navigate('/home'); // Navigate after closing the modal
+  };
+
   const handleEmotions = (cardDetails: any) => {
-    if (cardDetails.cardType === "new") {
+    if (cardDetails.cardType === 'new') {
       if (cardDetails.emotionalResponse === "confident") {
         cardDetails.easeFactor = 2.5;
         cardDetails.nextInterval = 1;
@@ -186,13 +195,19 @@ const Card = () => {
       console.log("Updated due date:", updatedCard.due);
 
       setTimeout(() => {
-        setAnimation("slideOutLeft");
+        setAnimation('slideOutLeft');
         setTimeout(() => {
-          setCurrentIndex((prevIndex) => (prevIndex + 1) % db.length);
-          setAnimation("slideInRight");
-        }, 400);
-        setShowAnswer(false);
-      }, 1200);
+          if (currentIndex === db.length - 1 && db.length > 0) {
+            // Last card reviewed and db is not empty
+            setIsCompletionModalOpen(true); // Open the modal instead of alert/navigate
+          } else if (db.length > 0) {
+            // Move to the next card (ensure db is not empty)
+            setCurrentIndex((prevIndex) => prevIndex + 1);
+            setAnimation('slideInRight');
+          }
+          setShowAnswer(false); // Reset answer visibility for the next card or after completion
+        }, 400); // Animation duration
+      }, 1200); // Delay before starting the animation
     } catch (error) {
       console.error("Error updating card:", error);
     }
@@ -298,6 +313,13 @@ const Card = () => {
           </div>
         </div>
       </div>
+      {/* Render the modal conditionally */}
+      <CompletionModal
+        isOpen={isCompletionModalOpen}
+        message="Congratulations! You've reviewed all cards in this deck."
+        redirectPath="/home"
+        onClose={handleModalClose}
+      />
     </div>
   );
 };
