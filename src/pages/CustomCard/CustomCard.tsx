@@ -279,7 +279,11 @@ const Card = () => {
           <div className="emojis-container">
             <DifficultyChooser onDifficultySelect={handleDifficultySelection} />
           </div>
-          <div className="nxtPreviousButtons">
+          <div className="nxtPreviousButtons" style={{
+            display: "flex",
+            justifyContent: "space-evenly",
+            marginTop: "10px",
+          }}>
               <div><button className="previous-button" onClick={handleNextButton}>Next</button></div>
               <div><button className="previous-button" onClick={handlePrev}>Previous</button></div>
             </div>

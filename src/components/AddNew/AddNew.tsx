@@ -49,7 +49,7 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       setPdf(imageFile);
       console.log("Image uploaded:", imageFile.name);
     }
-
+    setStatus("uploading");
     // const deckId = await fetchDeckNumber();
 
     try {
@@ -75,6 +75,7 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
     } finally {
       setIsOpen(false);
     }
+    window.location.reload();
   };
 
   // 📄 Handle PDF Upload
@@ -112,6 +113,7 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
 
   // Handle YouTube Upload
   const handleYoutubeUpload = async () => {
+    setShowDialog(false);
     if (!youtubeLink.trim()) {
       alert("Please enter a valid YouTube link.");
       return;
@@ -138,6 +140,7 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
       setIsOpen(false);
       setShowDialog(false);
     }
+    window.location.reload();
   };
 
   const handleManual = () => {
@@ -169,7 +172,7 @@ export const AddNew: React.FC<AddNewProps> = ({ onManual }) => {
                   alignItems: "center",
                 }}
               >
-                <h3>uploading pdf</h3>
+                <h3>uploading and generating</h3>
                 <Oval
                   height={60}
                   width={60}
