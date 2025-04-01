@@ -164,7 +164,22 @@ const Card = () => {
       console.error("Error updating card:", error);
     }
   };
-
+  const handleNextButton = () => {setTimeout(() => {
+    setAnimation("slideOutLeft");
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % db.length);
+      setAnimation("slideInRight");
+    }, 400);
+    setShowAnswer(false);
+  }, 1200);};
+  const handlePrev = () => {setTimeout(() => {
+    setAnimation("slideOutRight");
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) => (prevIndex - 1 + db.length) % db.length);
+      setAnimation("slideInLeft");
+    }, 400);
+    setShowAnswer(false);
+  }, 1200);};
   const getCardData = (offset: number) => {
     const index = (currentIndex + offset + db.length) % db.length;
     return db[index];
@@ -243,16 +258,13 @@ const Card = () => {
                 </div>
               </div>
             </div>
-            <div className="dueDate">
-              Next Due Date: {dueDate.toDateString()}
-            </div>
           </div>
         </div>
         <div className="middleLine"></div>
         <div className="right">
           <div className="progressContainerRight">
             <p className="progressCountKeeper">
-              {db.length - currentIndex} cards to review !
+              {currentIndex + 1} out of {db.length}
             </p>
             <div className="progressBar">
               <ProgressBar
@@ -267,6 +279,10 @@ const Card = () => {
           <div className="emojis-container">
             <DifficultyChooser onDifficultySelect={handleDifficultySelection} />
           </div>
+          <div className="nxtPreviousButtons">
+              <div><button className="previous-button" onClick={handleNextButton}>Next</button></div>
+              <div><button className="previous-button" onClick={handlePrev}>Previous</button></div>
+            </div>
         </div>
       </div>
     </div>

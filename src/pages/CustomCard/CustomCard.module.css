@@ -317,3 +317,10 @@
   justify-content: center;
   margin-top: 20px;
 }
+.nxtPreviousButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
