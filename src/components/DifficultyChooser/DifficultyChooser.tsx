@@ -20,7 +20,6 @@ const DifficultyChooser: React.FC<DifficultyChooserProps> = ({
             😢
           </span>
           <p>Again</p>
-          <p>15 min</p>
         </div>
         <div
           className="difficulty-option"
@@ -30,7 +29,6 @@ const DifficultyChooser: React.FC<DifficultyChooserProps> = ({
             😥
           </span>
           <p>Hard</p>
-          <p>15 min</p>
         </div>
         <div
           className="difficulty-option selected"
@@ -39,8 +37,7 @@ const DifficultyChooser: React.FC<DifficultyChooserProps> = ({
           <span role="img" aria-label="Good">
             😊
           </span>
-          <p>Good</p>
-          <p>1 day</p>
+          <p>Good</p> 
         </div>
         <div
           className="difficulty-option"
@@ -50,7 +47,6 @@ const DifficultyChooser: React.FC<DifficultyChooserProps> = ({
             😌
           </span>
           <p>Easy</p>
-          <p>4 days</p>
         </div>
       </div>
     </div>

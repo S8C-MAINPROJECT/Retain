@@ -258,11 +258,6 @@ const Home = () => {
                   onChange={(e) => setDeckTitle(e.target.value)}
                   value={deckTitle}
                 />
-                <TextInput
-                  placeholder="Number of Questions"
-                  onChange={(e) => setTotalQuestions(e.target.value)}
-                  value={totalQuestions}
-                />
                 <div className="modal-buttons">
                   <PrimaryBtn name="Create" onClick={handleDeckSubmit} />
                   <SecondaryBtn
